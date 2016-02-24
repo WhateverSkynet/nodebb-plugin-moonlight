@@ -1,6 +1,6 @@
 {
-	"id": "nodebb-plugin-quickstart",
-	"url": "https://github.com/NodeBB/nodebb-plugin-quickstart",
+	"id": "nodebb-plugin-moonlight",
+	"url": "https://github.com/WhateverSkynet/nodebb-plugin-moonlight",
 	"library": "./library.js",
 	"hooks": [
 		{
