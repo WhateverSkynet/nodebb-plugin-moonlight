@@ -1,11 +1,11 @@
 {
   "name": "nodebb-plugin-moonlight",
-  "version": "0.2.3",
+  "version": "0.0.1",
   "description": "A starter kit for quickly creating NodeBB plugins",
   "main": "library.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/WhateverSkynet/nodebb-plugin-moonlight/"
+    "url": "https://github.com/WhateverSkynet/nodebb-plugin-moonlight"
   },
   "keywords": [
     "nodebb",
@@ -13,4 +13,8 @@
   ],
   "license": "MIT",
   "readmeFilename": "README.md",
+    "nbbpm": {
+    "compatibility": "^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0",
+    "index": false
+  }
 }
