@@ -11,7 +11,7 @@
         <div class="mui-col-md-16 mui-col-md-offset-4 mui--text-center">
             <h1>Mythic raiding guild on Auchindoun-EU</h1>
             <p>
-                Want to join us? We always consider optional applicants of any class regardless of recruitment status. Fill out our application form <a href="#">here!</a>
+                Want to join us? We always consider optional applicants of any class regardless of recruitment status.
             </p>
         </div>
     </div>
