@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "noImplicitAny": true,
+        "module": "amd",
+        "target": "es5",
+        "jsx": "react"
+    },
+
+    "exclude": [
+        "node_modules"
+    ]
+}

@@ -1,26 +1,34 @@
 {
-	"id": "nodebb-plugin-moonlight",
-	"url": "https://github.com/WhateverSkynet/nodebb-plugin-moonlight",
-	"library": "./library.js",
-	"hooks": [
-		{
-			"hook": "static:app.load", "method": "init"
-		},
-		{
-			"hook": "filter:admin.header.build", "method": "addAdminNavigation"
-		}
-	],
-	"staticDirs": {
-		"static": "./static"
-	},
-	"less": [
-		"static/style.less"
-	],
-	"scripts": [
-		"static/lib/main.js"
-	],
-	"acpScripts": [
-		"static/lib/admin.js"
-	],
-	"templates": "static/templates"
+  "id": "nodebb-plugin-moonlight",
+  "url": "https://github.com/WhateverSkynet/nodebb-plugin-moonlight",
+  "library": "./library.js",
+  "hooks": [
+    {
+      "hook": "static:app.load",
+      "method": "init"
+    },
+    {
+      "hook": "filter:admin.header.build",
+      "method": "addAdminNavigation"
+    }
+  ],
+  "staticDirs": {
+    "static": "./static"
+  },
+  "less": [
+    "static/style.less"
+  ],
+  "scripts": [
+    "static/lib/main.js"
+  ],
+  "acpScripts": [
+    "static/lib/admin.js"
+  ],
+  "templates": "static/templates",
+  "modules": {
+    "react.js": "../react/dist/react.min.js",
+    "reactDOM.js": "../react-dom/dist/react-dom.min.js",
+    "moonlight/vendor.js": "/dist/vendor.js",
+    "moonlight/bundle.js": "/dist/main.js"
+  }
 }
