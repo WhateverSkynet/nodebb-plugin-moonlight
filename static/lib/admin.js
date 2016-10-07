@@ -38,7 +38,7 @@ define('admin/plugins/moonlight', ['settings'], function (Settings) {
           alert_id: 'moonlight-saved',
           title: 'Settings Saved',
           message: 'Success',
-          clickfn: function() {
+          clickfn: function () {
             socket.emit('admin.reload');
           },
         });
