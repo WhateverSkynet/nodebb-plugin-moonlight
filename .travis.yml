@@ -11,8 +11,6 @@ before_script:
 - typings install
 script:
 - npm run build
-before_deploy:
-  - npm version patch
 deploy:
   provider: npm
   skip_cleanup: true
@@ -22,4 +20,3 @@ deploy:
     secure: ALTrwhAusYzlY3oGggr+aADscbNnet8irQfElBdg3zoiUZWidO0YOMY/O/HCBZff9S8xLxSzLJ7UWCr+TCYLgD8KaQAZf8xxCRGdQFYiWWs0evLi2JqvvXCh+U8HBAD3GkCFrZPHKdsfAI6x5oE9kajF3Tv4qmB95xl6uFwt1CAOo1u5KdqjsSZhG3Mf8v7CXBfyEpmni+RtIozP2Rc1nd43lyqlWxkYCnLopMGsLAejs2DERvEhi/vnYQamg4o8W+5+xzmAr8kmf5wJ+pHqMbIur4Ei5lBPpsbPwkatScWldr/ipRzNegBlqgKaY0DVzoiaF3lZ2E9jMWUmsMBZzQlFzb5s9fUl6myTXJXPu5khm4rXtR91nPVvZv9hjt+MLQMABpVh6gPjGbI2R5DakRKRCcRGSMutIepWJoGuuImMOL1ZBlDzf+G2h6ft6Doc79X4n8+cYBPUCGRmrMdZuqboRKeLCL9kJnDArxRwDI2ksSjnJdATD2LItR6YntbXlnNrKTgNVCUcqbFSrQmeq9CgrrBJXs+EA6jpqeZxJLlPxWm4NoV7o88HXSemg1h42sicHYgsdvhLXH3mfwL+75wGT2N5odAoZsfoEbo9i6dBJf0+b+0aB4lwxwx8o6kRYGoeApW8npjvnCS4IDVcPZUnWbXGwSNREVtgBR3Htko=
   on:
     branch: master
- 
