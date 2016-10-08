@@ -1,15 +1,20 @@
 {
   "name": "nodebb-plugin-moonlight",
   "version": "0.0.5",
-  "description": "A starter kit for quickly creating NodeBB plugins",
+  "description": "Battle.net integration with Nodebb",
   "main": "library.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/WhateverSkynet/nodebb-plugin-moonlight"
   },
+  "scripts": {
+    "build": "webpack"
+  },
   "keywords": [
     "nodebb",
-    "plugin"
+    "plugin",
+    "battlenet",
+    "wow"
   ],
   "license": "MIT",
   "readmeFilename": "README.md",
@@ -26,7 +31,6 @@
     "react-redux": "4.4.5",
     "react-router": "2.6.1",
     "react-router-redux": "4.0.5",
-    "react-toolbox": "1.0.3",
     "redux": "3.5.2",
     "redux-form": "^5.3.2",
     "sass-loader": "4.0.0",
