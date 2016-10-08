@@ -1,4 +1,4 @@
-import * as BattleNet from "../BattleNet/index";
+import * as BattleNet from "../battlenet/index";
 
 export interface Question {
     id: number;

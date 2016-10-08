@@ -2,16 +2,22 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-  - "5"
+- '5'
 before_install:
-  - if [ $TRAVIS_OS_NAME == "linux" ]; then
-      export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
-      sh -e /etc/init.d/xvfb start;
-      sleep 3;
-    fi
-  - npm i -g typings
+- if [ $TRAVIS_OS_NAME == "linux" ]; then export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
+  sh -e /etc/init.d/xvfb start; sleep 3; fi
+- npm i -g typings
 before_script:
-  - npm i
-  - typings install
+- npm i
+- typings install
 script:
-  - npm run build
+- npm run build
+deploy:
+  provider: npm
+  email: "$NPM_EMAIL"
+  api_key: "$NPM_API_KEY"
+  on:
+    branch: master
+env:
+  matrix:
+    secure: e6VYO5AB0q+4j0rz+P5caEy4bs2JVfQaUHx5t7o1b5N41fvnVe1Klk3DCoxHigFMjRtbeqbiVYY8qFf4FkTcAu+AN8HAoGboCHEoyXM9nxpQkOHSvFRAM9PMWKGGNW+q+eduyiqVSrwJd/qa/Z+3FSL3zIBbZDUvL3lr3ZGG6iWfMkmAEYpTYLMNIpZ/Wnw5aP+OKNNT7atGZDwRepXLpVQolcNAb1EO68DEy4ao/ck7UHHQ4pXt2MUANhlgxUk1sOnY/A4vL0MFFC6wq7Bs/TtJX32ZCRf/pEtgHCFH3mMb08aCHioILAcM74bCFsXOxvqxk/CR9/UczZZj9ECnrkx3kYs0vYRQ6H5Prd1Bc6kMFZz5jhDeP+3wDpC3zwp2n8Co+LRjBzWuwpl91hc83R2BIXq6Tp8ck6xUePUZNnYoc3l/C1eWe7hkN1C3BprO1Aa4ECNpBaPXU6sFkEPTv+RsCRvgSguiVq69Mt8pzC0JfyGMFhM845wX+jmUDsqs08Pfmj/y2umYKmt0qvnklANx1T8a1ZxlvaRe6ve2X6G11/AhMCl6cqYO+ONTdHeJWppNc2Fz8czWAJgjZQ5bT2oIwMa2fdXz++rDtvo66YgKq6wVuoAelSwIk2Qt/+NlZc5zN0HAWsVM4lLJkhSOrDKaeRblrJWp0sHfAGj9Rqw=
