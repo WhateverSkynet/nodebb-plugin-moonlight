@@ -22,6 +22,7 @@ interface Member {
 
 interface AjaxifyAction extends Action {
     data?: any;
+    type: any;
 }
 
 
