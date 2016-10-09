@@ -5,11 +5,9 @@ import { Row } from "../../mui/row";
 import { Col } from "../../mui/col";
 import { Panel } from "../../mui/panel";
 
-import { Application, Question } from "../../models/index";
-
 import { ApplicationQuestion } from "./question";
 
-export class ApplicationForm  extends React.Component<Application, {}> {
+export class ApplicationForm  extends React.Component<{}, {}> {
     render() {
         return (
            <Container>

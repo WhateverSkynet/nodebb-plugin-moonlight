@@ -5186,14 +5186,18 @@ table.interactive tbody tr {
 
 
 .recruitment-class {
-  height: 20rem;
+  //height: 20rem;
 }
 
 .recruitment-class__name {
 /*   transform: rotate(270deg);
   transform-origin: left top 0;
   display:none; */
-  background-color: #1e1e1e;
+  > div {
+    background-color: #1e1e1e;
+    height: 4rem;
+    line-height: 4rem;
+  }
   height: 100%;
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
@@ -5277,50 +5281,50 @@ table.interactive tbody tr {
 }
     */
 
-.recruitment-class__name:hover[data-character-class="hunter"] {
+.recruitment-class__name:hover[data-character-class="hunter"] > div {
   background-color: #ABD473;
 }
 
-.recruitment-class__name:hover[data-character-class="druid"] {
+.recruitment-class__name:hover[data-character-class="druid"] > div {
   background-color: #FF7D0A;
 }
 
-.recruitment-class__name:hover[data-character-class="mage"] {
+.recruitment-class__name:hover[data-character-class="mage"] > div {
   background-color: #69EEFF;
 }
 
-.recruitment-class__name:hover[data-character-class="monk"] {
+.recruitment-class__name:hover[data-character-class="monk"] > div {
   background-color: #00FF96;
 }
 
-.recruitment-class__name:hover[data-character-class="paladin"] {
+.recruitment-class__name:hover[data-character-class="paladin"] > div {
   background-color: #F58CBA;
 }
 
-.recruitment-class__name:hover[data-character-class="priest"] {
+.recruitment-class__name:hover[data-character-class="priest"] > div {
   background-color: #FFFFFF;
 }
 
-.recruitment-class__name:hover[data-character-class="rogue"] {
+.recruitment-class__name:hover[data-character-class="rogue"] > div {
   background-color: #EEE468;
 }
 
-.recruitment-class__name:hover[data-character-class="shaman"] {
+.recruitment-class__name:hover[data-character-class="shaman"] > div {
   background-color: #2459FF;
 }
 
-.recruitment-class__name:hover[data-character-class="warlock"] {
+.recruitment-class__name:hover[data-character-class="warlock"] > div {
   background-color: #9482CA;
 }
 
-.recruitment-class__name:hover[data-character-class="warrior"] {
+.recruitment-class__name:hover[data-character-class="warrior"] > div {
   background-color: #C79C6E;
 }
 
-.recruitment-class__name:hover[data-character-class="deathknight"] {
+.recruitment-class__name:hover[data-character-class="deathknight"] > div {
   background-color: #C41E3A;
 }
-.recruitment-class__name:hover[data-character-class="deamonhunter"] {
+.recruitment-class__name:hover[data-character-class="deamonhunter"] > div {
   background-color: #b854d4;
 }
 

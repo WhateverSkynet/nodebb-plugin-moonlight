@@ -1,23 +1,28 @@
+import { getWoWData } from '../../services/wow';
+import { Recruitment } from '../../../models/recruitment';
+import { State } from '../../states/state';
 import * as React from "react";
 import { connect } from "react-redux";
-
-import { State } from "../../index";
 
 import { ClassPanel, ClassPanelProps } from "./class-panel";
 
 export interface RecruitmentWidgetProps {
-    classes: ClassPanelProps[];
+    classes: Recruitment.Class[];
 }
 
 class RecruitmentWidgetImpl extends React.Component<RecruitmentWidgetProps, {}> {
 
+    constructor(props: RecruitmentWidgetProps, state: {}) {
+        super(props, state);
+        getWoWData(() => { });
+    }
     render() {
         return (
             <div className="mui-panel">
                 <ul className="mui-list--unstyled mui-row">
                     {
                         this.props.classes
-                            .map(c => <li key={c.name}  className="mui-col-sm-12 mui-col-md-8"><ClassPanel name={c.name} specs={c.specs}/></li>)
+                            .map(c => <li key={c.name} className="mui-col-md-12 mui-col-lg-8"><ClassPanel name={c.name} specs={c.specs} /></li>)
                     }
                 </ul>
             </div>
@@ -26,10 +31,11 @@ class RecruitmentWidgetImpl extends React.Component<RecruitmentWidgetProps, {}> 
 }
 
 const mapStateToProps = (state: State) => {
-    var props: RecruitmentWidgetProps = {
-        classes: state.ajaxify.recruitment
+    const classes = state.ajaxify.recruitment || [];
+    const props: RecruitmentWidgetProps = {
+        classes: classes
     };
-    return  props;
+    return props;
 }
 
 

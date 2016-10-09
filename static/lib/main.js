@@ -19,42 +19,17 @@
       window.Moonlight = App;
 
       if (validUrls.indexOf(ajaxify.data.url) !== -1) {
+
+        if (ajaxify.data.action) {
+          App.store.dispatch(ajaxify.data.action)
+        }
         App.navigate(ajaxify.data.url);
       }
 
     });
   });
 
-
-  console.log("nodebb-plugin-moonlight: loaded");
-  // Note how this is shown in the console on the first load of every page
-
-
 } ());
-
-//const registerPage = (name) => {
-
-// define(name, ["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, Moonlight) {
-
-//   var Page = {};
-
-//   Page.init = function () {
-
-//     ReactDOM.render(
-//       React.createElement(Moonlight.Page, {}),
-//       document.getElementById("moonlight-content")
-//     );
-
-//   }
-
-//   return Page;
-// });
-
-// };
-
-
-// registerPage("forum/apply");
-// registerPage("form/landing");
 
 define("forum/apply", ["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, Moonlight) {
 

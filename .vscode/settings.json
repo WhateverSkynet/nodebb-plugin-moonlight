@@ -2,5 +2,15 @@
 {
     "files.associations": {
         "*.tpl": "html"
-    }
+    },
+    "editor.tabSize": 2,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "node_modules": true
+    },
+    "editor.trimAutoWhitespace": true,
+    "editor.renderWhitespace": true
 }
