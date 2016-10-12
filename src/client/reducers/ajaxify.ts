@@ -3,12 +3,13 @@ import { Question } from '../../models/application';
 import {RosterCharacter} from '../../models/wow';
 
 import { Reducer } from "redux";
-import { AJAXIFY_ROSTER, AJAXIFY_RECRUITMENT, AjaxifyAction, Action} from '../../actions';
+import { AJAXIFY_NEW_APPLICATION, AJAXIFY_ROSTER, AJAXIFY_RECRUITMENT, AjaxifyAction, Action} from '../../actions';
 
 const LOCATION_CHANGE = "@@router/LOCATION_CHANGE";
 const defaultState = {
   roster: [],
-  recruitment: []
+  recruitment: [],
+  questions: []
 }
 export const ajaxifyReducer = (state: AjaxifyState = defaultState, action: AjaxifyAction = Action) => {
   let newState: AjaxifyState;
@@ -20,6 +21,10 @@ export const ajaxifyReducer = (state: AjaxifyState = defaultState, action: Ajaxi
       case AJAXIFY_RECRUITMENT:
       newState = {};
       newState.recruitment = action.classes;
+      return newState;
+      case AJAXIFY_NEW_APPLICATION:
+      newState = {};
+      newState.questions = action.application.questions;
       return newState;
     default:
       return state;

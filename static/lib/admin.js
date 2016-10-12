@@ -1,7 +1,41 @@
 'use strict';
 /* globals $, app, socket */
 
-define('admin/plugins/moonlight', ['settings'], function (Settings) {
+(function () {
+	/*
+		This file shows how client-side javascript can be included via a plugin.
+		If you check `plugin.json`, you"ll see that this file is listed under "scripts".
+		That array tells NodeBB which files to bundle into the minified javascript
+		that is served to the end user.
+
+		Some events you can elect to listen for:
+
+		$(document).ready();			Fired when the DOM is ready
+		$(window).on("action:ajaxify.end", function(data) { ... });			"data" contains "url"
+	*/
+
+  //TODO: remove dependency on mui.js
+  var script = document.createElement("script");
+  script.setAttribute("src", "//cdn.muicss.com/mui-0.7.5/js/mui.min.js");
+  document.head.appendChild(script);
+  
+  $(window).on("action:ajaxify.contentLoaded", function (data) {
+
+    require(["moonlight/bundle"], function (App) {
+
+      if (ajaxify.data.url.startsWith("/admin/plugins/moonlight")) {
+
+        if (ajaxify.data.action) {
+          App.store.dispatch(ajaxify.data.action);
+        }
+        App.navigate(ajaxify.data.url);
+      }
+
+    });
+  });
+}());
+
+define('admin/plugins/moonlight', ['settings', "react", "reactDOM", "moonlight/bundle"], function (Settings, React, ReactDOM, Moonlight) {
 
   var ACP = {};
 
@@ -38,23 +72,17 @@ define('admin/plugins/moonlight', ['settings'], function (Settings) {
           alert_id: 'moonlight-saved',
           title: 'Settings Saved',
           message: 'Success',
-          clickfn: function() {
+          clickfn: function () {
             socket.emit('admin.reload');
           },
         });
       });
     });
 
-    $('#update').on('click', function () {
-      socket.emit('plugins.ml.roster.update', {}, function(err) {
-         app.alert({
-          type: 'success',
-          alert_id: 'moonlight-saved',
-          title: 'Roster updated',
-          message: !err ? "Roster update successful!" : err.message  
-        });
-      });
-    });
+    ReactDOM.render(
+      React.createElement(Moonlight.AdminPage, {}),
+      document.getElementById("moonlight-content")
+    );
   };
 
   return ACP;

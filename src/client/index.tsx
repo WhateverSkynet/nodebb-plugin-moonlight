@@ -1,4 +1,6 @@
-import { State } from './states';
+import { adminReducer } from './reducers/admin/admin';
+import { AdminState } from './states/admin/admin';
+import { State } from './states/state';
 import { AppState } from './states/app';
 import { appReducer } from './reducers/app';
 import { Action } from '../actions';
@@ -20,7 +22,8 @@ const reducer = combineReducers<State>({
   routing: routerReducer,
   app: appReducer,
   ajaxify: ajaxifyReducer,
-  wow: wowReducer
+  wow: wowReducer,
+  admin: adminReducer
 });
 
 const initialState: State = {
@@ -30,14 +33,17 @@ const initialState: State = {
   },
   ajaxify: {},
   wow: {},
-  routing: {}
+  routing: {},
+  admin: {
+    blizzard: {}
+  }
 };
 
 export const store = createStore<State>(reducer,
   window.devToolsExtension && window.devToolsExtension());
 
 
-const history = syncHistoryWithStore(browserHistory, store);
+export const history = syncHistoryWithStore(browserHistory, store);
 
 class App extends React.Component<React.HTMLAttributes, {}> {
   render() {
@@ -65,6 +71,7 @@ export class Page extends React.Component<{}, {}> {
   }
 }
 
+export { AdminPage } from "./admin";
 export const navigate = (url: string) => {
   browserHistory.push(url);
 };

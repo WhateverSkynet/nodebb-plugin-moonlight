@@ -1,4 +1,6 @@
-import { RosterCharacter, CharacterClass } from './models/wow';
+import {BlizzardSettingsState} from './client/states/admin/blizzard-settings';
+import {Application} from './models/application';
+import {RosterCharacter, CharacterClass} from './models/wow';
 import { Recruitment } from "./models/recruitment";
 
 export type Action = { type: "" };
@@ -18,7 +20,7 @@ export const AJAXIFY_NEW_APPLICATION: AjaxifyNewApplication = "@mnl/ajaxify/NEW_
 
 export type AjaxifyNewApplicationAction = {
   type: AjaxifyNewApplication;
-  application: any;
+  application: Application;
 }
 
 export type AjaxifyRecruitment = "@mnl/ajaxify/RECRUITMENT";
@@ -69,3 +71,20 @@ export type ToogleRankFilterAction = {
 }
 
 export type RosterAction = ToogleRankFilterAction | Action;
+
+// Admin Actions
+
+export type AdminGetSettings = "@mnl/admin/GET_SETTINGS";
+export const ADMIN_GET_SETTINGS: AdminGetSettings = "@mnl/admin/GET_SETTINGS";
+export type AdminGetSettingsAction = {
+  type: AdminGetSettings;
+}
+
+export type AdminSetBlizzardSettings = "@mnl/admin/SET_BLIZZARD_SETTING";
+export const ADMIN_SET_BLIZZARD_SETTINGS: AdminSetBlizzardSettings = "@mnl/admin/SET_BLIZZARD_SETTING";
+export type AdminSetBlizzardSettingsAction = {
+  type: AdminSetBlizzardSettings;
+  settings: BlizzardSettingsState;
+}
+
+export type AdminAction = AdminGetSettingsAction | AdminSetBlizzardSettingsAction | Action;

@@ -13,10 +13,14 @@
 		$(window).on("action:ajaxify.end", function(data) { ... });			"data" contains "url"
 	*/
   var validUrls = ["/landing", "/apply", "/roster"];
+  //TODO: remove dependency on mui.js
+  var script = document.createElement("script");
+  script.setAttribute("src", "//cdn.muicss.com/mui-0.7.5/js/mui.min.js");
+  document.head.appendChild(script);
+
   $(window).on("action:ajaxify.contentLoaded", function (data) {
 
     require(["moonlight/bundle"], function (App) {
-      window.Moonlight = App;
 
       if (validUrls.indexOf(ajaxify.data.url) !== -1) {
 

@@ -1,6 +1,7 @@
+import {getWoWData} from './services/wow';
 import {State} from './states/state';
 import {CharacterClass} from '../models/wow';
-import {ApplicationCharacter, Question} from '../models/application';
+import {Question, ApplicationCharacter} from '../models/application';
 import * as React from 'react';
 
 
@@ -41,7 +42,8 @@ class AppFormImpl extends React.Component<AppFormProps, AppFormState> {
             questions: props.questions,
             characters: props.characters,
             isValid: false
-        }
+        };
+          getWoWData(() => { });
     }
 
     onCharacterChange(character: ApplicationCharacter, index: number) {
@@ -181,7 +183,7 @@ const mapStateToProps = (state: State) => {
         realms: state.wow.realms,
         characterClasses: state.wow.classes,
         questions: state.ajaxify.questions,
-        characters: []
+        characters: [{id: 0}]
     };
     return props; 
 };
