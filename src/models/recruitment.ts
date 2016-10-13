@@ -9,7 +9,7 @@ export namespace Recruitment {
 
   export interface Spec {
     name: string;
-    status: Status;
+    status: string;
   }
 
   export interface Class {

@@ -1,6 +1,6 @@
-import {BlizzardSettingsState} from './client/states/admin/blizzard-settings';
-import {Application} from './models/application';
-import {RosterCharacter, CharacterClass} from './models/wow';
+import { BlizzardSettingsState } from './client/states/admin/blizzard-settings';
+import { Application } from './models/application';
+import { RosterCharacter, CharacterClass } from './models/wow';
 import { Recruitment } from "./models/recruitment";
 
 export type Action = { type: "" };
@@ -30,7 +30,18 @@ export type AjaxifyRecruitmentAction = {
   classes: Recruitment.Class[]
 }
 
+export type AjaxifyChangeRecruitmentStatus = "@mnl/ajaxify/CHANGE_RECRUITMENT_STATUS";
+export const AJAXIFY_CHANGE_RECRUITMENT_STATUS: AjaxifyChangeRecruitmentStatus = "@mnl/ajaxify/CHANGE_RECRUITMENT_STATUS";
+export type AjaxifyChangeRecruitmentStatusAction = {
+  type: AjaxifyChangeRecruitmentStatus;
+  class: string;
+  spec: string;
+  status: string;
+}
+
+
 export type AjaxifyAction = AjaxifyRosterAction
+  | AjaxifyChangeRecruitmentStatusAction
   | AjaxifyNewApplicationAction
   | AjaxifyRecruitmentAction
   | Action;
@@ -86,5 +97,7 @@ export type AdminSetBlizzardSettingsAction = {
   type: AdminSetBlizzardSettings;
   settings: BlizzardSettingsState;
 }
+
+
 
 export type AdminAction = AdminGetSettingsAction | AdminSetBlizzardSettingsAction | Action;

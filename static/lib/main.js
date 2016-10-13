@@ -12,7 +12,7 @@
 		$(document).ready();			Fired when the DOM is ready
 		$(window).on("action:ajaxify.end", function(data) { ... });			"data" contains "url"
 	*/
-  var validUrls = ["/landing", "/apply", "/roster"];
+  var validUrls = ["/landing", "/roster"];
   //TODO: remove dependency on mui.js
   var script = document.createElement("script");
   script.setAttribute("src", "//cdn.muicss.com/mui-0.7.5/js/mui.min.js");

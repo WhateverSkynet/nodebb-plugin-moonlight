@@ -1,7 +1,7 @@
 import * as React from "react";
 
 const triggerRosterUpdate = () => {
-  window.socket.emit('plugins.ml.roster.update', {}, function (err) {
+  window.socket.emit('plugins.ml.roster.update', {}, (err) => {
     window.app.alert({
       type: 'success',
       alert_id: 'moonlight-saved',

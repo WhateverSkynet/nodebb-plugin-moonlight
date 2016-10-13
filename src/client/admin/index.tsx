@@ -1,9 +1,10 @@
-import {getSettings} from '../services/settings';
+import { getWoWData } from '../services/wow';
+import { getSettings } from '../services/settings';
 import * as React from "react";
 import { Provider } from "react-redux";
 import { IndexRedirect, Link, Router, Route, browserHistory } from 'react-router';
 
-import { RecruitmentWidget } from "../components/recruitment/recruitment";
+import { RecruitmentSettings } from "./recruitment";
 import { history, store } from "../index";
 
 import { BlizzardSettings } from "./blizzard";
@@ -52,9 +53,10 @@ const AdminTabs = (props: React.HTMLAttributes) => (
 );
 
 export class AdminPage extends React.Component<{}, {}> {
-  constructor(props:any) {
+  constructor(props: any) {
     super(props);
     getSettings();
+    getWoWData(() => { });
   }
   render() {
     return (
@@ -62,7 +64,7 @@ export class AdminPage extends React.Component<{}, {}> {
         <Router history={history}>
           <Route path="/admin/plugins/moonlight" component={AdminTabs} >
             <IndexRedirect to="/admin/plugins/moonlight#recruitment" />
-            <Route path="/admin/plugins/moonlight#recruitment" component={RecruitmentWidget} />
+            <Route path="/admin/plugins/moonlight#recruitment" component={RecruitmentSettings} />
             <Route path="/admin/plugins/moonlight#roster" component={RosterSettings} />
             <Route path="/admin/plugins/moonlight#blizzard" component={BlizzardSettings} />
           </Route>

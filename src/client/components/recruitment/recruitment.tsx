@@ -18,14 +18,14 @@ class RecruitmentWidgetImpl extends React.Component<RecruitmentWidgetProps, {}> 
     }
     render() {
         return (
-            <div className="mui-panel">
-                <ul className="mui-list--unstyled mui-row">
-                    {
-                        this.props.classes
-                            .map(c => <li key={c.name} className="mui-col-md-12 mui-col-lg-8"><ClassPanel name={c.name} specs={c.specs} /></li>)
-                    }
-                </ul>
-            </div>
+
+            <ul className="mui-list--unstyled mui-row">
+                {
+                    this.props.classes
+                        .map(c => <li key={c.name} className="mui-col-md-12 mui-col-lg-8"><ClassPanel name={c.name} specs={c.specs} /></li>)
+                }
+            </ul>
+
         );
     }
 }

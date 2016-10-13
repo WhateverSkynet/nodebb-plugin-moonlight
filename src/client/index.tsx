@@ -26,19 +26,6 @@ const reducer = combineReducers<State>({
   admin: adminReducer
 });
 
-const initialState: State = {
-  app: {
-    data: {
-    }
-  },
-  ajaxify: {},
-  wow: {},
-  routing: {},
-  admin: {
-    blizzard: {}
-  }
-};
-
 export const store = createStore<State>(reducer,
   window.devToolsExtension && window.devToolsExtension());
 
@@ -72,6 +59,7 @@ export class Page extends React.Component<{}, {}> {
 }
 
 export { AdminPage } from "./admin";
+
 export const navigate = (url: string) => {
-  browserHistory.push(url);
+  browserHistory.replace(url);
 };
