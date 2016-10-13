@@ -1,61 +1,63 @@
+import { AjaxifyState } from '../states/ajaxify';
+import { Question } from '../../models/application';
+import { RosterCharacter } from '../../models/wow';
 
-import { Action, Reducer } from "redux";
-import { Question } from "../app";
-import * as BattleNet from "../battlenet/index";
+import { Reducer } from "redux";
+import { AJAXIFY_NEW_APPLICATION, AJAXIFY_ROSTER, AJAXIFY_RECRUITMENT, AJAXIFY_CHANGE_RECRUITMENT_STATUS, AjaxifyAction, Action } from '../../actions';
 
-const AJAXIFY_UPDATE = "AJAXIFY_UPDATE";
 const LOCATION_CHANGE = "@@router/LOCATION_CHANGE";
-
-interface AjaxifyState {
-    recruitment?: any;
-    realms?: string[];
-    characterClasses?: BattleNet.CharacterClass[];
-    questions?: Question[];
-    members?: Member[]
+const defaultState = {
+  roster: [],
+  recruitment: [],
+  questions: []
 }
 
-interface Member {
-    character: any;
-    audit: any;
+export const ajaxifyReducer = (state: AjaxifyState = defaultState, action: AjaxifyAction = Action) => {
+  let newState: AjaxifyState;
+  switch (action.type) {
+    case AJAXIFY_ROSTER:
+       newState = {
+        recruitment: state.recruitment,
+        roster: state.roster
+      };
+      newState.roster = action.characters.sort((a: RosterCharacter, b: RosterCharacter) => a.rank - b.rank);
+      return newState;
+    case AJAXIFY_RECRUITMENT:
+       newState = {
+        questions: state.questions,
+        roster: state.roster
+      };
+      newState.recruitment = action.classes;
+      return newState;
+    case AJAXIFY_NEW_APPLICATION:
+       newState = {
+        recruitment: state.recruitment,
+        roster: state.roster
+      };
+      newState.questions = action.application.questions;
+      return newState;
+    case AJAXIFY_CHANGE_RECRUITMENT_STATUS:
+      newState = {
+        questions: state.questions,
+        roster: state.roster
+      };
+      newState.recruitment = state.recruitment.map(c => {
+        return {
+          name: c.name, 
+          specs: c.specs.map(spec => {
+            return {
+              name: spec.name,
+              status: c.name == action.class && spec.name === action.spec
+                ? action.status
+                : spec.status
+            };
+          })
+        };
+      });
+      return newState;
+    default:
+      return state;
+  }
 }
 
 
-interface AjaxifyAction extends Action {
-    data?: any;
-    type: any;
-}
-
-
-export const ajaxifyReducer = (state: AjaxifyState, action: AjaxifyAction) => {
-    // if (!state) {
-    //     state = {}
-    // }
-    // switch (action.type) {
-    //     case AJAXIFY_UPDATE: state = action.ajaxify.data;
-    // }
-    if (action.type === LOCATION_CHANGE) {
-        let newSate: AjaxifyState = {}
-        newSate.recruitment = window.ajaxify.data.recruitment;
-        newSate.realms = window.ajaxify.data.realms;
-        newSate.characterClasses = window.ajaxify.data.classes;
-        newSate.questions = window.ajaxify.data.questions;
-        newSate.members = window.ajaxify.data.members.sort((a:any, b:any) => a.rank - b.rank);
-        return newSate;
-    }
-    if (!state) {
-        return {};
-    }
-    return state;
-
-
-}
-
-// const recruitment = (state: any, action: AjaxifyAction) => {
-//     if (!state) {
-//         state = [];
-//     }
-//     switch (action.type) {
-//         case AJAXIFY_UPDATE: return action.ajaxify.data.recruitment;
-//         default: return state;
-//     }
-// }

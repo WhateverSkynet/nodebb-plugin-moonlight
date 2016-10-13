@@ -1,7 +1,11 @@
+import {TOGGLE_RANK_FILTER} from '../../../actions';
+import {State} from '../../states/state';
+import {RosterCharacter} from '../../../models/wow';
 import * as React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
-import { State } from "../../index";
+
+import { groupBy } from "lodash";
 
 const getCssName = (str: string) => {
     if (!str) return "";
@@ -40,10 +44,19 @@ const className = (id: number) => {
 
 export interface RosterProps {
     ranks: number[];
-    disabledRanks: any;
-    members: any[];
+    disabledRanks: {[key:string]:boolean};
+    characters: RosterCharacter[];
     actions: any;
 }
+
+const formatLargeNumbers = (num: number) => {
+    return num > 1000 ? `${Math.floor(num / 1000)},${num % 1000}` : num.toString();
+};
+
+const toggleButtonClasses = (toggled: boolean) => {
+    const className = "mui-btn mui-btn--small mui-btn--fab";
+    return className + (toggled ? " mui-btn--accent" : "");
+};
 
 class RosterImpl extends React.Component<RosterProps, {}> {
 
@@ -54,10 +67,8 @@ class RosterImpl extends React.Component<RosterProps, {}> {
                 <div  className="mui-form--inline">
                     {
                         this.props.ranks.map((x, i) =>
-                            <div key={i} className="mui-checkbox" style={{ margin: "5px" }}>
-                                <input type="checkbox" checked={this.props.disabledRanks[x] === undefined} onChange={(e) =>  this.props.actions.toggleRank(x)}/>
-                                <label>{x}</label>
-                            </div>
+                        <button className={toggleButtonClasses(this.props.disabledRanks[x.toString()] === undefined)}
+                         onClick={(e) =>  this.props.actions.toggleRank(x)}>{x}</button>
                         )
                     }
                 </div>
@@ -69,23 +80,25 @@ class RosterImpl extends React.Component<RosterProps, {}> {
                                 Rank
                             </th>
                             <th className="mui-col-xs-4">Item Level</th>
-                            <th className="mui-col-xs-4">Artifact</th>
-                            <th className="mui-col-xs-2">AP</th>
+                            <th className="mui-col-xs-2">Artifact</th>
+                            <th className="mui-col-xs-4">AP</th>
                             <th className="mui-col-xs-2">Traits</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            this.props.members
+                            this.props.characters
                                 .map(m =>
                                     <tr  key={m.name} className="mui-row" >
                                         <td className="character-class mui-col-xs-6" data-character-class={getCssName(className(m.class)) }>
                                             <a href={"https://eu.battle.net/wow/en/character/" + m.realm + "/" + m.name + "/advanced"} target="_blank">{m.name}</a>
+                                            &nbsp;
+                                            <a href={`https://www.askmrrobot.com/wow/gear/eu/${m.realm}/${m.name}`} target="_blank">R</a>
                                         </td>
                                         <td className="mui-col-xs-6">{m.rank}</td>
                                         <td className="mui-col-xs-4">{m.averageItemLevelEquipped}</td>
-                                        <td className="mui-col-xs-4">{m.audit.artifact.itemLevel}</td>
-                                        <td className="mui-col-xs-2">{m.totalArtifactPower}</td>
+                                        <td className="mui-col-xs-2">{m.audit.artifact.itemLevel}</td>
+                                        <td className="mui-col-xs-4">{formatLargeNumbers(m.totalArtifactPower)}</td>
                                         <td className="mui-col-xs-2">{m.audit.artifact.traitCount}</td>
                                     </tr>)
                         }
@@ -98,20 +111,12 @@ class RosterImpl extends React.Component<RosterProps, {}> {
 }
 
 const mapStateToProps = (state: State) => {
+    const roster = state.ajaxify.roster || [];
     var props: RosterProps = {
         actions: [],
-        members: state.ajaxify.members.filter((x:any) => state.app.filters.rank[x.rank] === undefined),
-        disabledRanks: state.app.filters.rank,
-        ranks: [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7
-        ]
+        characters: roster.filter((x) => state.app.roster.filters.rank[x.rank] === undefined),
+        disabledRanks: state.app.roster.filters.rank,
+        ranks: Object.keys(groupBy(state.ajaxify.roster, (x: RosterCharacter) => x.rank)).map(x => parseInt(x, 10))
     };
     return props;
 };
@@ -121,8 +126,8 @@ const mapDispatchToProps = (dispatch: any) => {
         actions: bindActionCreators({
             toggleRank: (rank: number) => {
                 return {
-                    type: "TOGGLE_RANK_FILTER",
-                    value: rank
+                    type: TOGGLE_RANK_FILTER,
+                    rank
                 };
             }
         }, dispatch)

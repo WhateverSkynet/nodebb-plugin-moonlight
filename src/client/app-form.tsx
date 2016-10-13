@@ -1,8 +1,10 @@
+import {getWoWData} from './services/wow';
+import {State} from './states/state';
+import {CharacterClass} from '../models/wow';
+import {Question, ApplicationCharacter} from '../models/application';
 import * as React from 'react';
-import * as BattleNet from "./battlenet/index";
 
-import { Question, AppState } from "./app";
-import { State } from "./index";
+
 import { CharacterInput } from "./character-input";
 
 import { connect } from "react-redux";
@@ -18,16 +20,16 @@ import * as BattleNetData from "./battlenet/data";
 
 export interface AppFormProps {
     realms: string[];
-    characterClasses: BattleNet.CharacterClass[];
+    characterClasses: CharacterClass[];
     questions: Question[];
-    characters: BattleNet.Character[];
-    onSubmit?(characters: BattleNet.Character[], questions: Question[]): void;
+    characters: ApplicationCharacter[];
+    onSubmit?(characters: ApplicationCharacter[], questions: Question[]): void;
 
 }
 
 export interface AppFormState {
     questions?: Question[];
-    characters?: BattleNet.Character[];
+    characters?: ApplicationCharacter[];
     isValid?: boolean;
 }
 
@@ -40,10 +42,11 @@ class AppFormImpl extends React.Component<AppFormProps, AppFormState> {
             questions: props.questions,
             characters: props.characters,
             isValid: false
-        }
+        };
+          getWoWData(() => { });
     }
 
-    onCharacterChange(character: BattleNet.Character, index: number) {
+    onCharacterChange(character: ApplicationCharacter, index: number) {
         if (index < this.state.characters.length) {
             let characters = this.state.characters;
             characters[index] = character;
@@ -57,7 +60,10 @@ class AppFormImpl extends React.Component<AppFormProps, AppFormState> {
 
     onAddCharacter() {
         let characters = this.state.characters;
-        characters.push(new BattleNet.Character());
+        let character: ApplicationCharacter = {
+            id: new Date().getTime()
+        };
+        characters.push(character);
         let isValid = this.isValid(characters, this.state.questions);
         this.setState({
             characters: characters,
@@ -65,7 +71,7 @@ class AppFormImpl extends React.Component<AppFormProps, AppFormState> {
         });
     }
 
-    onRemoveCharacter(character: BattleNet.Character) {
+    onRemoveCharacter(character: ApplicationCharacter) {
         let characters = this.state.characters;
         const index = characters.indexOf(character);
         characters.splice(index, 1);
@@ -76,7 +82,7 @@ class AppFormImpl extends React.Component<AppFormProps, AppFormState> {
         });
     }
 
-    isCharacterValid(character: BattleNet.Character, screenshotRequired?: boolean) {
+    isCharacterValid(character: ApplicationCharacter, screenshotRequired?: boolean) {
         if (character.name && character.realm && character.class && character.primarySpecialization && character.secondarySpecialization && (!screenshotRequired || character.userInterfaceUrl)) {
             return true;
         }
@@ -89,7 +95,7 @@ class AppFormImpl extends React.Component<AppFormProps, AppFormState> {
         }
     }
 
-    isValid(characters: BattleNet.Character[], questions: Question[]) {
+    isValid(characters: ApplicationCharacter[], questions: Question[]) {
         let validCharacters = characters.filter((x, i) => this.isCharacterValid(x, i === 0)).length === characters.length;
         let validQuestions = questions.filter(x => !!x.value).length === questions.length;
         return validCharacters && validQuestions && this.state.characters.length >= 1;
@@ -174,10 +180,10 @@ class AppFormImpl extends React.Component<AppFormProps, AppFormState> {
 
 const mapStateToProps = (state: State) => {
     var props:AppFormProps = {
-        realms: state.ajaxify.realms,
-        characterClasses: state.ajaxify.classes,
+        realms: state.wow.realms,
+        characterClasses: state.wow.classes,
         questions: state.ajaxify.questions,
-        characters: []
+        characters: [{id: 0}]
     };
     return props; 
 };

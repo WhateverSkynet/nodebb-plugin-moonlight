@@ -4,9 +4,7 @@ import { Row } from "../../mui/row";
 import { Col } from "../../mui/col";
 import { Panel } from "../../mui/panel";
 
-import { Question } from "../../models/index";
-
-export class ApplicationQuestion extends React.Component<Question, {}> {
+export class ApplicationQuestion extends React.Component<{value: string, text:string}, {}> {
     render() {
         return (
             <Row>

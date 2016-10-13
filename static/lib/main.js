@@ -12,49 +12,28 @@
 		$(document).ready();			Fired when the DOM is ready
 		$(window).on("action:ajaxify.end", function(data) { ... });			"data" contains "url"
 	*/
-  var validUrls = ["/landing", "/apply", "/roster"];
+  var validUrls = ["/landing", "/roster"];
+  //TODO: remove dependency on mui.js
+  var script = document.createElement("script");
+  script.setAttribute("src", "//cdn.muicss.com/mui-0.7.5/js/mui.min.js");
+  document.head.appendChild(script);
+
   $(window).on("action:ajaxify.contentLoaded", function (data) {
 
     require(["moonlight/bundle"], function (App) {
-      window.Moonlight = App;
 
       if (validUrls.indexOf(ajaxify.data.url) !== -1) {
+
+        if (ajaxify.data.action) {
+          App.store.dispatch(ajaxify.data.action)
+        }
         App.navigate(ajaxify.data.url);
       }
 
     });
   });
 
-
-  console.log("nodebb-plugin-moonlight: loaded");
-  // Note how this is shown in the console on the first load of every page
-
-
 } ());
-
-//const registerPage = (name) => {
-
-// define(name, ["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, Moonlight) {
-
-//   var Page = {};
-
-//   Page.init = function () {
-
-//     ReactDOM.render(
-//       React.createElement(Moonlight.Page, {}),
-//       document.getElementById("moonlight-content")
-//     );
-
-//   }
-
-//   return Page;
-// });
-
-// };
-
-
-// registerPage("forum/apply");
-// registerPage("form/landing");
 
 define("forum/apply", ["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, Moonlight) {
 

@@ -1,5 +1,6 @@
+import {Specialization, CharacterClass} from '../models/wow';
+import {ApplicationCharacter} from '../models/application';
 import * as React from "react";
-import * as BattleNet from "./battlenet/index";
 
 import { Row } from './mui/row';
 import { Col } from './mui/col';
@@ -9,15 +10,15 @@ import { TextField } from './mui/text-field';
 
 export interface CharacterInputProps {
     title: string;
-    character: BattleNet.Character;
+    character: ApplicationCharacter;
     realms: string[];
-    classes: BattleNet.CharacterClass[];
+    classes: CharacterClass[];
     screenshotRequired?: boolean;
-    onChange(character: BattleNet.Character): void;
+    onChange(character: ApplicationCharacter): void;
 }
 
 export interface CharacterInputState {
-    selectedClass?: BattleNet.CharacterClass;
+    selectedClass?: CharacterClass;
     isValid?: boolean;
     url?: string;
 }
@@ -56,7 +57,7 @@ export class CharacterInput extends React.Component<CharacterInputProps, Charact
         }
     }
 
-    onClassSelect(selectedClass: BattleNet.CharacterClass) {
+    onClassSelect(selectedClass: CharacterClass) {
         this.setState({
             selectedClass: selectedClass
         });
@@ -75,7 +76,7 @@ export class CharacterInput extends React.Component<CharacterInputProps, Charact
         }
     }
 
-    onSpecializationSelect(specialization: BattleNet.Specialization, priority: number) {
+    onSpecializationSelect(specialization: Specialization, priority: number) {
         var character = this.props.character;
         if (priority === 0) {
             character.primarySpecialization = specialization.name;
@@ -152,7 +153,7 @@ export class CharacterInput extends React.Component<CharacterInputProps, Charact
                             </button>
                             <ul className="mui-dropdown__menu realm-list" style={{ width: 100 + "%" }}>
                                 {
-                                    this.props.realms.map((x, i) => <li key={i}><a  onClick={() => this.onRealmSelect(x)}>{x}</a></li>)
+                                    this.props.realms.map((x, i) => <li key={i}><a onClick={() => this.onRealmSelect(x)}>{x}</a></li>)
                                 }
                             </ul>
                         </div>
@@ -167,7 +168,7 @@ export class CharacterInput extends React.Component<CharacterInputProps, Charact
                             </button>
                             <ul className="mui-dropdown__menu" style={{ width: 100 + "%" }}>
                                 {
-                                    this.props.classes.map(x => <li key={x.id}><a  onClick={() => this.onClassSelect(x)}>{x.name}</a></li>)
+                                    this.props.classes.map(x => <li key={x.id}><a onClick={() => this.onClassSelect(x)}>{x.name}</a></li>)
                                 }
                             </ul>
                         </div>
@@ -208,7 +209,7 @@ export class CharacterInput extends React.Component<CharacterInputProps, Charact
                     </Col>
                     <Col md={24}>
                         Use
-                        <a  href="https://imgur.com"
+                        <a href="https://imgur.com"
                             target="_blank">
                             imgur</a>
                     </Col>
@@ -218,9 +219,9 @@ export class CharacterInput extends React.Component<CharacterInputProps, Charact
                         ? (
                             <Row>
                                 <Col sm={16} sm-offset={4}>
-                                  <div className="image-warapper">
-                                    <img title={this.props.character.userInterfaceUrl} alt="UI screenshot" className="image-preview" src={`https://i.imgur.com/${this.props.character.userInterfaceUrl}m.jpg`} />
-                                  </div>
+                                    <div className="image-warapper">
+                                        <img title={this.props.character.userInterfaceUrl} alt="UI screenshot" className="image-preview" src={`https://i.imgur.com/${this.props.character.userInterfaceUrl}m.jpg`} />
+                                    </div>
                                 </Col>
                             </Row>
                         )
