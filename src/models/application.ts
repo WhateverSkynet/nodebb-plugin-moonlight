@@ -1,9 +1,12 @@
 import {CharacterClass} from './wow';
 
 export interface Question {
-    id: number;
-    text: string;
+    qid?: number;
+    text?: string;
+    changed?: number;
     value?: string;
+    active?: string;
+    deleted?: string;
 }
 
 export interface Application {

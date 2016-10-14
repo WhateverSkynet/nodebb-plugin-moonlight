@@ -17,6 +17,7 @@ import { Roster } from "./components/roster/roster";
 import { AppForm } from "./app-form";
 
 import { RecruitmentWidget } from "./components/recruitment/recruitment";
+import { ApplicationSocket } from './socket/application';
 
 const reducer = combineReducers<State>({
   routing: routerReducer,
@@ -62,4 +63,9 @@ export { AdminPage } from "./admin";
 
 export const navigate = (url: string) => {
   browserHistory.replace(url);
+};
+
+
+export const initSocket = () => {
+  ApplicationSocket.register();
 };

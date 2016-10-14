@@ -5324,7 +5324,7 @@ table.interactive tbody tr {
 .recruitment-class__name:hover[data-character-class="deathknight"] > div {
   background-color: #C41E3A;
 }
-.recruitment-class__name:hover[data-character-class="deamonhunter"] > div {
+.recruitment-class__name:hover[data-character-class="demonhunter"] > div {
   background-color: #b854d4;
 }
 
@@ -5377,42 +5377,6 @@ table.interactive tbody tr {
 }
 .character-class[data-character-class="demonhunter"] a {
   color: #b854d4;
-}
-
-/** 
-* author: https://gist.github.com/aiboy/7406727
-* Works everywere ( IE7+, FF, Chrome, Safari, Opera )
-* Example: http://jsbin.com/afAQAWA/2/
-*/
-.rotated-text {
-    display: inline-block;
-    overflow: hidden;
-}
-.rotated-text__inner {
-    /* display: inline-block; */
-    white-space: nowrap;
-    /* this is for shity "non IE" browsers
-       that dosn't support writing-mode */
-    -webkit-transform: translate(-1.1em,0) rotate(90deg);
-       -moz-transform: translate(1.1em,0) rotate(90deg);
-         -o-transform: translate(1.1em,0) rotate(90deg);
-            transform: translate(-1.1em,10em) rotate(270deg);
-    -webkit-transform-origin: 0 0;
-       -moz-transform-origin: 0 0;
-         -o-transform-origin: 0 0;
-            transform-origin: 0 0;
-   /* IE9+ */
-   -ms-transform: none;
-   -ms-transform-origin: none;
-   /* IE8+ */
-   -ms-writing-mode: tb-rl;
-   /* IE7 and below */
-   *writing-mode: tb-rl;
-}
-.rotated-text__inner:before {
-    content: "";
-    float: left;
-    margin-top: 100%;
 }
 
 //Admin

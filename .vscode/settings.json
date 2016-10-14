@@ -12,5 +12,5 @@
         "node_modules": true
     },
     "editor.trimAutoWhitespace": true,
-    "editor.renderWhitespace": true
+    "editor.renderWhitespace": "boundary"
 }

@@ -18,13 +18,14 @@
   var script = document.createElement("script");
   script.setAttribute("src", "//cdn.muicss.com/mui-0.7.5/js/mui.min.js");
   document.head.appendChild(script);
+  require(["moonlight/bundle"], function (App) {
+    App.initSocket();
+  });
   
   $(window).on("action:ajaxify.contentLoaded", function (data) {
 
     require(["moonlight/bundle"], function (App) {
-
       if (ajaxify.data.url.startsWith("/admin/plugins/moonlight")) {
-
         if (ajaxify.data.action) {
           App.store.dispatch(ajaxify.data.action);
         }
@@ -33,7 +34,7 @@
 
     });
   });
-}());
+} ());
 
 define('admin/plugins/moonlight', ['settings', "react", "reactDOM", "moonlight/bundle"], function (Settings, React, ReactDOM, Moonlight) {
 

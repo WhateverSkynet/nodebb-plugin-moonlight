@@ -20,10 +20,11 @@ interface Window {
     devToolsExtension: any;
     socket: {
         emit: (eventId: string, data: any, callback: (err, data) => void) => void;
-    }
+        on: (eventId: string, data: any) => void;
+    };
     app: {
         alert: (def: AlertDescription) => void;
-    }
+    };
 }
 
 interface EventTarget {

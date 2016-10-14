@@ -18,10 +18,13 @@
   script.setAttribute("src", "//cdn.muicss.com/mui-0.7.5/js/mui.min.js");
   document.head.appendChild(script);
 
+  require(["moonlight/bundle"], function (App) {
+    App.initSocket();
+
+  });
   $(window).on("action:ajaxify.contentLoaded", function (data) {
 
     require(["moonlight/bundle"], function (App) {
-
       if (validUrls.indexOf(ajaxify.data.url) !== -1) {
 
         if (ajaxify.data.action) {
@@ -32,7 +35,6 @@
 
     });
   });
-
 } ());
 
 define("forum/apply", ["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, Moonlight) {

@@ -155,7 +155,7 @@ class AppFormImpl extends React.Component<AppFormProps, AppFormState> {
                     <h2 className="app-title">Questions</h2>
                     {
                         this.state.questions.map((x, i) => (
-                            <Row key={x.id}>
+                            <Row key={x.qid}>
                                 <Col md={16} md-offset={4}>
                                     <Panel>
                                         <div className="mui-textfield mui-textfield--float-label">
@@ -182,7 +182,7 @@ const mapStateToProps = (state: State) => {
     var props:AppFormProps = {
         realms: state.wow.realms,
         characterClasses: state.wow.classes,
-        questions: state.ajaxify.questions,
+        questions: state.app.application.questions,
         characters: [{id: 0}]
     };
     return props; 

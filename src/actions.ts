@@ -1,5 +1,5 @@
 import { BlizzardSettingsState } from './client/states/admin/blizzard-settings';
-import { Application } from './models/application';
+import { Application, Question } from './models/application';
 import { RosterCharacter, CharacterClass } from './models/wow';
 import { Recruitment } from "./models/recruitment";
 
@@ -98,6 +98,32 @@ export type AdminSetBlizzardSettingsAction = {
   settings: BlizzardSettingsState;
 }
 
-
-
 export type AdminAction = AdminGetSettingsAction | AdminSetBlizzardSettingsAction | Action;
+
+// Application Actions
+
+export type GetQuestions = "@mnl/application/GET_QUESTIONS";
+export const GET_QUESTIONS: GetQuestions = "@mnl/application/GET_QUESTIONS";
+export type GetQuestionsAction = {
+  type: GetQuestions;
+  questions: Question[];
+}
+
+export type QuestionCreated = "@mnl/application/QUESTION_CREATED";
+export const QUESTION_CREATED: QuestionCreated = "@mnl/application/QUESTION_CREATED";
+export type QuestionCreatedAction = {
+  type: QuestionCreated;
+  question: Question;
+}
+
+export type QuestionUpdated = "@mnl/application/QUESTION_UPDATED";
+export const QUESTION_UPDATED: QuestionUpdated = "@mnl/application/QUESTION_UPDATED";
+export type QuestionUpdatedAction = {
+  type: QuestionUpdated;
+  question: Question;
+}
+
+export type ApplicationAction = GetQuestionsAction
+  | QuestionUpdatedAction
+  | QuestionCreatedAction
+  | Action;
