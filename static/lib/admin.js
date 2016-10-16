@@ -21,7 +21,7 @@
   require(["moonlight/bundle"], function (App) {
     App.initSocket();
   });
-  
+
   $(window).on("action:ajaxify.contentLoaded", function (data) {
 
     require(["moonlight/bundle"], function (App) {
@@ -29,7 +29,12 @@
         if (ajaxify.data.action) {
           App.store.dispatch(ajaxify.data.action);
         }
-        App.navigate(ajaxify.data.url);
+        var url = ajaxify.data.url.replace("loggedin", "");
+        if (url.endsWith("?")) {
+          url = url.slice(0, -1);
+        }
+        app.enterRoom("mnl.admin", function() {});
+        App.navigate(url);
       }
 
     });

@@ -5,10 +5,12 @@ import { AppState } from './states/app';
 import { appReducer } from './reducers/app';
 import { Action } from '../actions';
 import * as React from "react";
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { syncHistoryWithStore, routerReducer, push } from 'react-router-redux';
 import { Router, Route, browserHistory } from 'react-router';
 import { Provider } from "react-redux";
+
+import { createEpicMiddleware } from "redux-observable";
 
 import { ajaxifyReducer } from './reducers/ajaxify';
 import { wowReducer } from './reducers/wow';
@@ -18,6 +20,11 @@ import { AppForm } from "./app-form";
 
 import { RecruitmentWidget } from "./components/recruitment/recruitment";
 import { ApplicationSocket } from './socket/application';
+import { appEpic } from "./epics";
+
+//Rxjs
+// import 'rxjs/add/operator/mergeMap';
+
 
 const reducer = combineReducers<State>({
   routing: routerReducer,
@@ -27,8 +34,11 @@ const reducer = combineReducers<State>({
   admin: adminReducer
 });
 
-export const store = createStore<State>(reducer,
-  window.devToolsExtension && window.devToolsExtension());
+const epicMiddleware = createEpicMiddleware(appEpic);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const store = createStore<State>(reducer, composeEnhancers(
+  applyMiddleware(epicMiddleware)
+));
 
 
 export const history = syncHistoryWithStore(browserHistory, store);

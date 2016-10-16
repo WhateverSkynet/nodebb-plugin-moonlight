@@ -6,6 +6,7 @@
         "module": "amd",
         "target": "es5",
         "moduleResolution": "node",
-        "jsx": "react"
+        "jsx": "react",
+        "removeComments": true
     }
 }

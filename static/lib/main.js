@@ -30,7 +30,9 @@
         if (ajaxify.data.action) {
           App.store.dispatch(ajaxify.data.action)
         }
-        App.navigate(ajaxify.data.url);
+        var url = ajaxify.data.url.replace("loggedin", "");
+        
+        App.navigate(url);
       }
 
     });

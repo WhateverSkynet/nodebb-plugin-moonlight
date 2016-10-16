@@ -63,6 +63,7 @@ export class AdminPage extends React.Component<{}, {}> {
     getSettings();
     getWoWData(() => { });
     ApplicationService.getQuestions();
+    ApplicationService.getTemplateQuestions();
   }
   render() {
     return (
