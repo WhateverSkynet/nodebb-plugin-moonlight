@@ -16,6 +16,16 @@ export interface Application {
     characters: ApplicationCharacter[];
 }
 
+export interface ApplicationTemplate {
+    appId?: number;
+    status?: number;
+    uid?: number;
+    changed?: number;
+    deleted?: number;
+    questions?: Question[];
+    characters?: ApplicationCharacter[];
+}
+
 export interface ApplicationCharacter {
     id: number;
     name?: string;

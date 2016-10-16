@@ -23,6 +23,7 @@
     "index": false
   },
   "devDependencies": {
+    "core-js": "^2.4.1",
     "css-loader": "0.23.1",
     "extract-text-webpack-plugin": "1.0.1",
     "lodash": "^4.16.4",

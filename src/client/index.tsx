@@ -1,3 +1,5 @@
+import './polyfills.ts';
+
 import { adminReducer } from './reducers/admin/admin';
 import { AdminState } from './states/admin/admin';
 import { State } from './states/state';
@@ -24,7 +26,7 @@ import { appEpic } from "./epics";
 
 //Rxjs
 // import 'rxjs/add/operator/mergeMap';
-
+import { ApplicationForm } from './components/application/form';
 
 const reducer = combineReducers<State>({
   routing: routerReducer,
@@ -60,7 +62,7 @@ export class Page extends React.Component<{}, {}> {
         <Router history={history}>
           <Route path="/" component={App}>
             <Route path="/landing" component={RecruitmentWidget} />
-            <Route path="/apply" component={AppForm} />
+            <Route path="/apply" component={ApplicationForm} />
             <Route path="/roster" component={Roster} />
           </Route>
 

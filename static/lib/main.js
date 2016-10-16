@@ -12,7 +12,7 @@
 		$(document).ready();			Fired when the DOM is ready
 		$(window).on("action:ajaxify.end", function(data) { ... });			"data" contains "url"
 	*/
-  var validUrls = ["/landing", "/roster"];
+  var validUrls = ["/landing", "/roster", "/apply", "/applications"];
   //TODO: remove dependency on mui.js
   var script = document.createElement("script");
   script.setAttribute("src", "//cdn.muicss.com/mui-0.7.5/js/mui.min.js");
@@ -31,7 +31,9 @@
           App.store.dispatch(ajaxify.data.action)
         }
         var url = ajaxify.data.url.replace("loggedin", "");
-        
+        if (url.endsWith("?")) {
+          url = url.slice(0, -1);
+        }
         App.navigate(url);
       }
 

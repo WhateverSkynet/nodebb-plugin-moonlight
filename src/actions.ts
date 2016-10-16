@@ -1,5 +1,5 @@
 import { BlizzardSettingsState } from './client/states/admin/blizzard-settings';
-import { Application, Question } from './models/application';
+import { Application, Question, ApplicationTemplate } from './models/application';
 import { RosterCharacter, CharacterClass } from './models/wow';
 import { Recruitment } from "./models/recruitment";
 
@@ -176,27 +176,63 @@ export const INIT_APPLICATION_TEMPLATE_SAVE: InitApplicationTemplateSave = "@mnl
 export type InitializeApplicationTemplateSaveAction = {
   type: InitApplicationTemplateSave;
   qids: number[];
-}
+};
 
 export type ApplicationTemplateSaveSucceeded = "@mnl/application/APPLICATION_TEMPLATE_SAVE_SUCCEDED";
 export const APPLICATION_TEMPLATE_SAVE_SUCCEDEED: ApplicationTemplateSaveSucceeded = "@mnl/application/APPLICATION_TEMPLATE_SAVE_SUCCEDED";
 export type ApplicationTemplateSaveSuccededAction = {
   type: ApplicationTemplateSaveSucceeded;
   qids: number[];
-}
+};
 
 export type GetApplicationTemplateQuestionsInit = "@mnl/application/GET_TEMPLATE_QUESTIONS";
 export const GET_APPLICATION_QUESTIONS_INIT: GetApplicationTemplateQuestionsInit = "@mnl/application/GET_TEMPLATE_QUESTIONS";
 export type GetApplicationTemplateQuestionsInitAction = {
   type: GetApplicationTemplateQuestionsInit;
-}
+};
 
 export type GetApplicationTemplateQuestionsSuccess = "@mnl/application/GET_TEMPLATE_QUESTIONS_SUCCESS";
 export const GET_APPLICATION_TEMPLATE_QUESTIONS_SUCCESS: GetApplicationTemplateQuestionsSuccess = "@mnl/application/GET_TEMPLATE_QUESTIONS_SUCCESS";
 export type GetApplicationTemplateQuestionsSuccessAction = {
   type: GetApplicationTemplateQuestionsSuccess;
   qids: number[];
-}
+};
+
+export type GetApplicationTemplate = "@mnl/application/GET_TEMPLATE";
+export const GET_APPLICATION_TEMPLATE: GetApplicationTemplate = "@mnl/application/GET_TEMPLATE";
+export type GetApplicationTemplateAction = {
+  type: GetApplicationTemplate;
+};
+
+export type GetApplicationTemplateSuccess = "@mnl/application/GET_TEMPLATE_SUCCESS";
+export const GET_APPLICATION_TEMPLATE_SUCCESS: GetApplicationTemplateSuccess = "@mnl/application/GET_TEMPLATE_SUCCESS";
+export type GetApplicationTemplateSuccessAction = {
+  type: GetApplicationTemplateSuccess;
+  template: ApplicationTemplate;
+};
+
+export type ApplicationQuestionValueChanged = "@mnl/application/QUESTION_VALUE_CHANGED";
+export const APPLICATION_QUESTION_VALUE_CHANGED: ApplicationQuestionValueChanged = "@mnl/application/QUESTION_VALUE_CHANGED";
+export type ApplicationQuestionValueChangedAction = {
+  type: ApplicationQuestionValueChanged;
+  qid: number;
+  newValue: string;
+};
+
+export type SaveApplication = "@mnl/application/SAVE";
+export const SAVE_APPLICATION: SaveApplication = "@mnl/application/SAVE";
+export type SaveApplicationAction = {
+  type: SaveApplication;
+  template: ApplicationTemplate;
+};
+
+//TODO: figure how save app works
+export type SaveApplicationSuccess = "@mnl/application/SAVE_SUCCESS";
+export const SAVE_APPLICATION_SUCCESS: SaveApplicationSuccess = "@mnl/application/SAVE_SUCCESS";
+export type SaveApplicationSuccessAction = {
+  type: SaveApplicationSuccess;
+  template: ApplicationTemplate;
+};
 
 export type ApplicationAction = GetQuestionsAction
   | QuestionsListUpdatedAction
@@ -212,4 +248,9 @@ export type ApplicationAction = GetQuestionsAction
   | ApplicationTemplateSaveSuccededAction
   | GetApplicationTemplateQuestionsInitAction
   | GetApplicationTemplateQuestionsSuccessAction
+  | GetApplicationTemplateAction
+  | GetApplicationTemplateSuccessAction
+  | ApplicationQuestionValueChangedAction
+  | SaveApplicationAction
+  | SaveApplicationSuccessAction
   | Action;

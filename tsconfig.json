@@ -5,6 +5,7 @@
         "noImplicitAny": false,
         "module": "amd",
         "target": "es5",
+        "lib": ["es6", "dom"],
         "moduleResolution": "node",
         "jsx": "react",
         "removeComments": true

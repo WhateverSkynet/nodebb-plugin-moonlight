@@ -1,7 +1,7 @@
-import { Reducer } from "redux";
+import { Reducer, combineReducers } from 'redux';
 import { ApplicationState } from './../states/application';
-import { ApplicationAction, Action, GET_QUESTIONS, QUESTION_CREATED, QUESTION_UPDATE_INITIATED, EDIT_QUESTION, QUESTION_LIST_UPDATED, QUESTION_UPDATE_SUCCESS, ADD_QUESTION_TO_TEMPLATE, REMOVE_QUESTION_FROM_TEMPLATE, MOVE_TEMPLATE_QUESTION_UP, MOVE_TEMPLATE_QUSTION_DOWN, GET_APPLICATION_TEMPLATE_QUESTIONS_SUCCESS } from './../../actions';
-import { Question, Application } from './../../models/application';
+import { ApplicationAction, Action, GET_QUESTIONS, QUESTION_CREATED, QUESTION_UPDATE_INITIATED, EDIT_QUESTION, QUESTION_LIST_UPDATED, QUESTION_UPDATE_SUCCESS, ADD_QUESTION_TO_TEMPLATE, REMOVE_QUESTION_FROM_TEMPLATE, MOVE_TEMPLATE_QUESTION_UP, MOVE_TEMPLATE_QUSTION_DOWN, GET_APPLICATION_TEMPLATE_QUESTIONS_SUCCESS, GET_APPLICATION_TEMPLATE_SUCCESS, APPLICATION_QUESTION_VALUE_CHANGED, SAVE_APPLICATION_SUCCESS } from './../../actions';
+import { Question, Application, ApplicationTemplate, ApplicationCharacter } from './../../models/application';
 
 
 const questionReducer: Reducer<Question> = (state: Question = {}, action: ApplicationAction = Action) => {
@@ -51,7 +51,7 @@ const templateQuestionsReducer: Reducer<number[]> = (state: number[] = [], actio
     //   return action.questions.map(x => questionReducer(x, action))
     case ADD_QUESTION_TO_TEMPLATE:
       index = state.indexOf(action.question);
-      if (index !== -1 ) {
+      if (index !== -1) {
         return state;
       }
       return [...state, action.question];
@@ -65,14 +65,14 @@ const templateQuestionsReducer: Reducer<number[]> = (state: number[] = [], actio
         return state;
       }
       return [
-        ...state.slice(0, index -1),
+        ...state.slice(0, index - 1),
         action.question,
-        ...state.slice(index -1, index),
+        ...state.slice(index - 1, index),
         ...state.slice(index + 1)
       ];
     case MOVE_TEMPLATE_QUSTION_DOWN:
       index = state.indexOf(action.question);
-      if (index === state.length -1) {
+      if (index === state.length - 1) {
         return state;
       }
       return [
@@ -81,24 +81,80 @@ const templateQuestionsReducer: Reducer<number[]> = (state: number[] = [], actio
         action.question,
         ...state.slice(index + 2)
       ];
-    case GET_APPLICATION_TEMPLATE_QUESTIONS_SUCCESS: 
-      return [ ...action.qids];
+    case GET_APPLICATION_TEMPLATE_QUESTIONS_SUCCESS:
+      return [...action.qids];
+    default:
+      return state;
+  }
+};
+const appQuestionReducer: Reducer<Question> = (state: Question = {}, action: ApplicationAction = Action) => {
+  switch (action.type) {
+    case APPLICATION_QUESTION_VALUE_CHANGED:
+      if (action.qid === state.qid) {
+        state = Object.assign({}, state);
+        state.value = action.newValue;
+      }
+      return state
+    default:
+      return state;
+  }
+};
+
+const appQuestionsReducer: Reducer<Question[]> = (state: Question[] = [], action: ApplicationAction = Action) => {
+
+  switch (action.type) {
+    case GET_APPLICATION_TEMPLATE_SUCCESS:
+      return [...action.template.questions];
+    default:
+      return state.map(x => appQuestionReducer(x, action));
+  }
+};
+const appCharacterReducer: Reducer<ApplicationCharacter[]> = (state: ApplicationCharacter[] = [], action: ApplicationAction = Action) => {
+
+  switch (action.type) {
+    default:
+      return state;//.map(x => appQuestionReducer(x, action));
+  }
+};
+
+const appIdReducer: Reducer<number> = (state: number = 0, action: ApplicationAction = Action) => {
+  switch (action.type) {
+    case SAVE_APPLICATION_SUCCESS:
+      return action.template.appId;
+    default:
+      return state;
+  }
+};
+
+const statusReducer: Reducer<number> = (state: number = 0, action: ApplicationAction = Action) => {
+  switch (action.type) {
+    case SAVE_APPLICATION_SUCCESS:
+      return action.template.status;
     default:
       return state;
   }
 }
 
+// const applicationTemplateReducer: Reducer<ApplicationTemplate> = (state: ApplicationTemplate = {}, action: ApplicationAction = Action) => {
 
-export const applicationReducer: Reducer<ApplicationState> = (state: ApplicationState = {}, action: ApplicationAction = Action) => {
-  switch (action.type) {
+//   switch (action.type) {
 
-    default:
-      return {
-        questions: questionsReducer(state.questions, action),
-        templateQuestions: templateQuestionsReducer(state.templateQuestions, action),
-        editQuestionIndex: editQuestionReducer(state.editQuestionIndex, action)
-      };
-  }
-}
+//     default:
+//       return {
+//         questions: appQuestionsReducer(state.questions, action)
+//       }
+//   }
+// };
+const applicationTemplateReducer = combineReducers<ApplicationTemplate>({
+  appId: appIdReducer,
+  questions: appQuestionsReducer,
+  characters: appCharacterReducer,
+  status: statusReducer,
+});
 
-
+export const applicationReducer = combineReducers<ApplicationState>({
+  questions: questionsReducer,
+  templateQuestions: templateQuestionsReducer,
+  editQuestionIndex: editQuestionReducer,
+  template: applicationTemplateReducer
+});
