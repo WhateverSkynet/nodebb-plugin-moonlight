@@ -18,8 +18,6 @@ import { ajaxifyReducer } from './reducers/ajaxify';
 import { wowReducer } from './reducers/wow';
 import { Roster } from "./components/roster/roster";
 
-import { AppForm } from "./app-form";
-
 import { RecruitmentWidget } from "./components/recruitment/recruitment";
 import { ApplicationSocket } from './socket/application';
 import { appEpic } from "./epics";
@@ -45,7 +43,7 @@ export const store = createStore<State>(reducer, composeEnhancers(
 
 export const history = syncHistoryWithStore(browserHistory, store);
 
-class App extends React.Component<React.HTMLAttributes, {}> {
+class App extends React.Component<React.HTMLAttributes<HTMLDivElement>, {}> {
   render() {
     return (
       <div>

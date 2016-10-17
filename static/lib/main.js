@@ -17,16 +17,36 @@
   var script = document.createElement("script");
   script.setAttribute("src", "//cdn.muicss.com/mui-0.7.5/js/mui.min.js");
   document.head.appendChild(script);
-
-  require(["moonlight/bundle"], function (App) {
+  var root = document.createElement("div");
+  root.setAttribute("id", "moonlight-root");
+  require(["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, App) {
     App.initSocket();
 
+    ReactDOM.render(
+      React.createElement(App.Page, {}),
+      root
+    );
   });
+  var matchRooms = function (path) {
+    switch (path) {
+      case "/landing":
+      return "mnl_landing";
+      case "/roster":
+      return "mnl_roster";
+      case "/apply":
+      return "mnl_apply";
+      case "/applications":
+      return "mnl_applications";
+      default:
+        "mnl";
+    }
+  };
+
   $(window).on("action:ajaxify.contentLoaded", function (data) {
 
     require(["moonlight/bundle"], function (App) {
       if (validUrls.indexOf(ajaxify.data.url) !== -1) {
-
+        document.getElementById("moonlight-content").appendChild(root);
         if (ajaxify.data.action) {
           App.store.dispatch(ajaxify.data.action)
         }
@@ -34,60 +54,11 @@
         if (url.endsWith("?")) {
           url = url.slice(0, -1);
         }
+        app.enterRoom(matchRooms(ajaxify.data.url), function() {});
         App.navigate(url);
+
       }
 
     });
   });
 } ());
-
-define("forum/apply", ["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, Moonlight) {
-
-  var Page = {};
-
-  Page.init = function () {
-
-    ReactDOM.render(
-      React.createElement(Moonlight.Page, {}),
-      document.getElementById("moonlight-content")
-    );
-
-  }
-
-  return Page;
-});
-
-
-define("forum/landing", ["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, Moonlight) {
-
-  var Page = {};
-
-  Page.init = function () {
-
-
-    ReactDOM.render(
-      React.createElement(Moonlight.Page, {}),
-      document.getElementById("moonlight-content")
-    );
-
-  }
-
-  return Page;
-});
-
-define("forum/roster", ["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, Moonlight) {
-
-  var Page = {};
-
-  Page.init = function () {
-
-
-    ReactDOM.render(
-      React.createElement(Moonlight.Page, {}),
-      document.getElementById("moonlight-content")
-    );
-
-  }
-
-  return Page;
-});

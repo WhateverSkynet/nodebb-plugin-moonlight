@@ -13,8 +13,8 @@ import { EDIT_QUESTION, QUESTION_UPDATE_INITIATED, QUESTION_UPDATE_SUCCESS, Appl
 interface QuestionInputProps {
   onClick: (value: string) => void;
   buttonEnabled: boolean;
-  buttonLabel: boolean;
-  defaultValue: string;
+  buttonLabel: string;
+  defaultValue?: string;
 }
 
 const QuestionInput: React.StatelessComponent<QuestionInputProps> = (props: QuestionInputProps) => {
@@ -38,7 +38,7 @@ const QuestionInput: React.StatelessComponent<QuestionInputProps> = (props: Ques
   );
 };
 
-interface QuestionMangerProps extends React.HTMLAttributes {
+interface QuestionMangerProps {
   questions: Question[];
   editIndex: number;
   actions: {
@@ -54,7 +54,7 @@ const updateQuestionText = (question: Question, newText: string) => {
 const createQuestion = (text: string) => {
   ApplicationService.createQuestion(text, (err) => { });
 }
-const updateQuestion = (question: Question, newText: string) => {
+const updateQuestion: (question: Question, newText: string) => ApplicationAction = (question: Question, newText: string) => {
   let action: ApplicationAction;
   if (question.text === newText) {
     action = {
@@ -85,7 +85,7 @@ const editQuestion = (index: number) => {
   };
   store.dispatch(action);
 };
-const QuestionManagerImpl: React.StatelessComponent<QuestionMangerProps> = (props: QuestionMangerProps) => (
+const QuestionManagerImpl= (props: QuestionMangerProps) => (
   <div className="mui-col-md-12">
     <QuestionInput buttonEnabled={true} buttonLabel="Create" onClick={(value) => createQuestion(value)}></QuestionInput>
     <ul>
@@ -128,7 +128,7 @@ const mapDispatchToProps = (dispatch: any) => {
 
 const QuestionManager = connect(mapStateToProps, mapDispatchToProps)(QuestionManagerImpl);
 
-const ApplicationSettingsImpl = (props: React.HTMLAttributes) => (
+const ApplicationSettingsImpl = (props: React.HTMLAttributes<HTMLDivElement>) => (
   <div className="mui-row">
 
     <QuestionManager></QuestionManager>

@@ -33,7 +33,7 @@ export class AdminTab extends Link {
 }
 
 
-const AdminTabs = (props: React.HTMLAttributes) => (
+const AdminTabs = (props: React.HTMLAttributes<HTMLDivElement>) => (
   <div>
     <div className="mui-panel">
       <ul className="mui-tabs__bar">

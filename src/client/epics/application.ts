@@ -13,7 +13,7 @@ export const getQuestionsEpic: Epic<ApplicationAction> = action$ =>
         type: QUESTION_LIST_UPDATED,
         questions: data
       }))
-      .catch(err => console.log(err))
+     // .catch(err => console.log(err))
     );
 
 
@@ -25,7 +25,7 @@ export const getTemplateQuestionsEpic: Epic<ApplicationAction> = action$ =>
         type: GET_APPLICATION_TEMPLATE_QUESTIONS_SUCCESS,
         qids: data
       }))
-      .catch(err => console.log(err))
+    //  .catch(err => console.log(err))
     );
 
 export const getApplicationTemplateEpic: Epic<ApplicationAction> = action$ =>
@@ -36,7 +36,7 @@ export const getApplicationTemplateEpic: Epic<ApplicationAction> = action$ =>
         type: GET_APPLICATION_TEMPLATE_SUCCESS,
         template: data
       }))
-      .catch(err => console.log(err))
+     // .catch(err => console.log(err))
     );
 
 
@@ -49,7 +49,12 @@ export const saveApplication: Epic<ApplicationAction> = action$ =>
           type: SAVE_APPLICATION_SUCCESS,
           template: data
         })) //TODO: can this be done better?
-        .catch(err => console.log(err))
+        // .catch((err: any) => {
+        //   console.log(err);
+        //   return {
+        //     type: ''
+        //    };
+        // })
     }
     );
 
@@ -60,7 +65,7 @@ export const updateQuestion: Epic<ApplicationAction> = action$ =>
       return Socket
         .emit({ event: 'plugins.ml.application.updateQuestion', payload: action.question })
         .map(data => Action) //TODO: can this be done better?
-        .catch(err => console.log(err))
+     //   .catch(err => console.log(err))
     }
     );
 
@@ -69,7 +74,7 @@ export const updateTemplateQuestionsEpic: Epic<ApplicationAction> = action$ =>
     .mergeMap<ApplicationAction>((action: InitializeApplicationTemplateSaveAction) => Socket
       .emit({ event: 'plugins.ml.application.updateTemplateQuestions', payload: action.qids })
       .map(data => Action) //TODO: can this be done better?
-      .catch(err => console.log(err))
+      //.catch(err => console.log(err))
     );
 
 

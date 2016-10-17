@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { APPLICATION_QUESTION_VALUE_CHANGED, ApplicationQuestionValueChangedAction } from './../../../actions';
 import { Question } from './../../../models/application';
 
-interface QuestionProps extends React.HTMLAttributes {
+interface QuestionProps extends React.HTMLAttributes<HTMLDivElement> {
     value: string;
     text: string;
     onValueChanged: (text: string) => void;
