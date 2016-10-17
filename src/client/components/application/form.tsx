@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { store } from './../../index';
 import { SAVE_APPLICATION } from './../../../actions';
+import { CharacterListContainer } from './characters';
 
 
 export class ApplicationForm extends React.Component<{}, {}> {
@@ -29,9 +30,12 @@ export class ApplicationForm extends React.Component<{}, {}> {
         return (
 
             <div className="mui-panel">
+                <h2 className="app-title">Characters</h2>
+                <CharacterListContainer></CharacterListContainer>
                 <h2 className="app-title">Questions</h2>
 
                 <QuestionListContainer></QuestionListContainer>
+                <button className="mui-btn  mui-btn--primary">Submit</button>
             </div>
         );
     }

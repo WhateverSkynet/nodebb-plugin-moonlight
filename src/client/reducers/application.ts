@@ -1,8 +1,9 @@
 import { Reducer, combineReducers } from 'redux';
 import { ApplicationState } from './../states/application';
-import { ApplicationAction, Action, GET_QUESTIONS, QUESTION_CREATED, QUESTION_UPDATE_INITIATED, EDIT_QUESTION, QUESTION_LIST_UPDATED, QUESTION_UPDATE_SUCCESS, ADD_QUESTION_TO_TEMPLATE, REMOVE_QUESTION_FROM_TEMPLATE, MOVE_TEMPLATE_QUESTION_UP, MOVE_TEMPLATE_QUSTION_DOWN, GET_APPLICATION_TEMPLATE_QUESTIONS_SUCCESS, GET_APPLICATION_TEMPLATE_SUCCESS, APPLICATION_QUESTION_VALUE_CHANGED, SAVE_APPLICATION_SUCCESS } from './../../actions';
+import { ApplicationAction, Action, GET_QUESTIONS, QUESTION_CREATED, QUESTION_UPDATE_INITIATED, EDIT_QUESTION, QUESTION_LIST_UPDATED, QUESTION_UPDATE_SUCCESS, ADD_QUESTION_TO_TEMPLATE, REMOVE_QUESTION_FROM_TEMPLATE, MOVE_TEMPLATE_QUESTION_UP, MOVE_TEMPLATE_QUSTION_DOWN, GET_APPLICATION_TEMPLATE_QUESTIONS_SUCCESS, GET_APPLICATION_TEMPLATE_SUCCESS, APPLICATION_QUESTION_VALUE_CHANGED, SAVE_APPLICATION_SUCCESS, ADD_APPLICATION_CHARACTER, REMOVE_APPLICATION_CHARACTER } from './../../actions';
 import { Question, Application, ApplicationTemplate, ApplicationCharacter } from './../../models/application';
 
+import * as UUID from "uuid";
 
 const questionReducer: Reducer<Question> = (state: Question = {}, action: ApplicationAction = Action) => {
   switch (action.type) {
@@ -109,11 +110,32 @@ const appQuestionsReducer: Reducer<Question[]> = (state: Question[] = [], action
       return state.map(x => appQuestionReducer(x, action));
   }
 };
-const appCharacterReducer: Reducer<ApplicationCharacter[]> = (state: ApplicationCharacter[] = [], action: ApplicationAction = Action) => {
+const appCharacterReducer: Reducer<ApplicationCharacter> = (state: ApplicationCharacter = {}, action: ApplicationAction = Action) => {
 
   switch (action.type) {
     default:
       return state;//.map(x => appQuestionReducer(x, action));
+  }
+};
+const appCharactersReducer: Reducer<ApplicationCharacter[]> = (state: ApplicationCharacter[] = [], action: ApplicationAction = Action) => {
+
+  switch (action.type) {
+     case GET_APPLICATION_TEMPLATE_SUCCESS:
+      return [...action.template.characters];
+    case ADD_APPLICATION_CHARACTER: 
+      return [...state, {guid: UUID.v4()}];
+    case REMOVE_APPLICATION_CHARACTER: 
+      for (let i = 0; i < state.length; i++) {
+        if (state[i].guid == action.guid) {
+          return [
+            ...state.slice(0, i),
+            ...state.slice(i +1)
+            ];
+        }
+      }
+      return state;
+    default:
+      return state.map(x => appCharacterReducer(x, action));
   }
 };
 
@@ -148,7 +170,7 @@ const statusReducer: Reducer<number> = (state: number = 0, action: ApplicationAc
 const applicationTemplateReducer = combineReducers<ApplicationTemplate>({
   appId: appIdReducer,
   questions: appQuestionsReducer,
-  characters: appCharacterReducer,
+  characters: appCharactersReducer,
   status: statusReducer,
 });
 

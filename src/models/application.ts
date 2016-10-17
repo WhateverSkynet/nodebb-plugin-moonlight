@@ -27,7 +27,7 @@ export interface ApplicationTemplate {
 }
 
 export interface ApplicationCharacter {
-    id: number;
+    guid?: string;
     name?: string;
     realm?: string;
     class?: string;

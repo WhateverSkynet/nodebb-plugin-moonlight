@@ -234,6 +234,19 @@ export type SaveApplicationSuccessAction = {
   template: ApplicationTemplate;
 };
 
+export type AddApplicationCharacter = "@mnl/application/ADD_CHARACTER";
+export const ADD_APPLICATION_CHARACTER: AddApplicationCharacter = "@mnl/application/ADD_CHARACTER";
+export type AddApplicationCharacterAction = {
+  type: AddApplicationCharacter;
+};
+
+export type RemoveApplicationCharacter = "@mnl/application/REMOVE_CHARACTER";
+export const REMOVE_APPLICATION_CHARACTER: RemoveApplicationCharacter = "@mnl/application/REMOVE_CHARACTER";
+export type RemoveApplicationCharacterAction = {
+  type: RemoveApplicationCharacter;
+  guid: string;
+};
+
 export type ApplicationAction = GetQuestionsAction
   | QuestionsListUpdatedAction
   | QuestionUpdateInitiateAction
@@ -253,4 +266,6 @@ export type ApplicationAction = GetQuestionsAction
   | ApplicationQuestionValueChangedAction
   | SaveApplicationAction
   | SaveApplicationSuccessAction
+  | RemoveApplicationCharacterAction
+  | AddApplicationCharacterAction
   | Action;
