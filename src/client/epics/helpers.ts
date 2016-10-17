@@ -1,4 +1,7 @@
 import { Observable } from 'rxjs/Observable';
+//Webpack doesn't bundle correctly without this. TODO: figure out why & fix.
+import 'rxjs/add/observable/bindNodeCallback';
+import 'rxjs/add/observable/bindCallback';
 
 export interface SocketOptions {
   event: string;

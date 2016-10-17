@@ -4,12 +4,12 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     context: __dirname,
     entry: {
-        vendors: [
-            'react',
-            'react-dom',
-            'redux',
-            'react-redux'
-        ],
+        // vendors: [
+        //     'react',
+        //     'react-dom',
+        //     'redux',
+        //     'react-redux'
+        // ],
         main: [
             "./src/client/index.tsx"
         ]
@@ -22,7 +22,7 @@ module.exports = {
     },
 
     // Enable sourcemaps for debugging webpack's output.
-    devtool: "source-map",
+   // devtool: "source-map",
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
