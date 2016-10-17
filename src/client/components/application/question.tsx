@@ -2,7 +2,9 @@ import * as React from "react";
 
 import { State } from './../../states/state';
 import { connect } from 'react-redux';
-import { Observable, Subject, Subscription } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 import { bindActionCreators } from 'redux';
 import { APPLICATION_QUESTION_VALUE_CHANGED, ApplicationQuestionValueChangedAction } from './../../../actions';
 import { Question } from './../../../models/application';

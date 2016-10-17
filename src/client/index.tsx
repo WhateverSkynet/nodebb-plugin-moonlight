@@ -1,4 +1,5 @@
 import './polyfills.ts';
+import './dependencies.ts';
 
 import { adminReducer } from './reducers/admin/admin';
 import { AdminState } from './states/admin/admin';

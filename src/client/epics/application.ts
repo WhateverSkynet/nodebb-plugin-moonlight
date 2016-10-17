@@ -1,5 +1,5 @@
 import { Epic, ActionsObservable } from 'redux-observable';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { GetQuestionsAction, GET_QUESTIONS, Action, QUESTION_LIST_UPDATED, QuestionsListUpdatedAction, QUESTION_UPDATE_INITIATED, QuestionUpdateInitiateAction, ApplicationAction, GET_APPLICATION_QUESTIONS_INIT, GET_APPLICATION_TEMPLATE_QUESTIONS_SUCCESS, INIT_APPLICATION_TEMPLATE_SAVE, InitializeApplicationTemplateSaveAction, GET_APPLICATION_TEMPLATE_SUCCESS, AJAXIFY_NEW_APPLICATION, SaveApplication, SAVE_APPLICATION, SaveApplicationAction, SAVE_APPLICATION_SUCCESS } from './../../actions';
 import { applyMiddleware } from 'redux';
 import { Socket } from './helpers';

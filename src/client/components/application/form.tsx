@@ -1,9 +1,11 @@
 import * as React from "react";
 
 import { QuestionListContainer } from './question';
-import { Subscription, Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { store } from './../../index';
 import { SAVE_APPLICATION } from './../../../actions';
+
 
 export class ApplicationForm extends React.Component<{}, {}> {
 
