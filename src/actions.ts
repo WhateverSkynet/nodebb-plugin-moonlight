@@ -1,5 +1,5 @@
 import { BlizzardSettingsState } from './client/states/admin/blizzard-settings';
-import { Application, Question, ApplicationTemplate } from './models/application';
+import { Application, Question, ApplicationTemplate, ApplicationCharacter, ApplicationCharacterChange } from './models/application';
 import { RosterCharacter, CharacterClass } from './models/wow';
 import { Recruitment } from "./models/recruitment";
 
@@ -247,6 +247,23 @@ export type RemoveApplicationCharacterAction = {
   guid: string;
 };
 
+export type SelectCharacterClass = "@mnl/application/SELECT_CHARACTER_CLASS";
+export const SELECT_CHARACTER_CLASS: SelectCharacterClass = "@mnl/application/SELECT_CHARACTER_CLASS";
+export type SelectCharacterClassAction = {
+  type: SelectCharacterClass;
+  className: string;
+  characterGuid: string;
+};
+
+// Can use object to describe changes
+export type ApplicationCharacterDataChanged = "@mnl/application/CHARACTER_DATA_CHANGED";
+export const APPLICATION_CHARACTER_DATA_CHANGED: ApplicationCharacterDataChanged = "@mnl/application/CHARACTER_DATA_CHANGED";
+export type ApplicationCharacterDataChangedAction = {
+  type: ApplicationCharacterDataChanged;
+  characterGuid: string;
+  changed: ApplicationCharacterChange;
+};
+
 export type ApplicationAction = GetQuestionsAction
   | QuestionsListUpdatedAction
   | QuestionUpdateInitiateAction
@@ -268,4 +285,6 @@ export type ApplicationAction = GetQuestionsAction
   | SaveApplicationSuccessAction
   | RemoveApplicationCharacterAction
   | AddApplicationCharacterAction
+  | SelectCharacterClassAction
+  | ApplicationCharacterDataChangedAction
   | Action;

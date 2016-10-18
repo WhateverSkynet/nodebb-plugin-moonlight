@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { store } from './../../index';
 import { SAVE_APPLICATION } from './../../../actions';
 import { CharacterListContainer } from './characters';
+import { getWoWData } from '../../services/wow';
 
 
 export class ApplicationForm extends React.Component<{}, {}> {
@@ -13,6 +14,7 @@ export class ApplicationForm extends React.Component<{}, {}> {
     private sub: Subscription;
     constructor(props: {}) {
         super(props);
+        getWoWData(() => { });
         this.sub = Observable.timer(30000, 30000)
             .subscribe(x => {
                 store.dispatch({

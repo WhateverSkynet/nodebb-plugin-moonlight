@@ -1,4 +1,4 @@
-import {CharacterClass} from './wow';
+import { CharacterClass } from './wow';
 
 export interface Question {
     qid?: number;
@@ -28,6 +28,15 @@ export interface ApplicationTemplate {
 
 export interface ApplicationCharacter {
     guid?: string;
+    name?: string;
+    realm?: string;
+    class?: string;
+    userInterfaceUrl?: string;
+    primarySpecialization?: string;
+    secondarySpecialization?: string;
+}
+
+export interface ApplicationCharacterChange {
     name?: string;
     realm?: string;
     class?: string;

@@ -4,6 +4,7 @@ import { ApplicationAction, Action, GET_QUESTIONS, QUESTION_CREATED, QUESTION_UP
 import { Question, Application, ApplicationTemplate, ApplicationCharacter } from './../../models/application';
 
 import * as UUID from "uuid";
+import { SELECT_CHARACTER_CLASS, APPLICATION_CHARACTER_DATA_CHANGED } from '../../actions';
 
 const questionReducer: Reducer<Question> = (state: Question = {}, action: ApplicationAction = Action) => {
   switch (action.type) {
@@ -95,7 +96,7 @@ const appQuestionReducer: Reducer<Question> = (state: Question = {}, action: App
         state = Object.assign({}, state);
         state.value = action.newValue;
       }
-      return state
+      return state;
     default:
       return state;
   }
@@ -113,6 +114,20 @@ const appQuestionsReducer: Reducer<Question[]> = (state: Question[] = [], action
 const appCharacterReducer: Reducer<ApplicationCharacter> = (state: ApplicationCharacter = {}, action: ApplicationAction = Action) => {
 
   switch (action.type) {
+    case APPLICATION_CHARACTER_DATA_CHANGED:
+      if (state.guid === action.characterGuid) {
+        return Object.assign({}, state, action.changed);
+      } else {
+        return state;
+      }
+    case SELECT_CHARACTER_CLASS:
+      if (state.guid === action.characterGuid) {
+        return Object.assign({}, state, {
+          class: action.className
+        });
+      } else {
+        return state;
+      }
     default:
       return state;//.map(x => appQuestionReducer(x, action));
   }
@@ -120,17 +135,17 @@ const appCharacterReducer: Reducer<ApplicationCharacter> = (state: ApplicationCh
 const appCharactersReducer: Reducer<ApplicationCharacter[]> = (state: ApplicationCharacter[] = [], action: ApplicationAction = Action) => {
 
   switch (action.type) {
-     case GET_APPLICATION_TEMPLATE_SUCCESS:
+    case GET_APPLICATION_TEMPLATE_SUCCESS:
       return [...action.template.characters];
-    case ADD_APPLICATION_CHARACTER: 
-      return [...state, {guid: UUID.v4()}];
-    case REMOVE_APPLICATION_CHARACTER: 
+    case ADD_APPLICATION_CHARACTER:
+      return [...state, { guid: UUID.v4() }];
+    case REMOVE_APPLICATION_CHARACTER:
       for (let i = 0; i < state.length; i++) {
         if (state[i].guid == action.guid) {
           return [
             ...state.slice(0, i),
-            ...state.slice(i +1)
-            ];
+            ...state.slice(i + 1)
+          ];
         }
       }
       return state;
