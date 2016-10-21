@@ -15,6 +15,13 @@
   var validUrls = ["/landing", "/roster", "/apply", "/applications"];
   //TODO: remove dependency on mui.js
   var script = document.createElement("script");
+  script.setAttribute("src", "/src/modules/muicss.js");
+  document.head.appendChild(script);
+  var link = document.createElement("link");
+  link.setAttribute("rel", "stylesheet");
+  link.setAttribute("type", "text/css");
+  link.setAttribute("href", "/src/modules/moonlight/style.css");
+  document.head.appendChild(link);
   script.setAttribute("src", "//cdn.muicss.com/mui-0.7.5/js/mui.min.js");
   document.head.appendChild(script);
   var root = document.createElement("div");

@@ -10,6 +10,9 @@ module.exports = {
         //     'redux',
         //     'react-redux'
         // ],
+        style: [
+            "./src/client/main.scss"
+        ],
         main: [
             "./src/client/index.tsx"
         ]
@@ -41,7 +44,7 @@ module.exports = {
                 loader: "ts"
             }, {
                 test: /(\.scss|\.css)$/,
-                loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass?sourceMap')
+                loader: ExtractTextPlugin.extract(['css?sourceMap','sass?sourceMap'])
             }
         ],
         preLoaders: [
@@ -53,7 +56,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin('style.less', {
+        new ExtractTextPlugin('style.css', {
             allChunks: true
         })
     ],
