@@ -16,8 +16,13 @@
 
   //TODO: remove dependency on mui.js
   var script = document.createElement("script");
-  script.setAttribute("src", "//cdn.muicss.com/mui-0.7.5/js/mui.min.js");
+  script.setAttribute("src", "/src/modules/muicss.js");
   document.head.appendChild(script);
+  var link = document.createElement("link");
+  link.setAttribute("rel", "stylesheet");
+  link.setAttribute("type", "text/css");
+  link.setAttribute("href", "/src/modules/moonlight/style.css");
+  document.head.appendChild(link);
   var root = document.createElement("div");
   root.setAttribute("id", "moonlight-root");
   require(["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, App) {

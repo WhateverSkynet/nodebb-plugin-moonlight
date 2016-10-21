@@ -17,6 +17,11 @@
   var script = document.createElement("script");
   script.setAttribute("src", "/src/modules/muicss.js");
   document.head.appendChild(script);
+  var link = document.createElement("link");
+  link.setAttribute("rel", "stylesheet");
+  link.setAttribute("type", "text/css");
+  link.setAttribute("href", "/src/modules/moonlight/style.css");
+  document.head.appendChild(link);
   var root = document.createElement("div");
   root.setAttribute("id", "moonlight-root");
   require(["react", "reactDOM", "moonlight/bundle", "moonlight/style"], function (React, ReactDOM, App) {
