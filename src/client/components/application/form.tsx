@@ -1,30 +1,51 @@
 import * as React from "react";
 
-import { Container } from "../../mui/container";
-import { Row } from "../../mui/row";
-import { Col } from "../../mui/col";
-import { Panel } from "../../mui/panel";
+import { QuestionListContainer } from './question';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { store } from './../../index';
+import { SAVE_APPLICATION } from './../../../actions';
+import { CharacterListContainer } from './characters';
+import { getWoWData } from '../../services/wow';
 
-import { ApplicationQuestion } from "./question";
 
-export class ApplicationForm  extends React.Component<{}, {}> {
+export class ApplicationForm extends React.Component<{}, {}> {
+
+    private sub: Subscription;
+    constructor(props: {}) {
+        super(props);
+        getWoWData(() => { });
+        this.sub = Observable.timer(30000, 30000)
+            .subscribe(x => {
+                store.dispatch({
+                    type: SAVE_APPLICATION,
+                    template: store.getState().app.application.template
+                });
+            });
+    }
+
+    componentWillUnmount() {
+        this.sub.unsubscribe();
+    }
+
     render() {
         return (
-           <Container>
-                
-                <Panel>
-                    <h2 className="app-title">Questions</h2>
-                  
-            
-                </Panel>
-            </Container>
+
+            <div className="mui-panel">
+                <h2 className="app-title">Characters</h2>
+                <CharacterListContainer></CharacterListContainer>
+                <h2 className="app-title">Questions</h2>
+
+                <QuestionListContainer></QuestionListContainer>
+                <button className="mui-btn  mui-btn--primary">Submit</button>
+            </div>
         );
     }
 }
   // {
                     //     this.props.questions.map((x, i) => (
                     //         <ApplicationQuestion key={x.id} text={x.text} value={x.value}>
-                            
+
                     //         </ApplicationQuestion>))
                     // }
     //  onChange={(e) => this.onQuestionEnter(i, e.target.value) }

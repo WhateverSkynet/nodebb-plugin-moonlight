@@ -21,11 +21,11 @@ plugin.init = function (params, callback) {
   router.get('/admin/plugins/moonlight', hostMiddleware.admin.buildHeader, controllers.renderAdminPage);
   router.get('/api/admin/plugins/moonlight', middlewares, controllers.renderAdminPage);
 
-  // router.get('/applications', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderApplicationsPage);
-  // router.get('/api/applications', middlewares, controllers.renderApplicationsPage);
+  router.get('/applications', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderApplicationsPage);
+  router.get('/api/applications', middlewares, controllers.renderApplicationsPage);
 
-  // router.get('/apply', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderApplyPage);
-  // router.get('/api/apply', middlewares, controllers.renderApplyPage);
+  router.get('/apply', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderApplyPage);
+  router.get('/api/apply', middlewares, controllers.renderApplyPage);
 
   router.get('/landing', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderLandingPage);
   router.get('/api/landing', middlewares, controllers.renderLandingPage);

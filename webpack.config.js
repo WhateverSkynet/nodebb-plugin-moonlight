@@ -4,11 +4,14 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     context: __dirname,
     entry: {
-        vendors: [
-            'react',
-            'react-dom',
-            'redux',
-            'react-redux'
+        // vendors: [
+        //     'react',
+        //     'react-dom',
+        //     'redux',
+        //     'react-redux'
+        // ],
+        style: [
+            './src/client/main.scss'
         ],
         main: [
             "./src/client/index.tsx"
@@ -22,7 +25,7 @@ module.exports = {
     },
 
     // Enable sourcemaps for debugging webpack's output.
-    devtool: "source-map",
+     devtool: "source-map",
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
@@ -40,8 +43,8 @@ module.exports = {
                 test: /\.tsx?$/,
                 loader: "ts"
             }, {
-                test: /(\.scss|\.css)$/,
-                loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass?sourceMap')
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract(['css?sourceMap','sass?sourceMap'])
             }
         ],
         preLoaders: [
@@ -53,11 +56,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin('style.less', {
+        new ExtractTextPlugin('style.css', {
             allChunks: true
         })
     ],
-
     // When importing a module whose path matches one of the following, just
     // assume a corresponding global variable exists and use that instead.
     // This is important because it allows us to avoid bundling all of our

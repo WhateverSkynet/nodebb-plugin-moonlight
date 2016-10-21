@@ -9,7 +9,6 @@ const LOCATION_CHANGE = "@@router/LOCATION_CHANGE";
 const defaultState = {
   roster: [],
   recruitment: [],
-  questions: []
 }
 
 export const ajaxifyReducer = (state: AjaxifyState = defaultState, action: AjaxifyAction = Action) => {
@@ -24,21 +23,12 @@ export const ajaxifyReducer = (state: AjaxifyState = defaultState, action: Ajaxi
       return newState;
     case AJAXIFY_RECRUITMENT:
        newState = {
-        questions: state.questions,
         roster: state.roster
       };
       newState.recruitment = action.classes;
       return newState;
-    case AJAXIFY_NEW_APPLICATION:
-       newState = {
-        recruitment: state.recruitment,
-        roster: state.roster
-      };
-      newState.questions = action.application.questions;
-      return newState;
     case AJAXIFY_CHANGE_RECRUITMENT_STATUS:
       newState = {
-        questions: state.questions,
         roster: state.roster
       };
       newState.recruitment = state.recruitment.map(c => {

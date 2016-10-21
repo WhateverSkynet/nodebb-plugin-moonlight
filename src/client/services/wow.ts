@@ -1,11 +1,11 @@
 import * as actions from "../../actions";
 import { store } from "../index";
 
-//TODO: Clean up 
+//TODO: Clean up and improove perf
 export const getWoWData = (cb: () => void) => {
-  if (store.getState().wow) {
-    cb();
-  } else {
+  // if (store.getState().wow) {
+  //   cb();
+  // } else {
     window.ajaxify.loadData("mnl/wow", (err, data) => {
       if (err) {
         //TODO: Handle error
@@ -15,5 +15,5 @@ export const getWoWData = (cb: () => void) => {
       store.dispatch(data.action);
       cb();
     });
-  }
+  //}
 };

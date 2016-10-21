@@ -16,74 +16,41 @@
 
   //TODO: remove dependency on mui.js
   var script = document.createElement("script");
-  script.setAttribute("src", "//cdn.muicss.com/mui-0.7.5/js/mui.min.js");
+  script.setAttribute("src", "/src/modules/muicss.js");
   document.head.appendChild(script);
-  
+  var link = document.createElement("link");
+  link.setAttribute("rel", "stylesheet");
+  link.setAttribute("type", "text/css");
+  link.setAttribute("href", "/src/modules/moonlight/style.css");
+  document.head.appendChild(link);
+  var root = document.createElement("div");
+  root.setAttribute("id", "moonlight-root");
+  require(["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, App) {
+    App.initSocket();
+
+    ReactDOM.render(
+      React.createElement(App.AdminPage, {}),
+      root
+    );
+  });
+
   $(window).on("action:ajaxify.contentLoaded", function (data) {
 
     require(["moonlight/bundle"], function (App) {
-
       if (ajaxify.data.url.startsWith("/admin/plugins/moonlight")) {
-
+        document.getElementById("moonlight-content").appendChild(root);
         if (ajaxify.data.action) {
-          App.store.dispatch(ajaxify.data.action);
+          App.store.dispatch(ajaxify.data.action)
         }
-        App.navigate(ajaxify.data.url);
+        var url = ajaxify.data.url.replace("loggedin", "");
+        if (url.endsWith("?")) {
+          url = url.slice(0, -1);
+        }
+        app.enterRoom("mnl.admin", function() {});
+        App.navigate(url);
+
       }
 
     });
   });
-}());
-
-define('admin/plugins/moonlight', ['settings', "react", "reactDOM", "moonlight/bundle"], function (Settings, React, ReactDOM, Moonlight) {
-
-  var ACP = {};
-
-
-  // var events = {
-  //   'ticket:user_status_change': onUserStatusChange,
-  // };
-
-  // Events.init = function () {
-  //   Events.removeListeners();
-  //   for (var eventName in events) {
-  //     if (events.hasOwnProperty(eventName)) {
-  //       socket.on(eventName, events[eventName]);
-  //     }
-  //   }
-  // };
-
-  // Events.removeListeners = function () {
-  //   for (var eventName in events) {
-  //     if (events.hasOwnProperty(eventName)) {
-  //       socket.removeListener(eventName, events[eventName]);
-  //     }
-  //   }
-  // };
-
-
-  ACP.init = function () {
-    Settings.load('moonlight', $('.moonlight-settings'));
-
-    $('#save').on('click', function () {
-      Settings.save('moonlight', $('.moonlight-settings'), function () {
-        app.alert({
-          type: 'success',
-          alert_id: 'moonlight-saved',
-          title: 'Settings Saved',
-          message: 'Success',
-          clickfn: function () {
-            socket.emit('admin.reload');
-          },
-        });
-      });
-    });
-
-    ReactDOM.render(
-      React.createElement(Moonlight.AdminPage, {}),
-      document.getElementById("moonlight-content")
-    );
-  };
-
-  return ACP;
-});
+} ());

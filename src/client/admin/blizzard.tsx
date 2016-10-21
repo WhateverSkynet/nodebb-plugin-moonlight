@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { store } from "../index";
 
-interface BlizzardSettingsProps extends React.HTMLAttributes {
+interface BlizzardSettingsProps extends React.HTMLAttributes<HTMLDivElement> {
   apiKey: string;
   region: string;
   guild: string;
