@@ -15,11 +15,11 @@
   var validUrls = ["/landing", "/roster", "/apply", "/applications"];
   //TODO: remove dependency on mui.js
   var script = document.createElement("script");
-  script.setAttribute("src", "//cdn.muicss.com/mui-0.7.5/js/mui.min.js");
+  script.setAttribute("src", "/src/modules/muicss.js");
   document.head.appendChild(script);
   var root = document.createElement("div");
   root.setAttribute("id", "moonlight-root");
-  require(["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, App) {
+  require(["react", "reactDOM", "moonlight/bundle", "moonlight/style"], function (React, ReactDOM, App) {
     App.initSocket();
 
     ReactDOM.render(
