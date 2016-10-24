@@ -93,7 +93,7 @@ class RosterImpl extends React.Component<RosterProps, {}> {
                                         <td className="character-class mui-col-xs-6" data-character-class={getCssName(className(m.class)) }>
                                             <a href={"https://eu.battle.net/wow/en/character/" + m.realm + "/" + m.name + "/advanced"} target="_blank">{m.name}</a>
                                             &nbsp;
-                                            <a href={`https://www.askmrrobot.com/wow/gear/eu/${m.realm}/${m.name}`} target="_blank">R</a>
+                                            <a href={`https://www.askmrrobot.com/wow/gear/eu/${m.realm}/${m.name}`} target="_blank"><img src="https://media-curse.cursecdn.com/attachments/81/383/a7c1e08f4816cf2632752d5949eb7bdc.png" height="15" width="15" /></a>
                                         </td>
                                         <td className="mui-col-xs-6">{m.rank}</td>
                                         <td className="mui-col-xs-4">{m.averageItemLevelEquipped}</td>
