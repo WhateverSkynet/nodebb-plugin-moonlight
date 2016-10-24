@@ -4,5 +4,7 @@ export interface RosterState {
   characters: RosterCharacter[];
   filters: {
     rank: {[key:string]:boolean};
+    sortBy: string;
+    sortDirection: string;
   };
 }

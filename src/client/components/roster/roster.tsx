@@ -1,4 +1,4 @@
-import {TOGGLE_RANK_FILTER} from '../../../actions';
+import { TOGGLE_RANK_FILTER, SORT_ROSTER_BY, ToogleRankFilterAction, SortRosterByAction } from '../../../actions';
 import {State} from '../../states/state';
 import {RosterCharacter} from '../../../models/wow';
 import * as React from "react";
@@ -43,11 +43,26 @@ const className = (id: number) => {
     }
 };
 
+const rankNames = 
+[
+    "GM",
+    "O",
+    "OA",
+    "R",
+    "T",
+    "RA",
+    "A",
+    "S",
+];
+
 export interface RosterProps {
     ranks: number[];
-    disabledRanks: {[key:string]:boolean}; //TODO: 2, 5, 6, 7 should be disabled by default, but can be enabled
+    disabledRanks: { [key: string]: boolean }; //TODO: 2, 5, 6, 7 should be disabled by default, but can be enabled
     characters: RosterCharacter[];
-    actions: any;
+    actions?: {
+        toggleRank: (rank: number) => ToogleRankFilterAction;
+        sortBy: (propertyName: string) => SortRosterByAction;
+    };
 }
 
 const formatLargeNumbers = (num: number) => {
@@ -69,7 +84,7 @@ class RosterImpl extends React.Component<RosterProps, {}> {
                     {
                         this.props.ranks.map((x, i) =>
                         <button className={toggleButtonClasses(this.props.disabledRanks[x.toString()] === undefined)}
-                         onClick={(e) =>  this.props.actions.toggleRank(x)}>{x}</button> //Replace with rank names on the display?
+                         onClick={(e) =>  this.props.actions.toggleRank(x)}>{rankNames[i]}</button> //Replace with rank names on the display?
                         )
                     }
                 </div>
@@ -78,10 +93,10 @@ class RosterImpl extends React.Component<RosterProps, {}> {
                     <thead>
                         <tr className="mui-row">
                             <th className="mui-col-xs-6">Name</th>
-                            <th className="mui-col-xs-6">Rank</th>
-                            <th className="mui-col-xs-4">Item Level</th>
+                            <th className="mui-col-xs-6" onClick={() => this.props.actions.sortBy("rank")} >Rank</th>
+                            <th className="mui-col-xs-4" onClick={() => this.props.actions.sortBy("averageItemLevelEquipped")} >Item Level</th>
                             <th className="mui-col-xs-2">Artifact</th>
-                            <th className="mui-col-xs-4">AP</th>
+                            <th className="mui-col-xs-4" onClick={() => this.props.actions.sortBy("totalArtifactPower")} >AP</th>
                             <th className="mui-col-xs-2">Traits</th>
                         </tr>
                     </thead>
@@ -95,7 +110,7 @@ class RosterImpl extends React.Component<RosterProps, {}> {
                                             &nbsp;
                                             <a href={`https://www.askmrrobot.com/wow/gear/eu/${m.realm}/${m.name}`} target="_blank"><img src="https://media-curse.cursecdn.com/attachments/81/383/a7c1e08f4816cf2632752d5949eb7bdc.png" height="15" width="15" /></a>
                                         </td>
-                                        <td className="mui-col-xs-6">{m.rank}</td>
+                                        <td className="mui-col-xs-6">{rankNames[m.rank]}</td>
                                         <td className="mui-col-xs-4">{m.averageItemLevelEquipped}</td>
                                         <td className="mui-col-xs-2">{m.audit.artifact.itemLevel}</td>
                                         <td className="mui-col-xs-4">{formatLargeNumbers(m.totalArtifactPower)}</td>
@@ -110,11 +125,19 @@ class RosterImpl extends React.Component<RosterProps, {}> {
     }
 }
 
+const sort = (property: string, direction: string) => {
+    if (direction === "ASC") {
+        return (a: RosterCharacter, b: RosterCharacter) => a[property] - b[property];
+    }
+    return (a: RosterCharacter, b: RosterCharacter) => b[property] - a[property];
+};
+
 const mapStateToProps = (state: State) => {
     const roster = state.ajaxify.roster || [];
+    const sortBy = state.app.roster.filters.sortBy;
     var props: RosterProps = {
-        actions: [],
-        characters: roster.filter((x) => state.app.roster.filters.rank[x.rank] === undefined),
+        characters: roster.filter((x) => state.app.roster.filters.rank[x.rank] === undefined)
+            .sort(sort(sortBy, state.app.roster.filters.sortDirection)),
         disabledRanks: state.app.roster.filters.rank,
         ranks: Object.keys(groupBy(state.ajaxify.roster, (x: RosterCharacter) => x.rank)).map(x => parseInt(x, 10))
     };
@@ -128,6 +151,12 @@ const mapDispatchToProps = (dispatch: any) => {
                 return {
                     type: TOGGLE_RANK_FILTER,
                     rank
+                };
+            },
+            sortBy: (propertyName: string) => {
+                return {
+                    type: SORT_ROSTER_BY,
+                    propertyName
                 };
             }
         }, dispatch)

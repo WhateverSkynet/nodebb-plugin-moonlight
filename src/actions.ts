@@ -81,7 +81,14 @@ export type ToogleRankFilterAction = {
   rank: number;
 }
 
-export type RosterAction = ToogleRankFilterAction | Action;
+export type SortRosterBy = "@mnl/roster/SORT_BY";
+export const SORT_ROSTER_BY: SortRosterBy = "@mnl/roster/SORT_BY";
+export type SortRosterByAction = {
+  type: SortRosterBy;
+  propertyName: string;
+};
+
+export type RosterAction = SortRosterByAction | ToogleRankFilterAction | Action;
 
 // Admin Actions
 
