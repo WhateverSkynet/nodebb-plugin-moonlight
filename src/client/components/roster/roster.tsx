@@ -51,7 +51,7 @@ export interface RosterProps {
 }
 
 const formatLargeNumbers = (num: number) => {
-    return num.toLocaleString(); //num > 1000 ? `${Math.floor(num / 1000)},${num % 1000}` : num.toString();
+    return num.toLocaleString('en-INT'); //num > 1000 ? `${Math.floor(num / 1000)},${num % 1000}` : num.toString();
 };
 
 const toggleButtonClasses = (toggled: boolean) => {
@@ -69,7 +69,7 @@ class RosterImpl extends React.Component<RosterProps, {}> {
                     {
                         this.props.ranks.map((x, i) =>
                         <button className={toggleButtonClasses(this.props.disabledRanks[x.toString()] === undefined)}
-                         onClick={(e) =>  this.props.actions.toggleRank(x)}>{x}</button>
+                         onClick={(e) =>  this.props.actions.toggleRank(x)}>{x}</button> //Replace with rank names on the display?
                         )
                     }
                 </div>
