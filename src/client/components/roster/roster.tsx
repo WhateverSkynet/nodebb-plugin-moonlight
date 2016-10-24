@@ -92,12 +92,12 @@ class RosterImpl extends React.Component<RosterProps, {}> {
                 <table className="mui-table mui-table--bordered">
                     <thead>
                         <tr className="mui-row">
-                            <th className="mui-col-xs-6">Name</th>
-                            <th className="mui-col-xs-6" onClick={() => this.props.actions.sortBy("rank")} >Rank</th>
-                            <th className="mui-col-xs-4" onClick={() => this.props.actions.sortBy("averageItemLevelEquipped")} >Item Level</th>
-                            <th className="mui-col-xs-2">Artifact</th>
-                            <th className="mui-col-xs-4" onClick={() => this.props.actions.sortBy("totalArtifactPower")} >AP</th>
-                            <th className="mui-col-xs-2">Traits</th>
+                            <th className="mui-col-xs-6" >Name</th>
+                            <th className="mui-col-xs-6 clickable" onClick={() => this.props.actions.sortBy("rank")} >Rank</th>
+                            <th className="mui-col-xs-4 clickable" onClick={() => this.props.actions.sortBy("averageItemLevelEquipped")} >Item Level</th>
+                            <th className="mui-col-xs-2 clickable" onClick={() => this.props.actions.sortBy("audit.artifact.itemLevel")} >Artifact</th>
+                            <th className="mui-col-xs-4 clickable" onClick={() => this.props.actions.sortBy("totalArtifactPower")} >AP</th>
+                            <th className="mui-col-xs-2 clickable" onClick={() => this.props.actions.sortBy("audit.artifact.traitCount")} >Traits</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -125,11 +125,21 @@ class RosterImpl extends React.Component<RosterProps, {}> {
     }
 }
 
-const sort = (property: string, direction: string) => {
-    if (direction === "ASC") {
-        return (a: RosterCharacter, b: RosterCharacter) => a[property] - b[property];
+const getProperty = (obj: any, property: string) => {
+    const parts = property.split(".");
+
+    for (let propertyName of parts) {
+        obj = obj[propertyName];
     }
-    return (a: RosterCharacter, b: RosterCharacter) => b[property] - a[property];
+
+    return obj;
+};
+
+const sort = (property: string, direction: string) => {
+       if (direction === "ASC") {
+        return (a: RosterCharacter, b: RosterCharacter) => getProperty(a, property) - getProperty(b, property);
+    }
+    return (a: RosterCharacter, b: RosterCharacter) => getProperty(b, property) - getProperty(a, property);
 };
 
 const mapStateToProps = (state: State) => {
