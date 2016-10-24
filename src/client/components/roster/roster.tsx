@@ -50,7 +50,7 @@ export interface RosterProps {
 }
 
 const formatLargeNumbers = (num: number) => {
-    return num.toLocaleString(); //num > 1000 ? `${Math.floor(num / 1000)},${num % 1000}` : num.toString();
+    return num.toLocaleString(); //num > 1000 ? `${Math.floor(num / 1000)},${num % 1000}` : num.toString(); //Checking git commit in VScode
 };
 
 const toggleButtonClasses = (toggled: boolean) => {
