@@ -13,6 +13,7 @@ const getCssName = (str: string) => {
         .replace(/ /, "");
 };
 
+//Replace these with class images?
 const className = (id: number) => {
     switch (id) {
         case 1:
@@ -44,13 +45,13 @@ const className = (id: number) => {
 
 export interface RosterProps {
     ranks: number[];
-    disabledRanks: {[key:string]:boolean};
+    disabledRanks: {[key:string]:boolean}; //TODO: 2, 5, 6, 7 should be disabled by default, but can be enabled
     characters: RosterCharacter[];
     actions: any;
 }
 
 const formatLargeNumbers = (num: number) => {
-    return num.toLocaleString(); //num > 1000 ? `${Math.floor(num / 1000)},${num % 1000}` : num.toString(); //Checking git commit in VScode
+    return num.toLocaleString(); //num > 1000 ? `${Math.floor(num / 1000)},${num % 1000}` : num.toString();
 };
 
 const toggleButtonClasses = (toggled: boolean) => {
@@ -72,13 +73,12 @@ class RosterImpl extends React.Component<RosterProps, {}> {
                         )
                     }
                 </div>
+
                 <table className="mui-table mui-table--bordered">
                     <thead>
                         <tr className="mui-row">
                             <th className="mui-col-xs-6">Name</th>
-                            <th className="mui-col-xs-6">
-                                Rank
-                            </th>
+                            <th className="mui-col-xs-6">Rank</th>
                             <th className="mui-col-xs-4">Item Level</th>
                             <th className="mui-col-xs-2">Artifact</th>
                             <th className="mui-col-xs-4">AP</th>

@@ -8,6 +8,7 @@ const defaultState = {
     rank: {}
   }
 };
+
 export const rosterReducer = (state: RosterState = defaultState, action: RosterAction = Action) => {
   switch (action.type) {
     case TOGGLE_RANK_FILTER:
