@@ -6,25 +6,32 @@ import { bindActionCreators } from 'redux';
 import * as React from "react";
 import { connect } from 'react-redux';
 
+import AutoComplete from 'material-ui/AutoComplete';
+
+
+//TODO: Type safe input
 interface RealmSelectorProps {
-  value?: string;
   realms?: string[];
   onSelect?: (value: string) => void;
+  input?: any;
+  data?: {
+    label?: string;
+  }
+  meta?: any;
 }
 const RealmSelector: React.StatelessComponent<RealmSelectorProps> = (props: RealmSelectorProps) => {
   return (
     <div>
-      <div className="mui-dropdown" style={{ width: 100 + "%" }}>
-        <button className="mui-btn mui-btn--light" data-mui-toggle="dropdown" style={{ width: 100 + "%" }}>
-          {props.value || "Realm"}
-          <span className="mui-caret" />
-        </button>
-        <ul className="mui-dropdown__menu realm-list" style={{ width: 100 + "%" }}>
-          {
-            props.realms.map((x, i) => <li key={i}><a onClick={() => props.onSelect && props.onSelect(x)}>{x}</a></li>)
-          }
-        </ul>
-      </div>
+      <AutoComplete
+        floatingLabelText={props.data.label}
+        filter={AutoComplete.fuzzyFilter}
+        dataSource={props.realms}
+        errorText={props.meta.error}
+        searchText={props.input.value}
+        maxSearchResults={5}
+        onUpdateInput={props.input.onChange}
+        onNewRequest={props.input.onChange}
+        />
     </div>
   );
 };

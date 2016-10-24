@@ -6,25 +6,30 @@ import { bindActionCreators } from 'redux';
 import * as React from "react";
 import { connect } from 'react-redux';
 
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+
 interface CharacterClassSelectorProps {
-  value?: string;
   classes?: CharacterClass[];
-  onSelect?: (value: string) => void;
+  data?: {
+    label?: string;
+  }
+  meta?: any;
+  input?: any;
 }
 const CharacterClassSelector: React.StatelessComponent<CharacterClassSelectorProps> = (props: CharacterClassSelectorProps) => {
   return (
     <div>
-      <div className="mui-dropdown" style={{ width: 100 + "%" }}>
-        <button className="mui-btn mui-btn--light" data-mui-toggle="dropdown" style={{ width: 100 + "%" }}>
-          {props.value || "Class"}
-          <span className="mui-caret" />
-        </button>
-        <ul className="mui-dropdown__menu" style={{ width: 100 + "%" }}>
-          {
-            props.classes.map((x, i) => <li key={i}><a onClick={() => props.onSelect && props.onSelect(x.name)}>{x.name}</a></li>)
-          }
-        </ul>
-      </div>
+      <SelectField
+        value={props.input.value}
+        errorText={props.meta.touched && props.meta.error}
+        onChange={(e, key, payload) => props.input.onChange(payload)}
+        floatingLabelText={props.data.label}
+        >
+        {
+          props.classes.map((x, i) => <MenuItem key={i} value={x.name} primaryText={x.name} />)
+        }
+      </SelectField>
     </div>
   );
 };

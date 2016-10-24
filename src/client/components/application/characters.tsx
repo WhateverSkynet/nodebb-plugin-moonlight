@@ -7,10 +7,18 @@ import { bindActionCreators } from 'redux';
 import { CharacterClass } from '../../../models/wow';
 import { SelectCharacterClass, SELECT_CHARACTER_CLASS, SelectCharacterClassAction, ApplicationCharacterDataChangedAction, APPLICATION_CHARACTER_DATA_CHANGED } from '../../../actions';
 import { ApplicationCharacter, ApplicationCharacterChange } from '../../../models/application';
-import { TextField } from '../../common/textfield';
+
 import { CharacterClassSelectorContainer } from './class';
 import { CharacterSpecSelectorContainer } from './spec';
 import { RealmSelectorContainer } from './realms';
+
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+
+import * as UUID from "uuid";
+
+import { reduxForm, Field, FieldArray, formValueSelector } from 'redux-form';
 
 interface ImgurImageInputProps {
   url: string;
@@ -37,99 +45,143 @@ const ImgurImageInput = (props: ImgurImageInputProps) => {
 };
 
 interface CharacterProps {
-  isMain?: boolean;
-  character?: ApplicationCharacter;
-  onRemoveClick?: () => void;
-  actions?: {
-    change: (property: string, value: string) => ApplicationCharacterDataChangedAction;
-  };
+
+  field?: string;
+  class?: string;
+  index?: number;
+  userInterfaceUrl?: string;
+
 }
 
-const validateImgurUrl = (url: string) => {
-
-  if (!url || typeof url != "string") {
-    url = "";
-  };
-  let matches = url.match(/(?:https?:\/\/(?:www\.)?(?:imgur\.com)|(?:i\.imgur\.com))\/([A-z0-9]{7})\.?|^([A-z0-9]{7})$/);
-  let newUrl: string = null;
-  if (matches && matches.length > 1) {
-    if (matches[1]) {
-      newUrl = matches[1];
-    } else if (matches[2]) {
-      newUrl = matches[2];
-    } else {
-      newUrl = null;
-    }
-  }
-  return newUrl;
-};
-const Character: React.StatelessComponent<CharacterProps> = (props: CharacterProps) => {
-
+const renderTextField = ({ data, input, label, meta: { touched, error } }) => {
   return (
-    <div className="mui-panel">
-     { 
-       !props.isMain 
-       ? (<button className="mui-btn  mui-btn--primary" onClick={() => props.onRemoveClick && props.onRemoveClick()}>Remove</button>)
-       : ""
-      }
-      <TextField value={props.character.name} onValueChanged={(str) => props.actions.change("name", str)} label="Name"></TextField>
-      <RealmSelectorContainer value={props.character.realm} onSelect={(str) => props.actions.change("realm", str)} ></RealmSelectorContainer>
-      <CharacterClassSelectorContainer value={props.character.class} onSelect={(str) => props.actions.change("class", str)} ></CharacterClassSelectorContainer>
-      <CharacterSpecSelectorContainer value={props.character.primarySpecialization}
-        class={props.character.class}
-        onSelect={(str) => props.actions.change("primarySpecialization", str)}
-        label="Primary Specialization">
-      </CharacterSpecSelectorContainer>
-      <CharacterSpecSelectorContainer value={props.character.secondarySpecialization}
-        class={props.character.class}
-        onSelect={(str) => props.actions.change("secondarySpecialization", str)}
-        label="Secondary Specialization">
-      </CharacterSpecSelectorContainer>
+    <TextField
+      floatingLabelText={data.label}
+      fullWidth={true}
+      floatingLabelFixed={true}
+      errorText={touched && error}
+      value={input.value}
+      onChange={input.onChange}
+      onBlur={input.onBlur}
+      onFocus={input.onFocus}
+      />
+  );
+};
 
-      <TextField value={props.character.userInterfaceUrl} required={props.isMain} onValueChanged={(str) => {
-        const newUrl = validateImgurUrl(str);
-        if (newUrl && newUrl !== props.character.userInterfaceUrl) {
-          props.actions.change("userInterfaceUrl", newUrl)
-        }
-      }
-      } label="UI Screenshot URL"></TextField>
+const Character = (props: CharacterProps) => {
+  return (
+    <div>
+
+      <Field name={`${props.field}.name`} component={renderTextField} data={{ label: "Name" }} />
+      <Field name={`${props.field}.realm`} component={RealmSelectorContainer} data={{ label: "Realm" }} />
+      <Field name={`${props.field}.class`} component={CharacterClassSelectorContainer} data={{ label: "Class" }} />
+      <Field name={`${props.field}.primarySpecialization`} component={CharacterSpecSelectorContainer} data={{
+        label: "Primary Specialization",
+        class: props.class
+      }} />
+      <Field name={`${props.field}.secondarySpecialization`} component={CharacterSpecSelectorContainer} data={{
+        label: "Secondary Specialization",
+        class: props.class
+      }} />
+      <Field name={`${props.field}.userInterfaceUrl`} component={renderTextField} data={{ label: "UI Screenshot URL" }}/>
+
+
       {
-                    props.character.userInterfaceUrl
-                        ? (
-                            <div className="mui-row">
-                                <div className="mui-col-sm-16 mui-col-sm-4--offset">
-                                    <div className="image-warapper">
-                                        <img title={props.character.userInterfaceUrl} alt="UI screenshot" className="image-preview" 
-                                        src={`https://i.imgur.com/${props.character.userInterfaceUrl}m.jpg`} />
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                        : ""
-                }
+        props.userInterfaceUrl
+          ? (
+            <div className="mui-row">
+              <div className="mui-col-sm-16 mui-col-sm-4--offset">
+                <div className="image-warapper">
+                  <img title={props.userInterfaceUrl} alt="UI screenshot" className="image-preview"
+                    src={`https://i.imgur.com/${props.userInterfaceUrl}m.jpg`} />
+                </div>
+              </div>
+            </div>
+          )
+          : ""
+      }
+
+
+
     </div>
   );
 };
 
-const mapCharacterDispatchToProps = (dispatch: any, ownProps: CharacterProps) => {
-  const props: CharacterProps = {
-    actions: bindActionCreators({
-      change: (property: string, value: string) => {
-        const action: ApplicationCharacterDataChangedAction = {
-          type: APPLICATION_CHARACTER_DATA_CHANGED,
-          characterGuid: ownProps.character.guid,
-          changed: {
-            [property]: value
-          }
-        };
-        return action;
-      }
-    }, dispatch)
-  };
-  return props;
-};
+const selector = formValueSelector('application');
+const mapStateToProps2 = (state, ownProps) => {
 
-const CharacterContainer = connect(null, mapCharacterDispatchToProps)(Character);
+  const className = selector(state, `${ownProps.field}.class`);
+  const userInterfaceUrl = selector(state, `${ownProps.field}.userInterfaceUrl`);
+
+  return {
+    class: className,
+    userInterfaceUrl
+  };
+};
+const CharacterContainer = connect(mapStateToProps2)(Character);
+
+
+// <TextField value={props.character.userInterfaceUrl}  onChange={(e) => {
+//           const newUrl = validateImgurUrl(e.target.value);
+//           if (newUrl && newUrl !== props.character.userInterfaceUrl) {
+//             props.actions.change("userInterfaceUrl", newUrl)
+//           }
+//         }
+//         } floatingLabelText="UI Screenshot URL"></TextField>
+//         {
+//           props.character.userInterfaceUrl
+//             ? (
+//               <div className="mui-row">
+//                 <div className="mui-col-sm-16 mui-col-sm-4--offset">
+//                   <div className="image-warapper">
+//                     <img title={props.character.userInterfaceUrl} alt="UI screenshot" className="image-preview"
+//                       src={`https://i.imgur.com/${props.character.userInterfaceUrl}m.jpg`} />
+//                   </div>
+//                 </div>
+//               </div>
+//             )
+//             : ""
+//         }
+//  <RealmSelectorContainer onSelect={(str) => props.actions.change("realm", str)} ></RealmSelectorContainer>
+//       <CharacterClassSelectorContainer value={props.character.class} onSelect={(str) => props.actions.classChange(str)} ></CharacterClassSelectorContainer>
+//       <CharacterSpecSelectorContainer value={props.character.primarySpecialization}
+//         class={props.character.class}
+//         onSelect={(str) => props.actions.change("primarySpecialization", str)}
+//         label="Primary Specialization">
+//       </CharacterSpecSelectorContainer>
+//       <CharacterSpecSelectorContainer value={props.character.secondarySpecialization}
+//         class={props.character.class}
+//         onSelect={(str) => props.actions.change("secondarySpecialization", str)}
+//         label="Secondary Specialization">
+//       </CharacterSpecSelectorContainer>
+// <Field name={`characters[0].name`} component={renderTextField} type="textarea" label={`${index}. ${this.props.questions[index].text}`} />
+// const mapCharacterDispatchToProps = (dispatch: any, ownProps: CharacterProps) => {
+//   const props: CharacterProps = {
+//     actions: bindActionCreators({
+//       change: (property: string, value: string) => {
+//         const action: ApplicationCharacterDataChangedAction = {
+//           type: APPLICATION_CHARACTER_DATA_CHANGED,
+//           characterGuid: ownProps.character.guid,
+//           changed: {
+//             [property]: value
+//           }
+//         };
+//         return action;
+//       },
+//       classChange: (className: string) => {
+//         const action: SelectCharacterClassAction = {
+//           type: SELECT_CHARACTER_CLASS,
+//           characterGuid: ownProps.character.guid,
+//           className
+//         };
+//         return action;
+//       }
+//     }, dispatch)
+//   };
+//   return props;
+// };
+
+// const CharacterContainer = connect(null, mapCharacterDispatchToProps)(Character);
 
 interface CharacterListProps {
   characters: ApplicationCharacter[];
@@ -139,23 +191,39 @@ interface CharacterListProps {
   };
 }
 
+
+export const renderCharacterList = ({fields, meta: {error}}) => (
+  <div>
+    <RaisedButton label="Add" primary={true} onClick={() => fields.push({ guid: UUID.v4() })} />
+    <ul className="list--unstyled">
+      {
+        fields.map((f, i) => {
+          const remove = () => fields.remove(i);
+          return <li key={i}>
+            {
+              i !== 0
+                ? (<RaisedButton label="Remove" primary={true} onClick={() => fields.remove(i)}></RaisedButton>)
+                : ""
+            }
+
+            <CharacterContainer field={f} onRemoveClick={remove} index={i} />
+          </li>
+        })
+      }
+    </ul>
+  </div>
+);
+
 const CharacterList = (props: CharacterListProps) => {
 
   return (
     <div>
-      <button className="mui-btn  mui-btn--primary" onClick={() => props.actions.addCharacter()}>Add</button>
-      <ul className="mui-list--unstyled">
-        {
-          props.characters.map((c, i) => {
-            return <li key={c.guid}>
-              <CharacterContainer isMain={i === 0} character={c} onRemoveClick={() => props.actions.removeCharacter(c.guid)}></CharacterContainer>
-            </li>
-          })
-        }
-      </ul>
+      {renderCharacterList}
     </div>
   );
 };
+
+
 
 const mapStateToProps = (state: State) => {
   const props: CharacterListProps = {
@@ -178,4 +246,8 @@ const mapDispatchToProps = (dispatch: any) => {
   }
 };
 
-export const CharacterListContainer = connect(mapStateToProps, mapDispatchToProps)(CharacterList);
+//export const CharacterListContainer = connect(mapStateToProps, mapDispatchToProps)(CharacterList);
+
+
+
+export const CharacterListContainer = renderCharacterList;

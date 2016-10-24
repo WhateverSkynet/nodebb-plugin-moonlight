@@ -5,7 +5,12 @@ import { TOGGLE_RANK_FILTER, RosterAction, Action } from '../../actions';
 const defaultState = {
   characters: [],
   filters: {
-    rank: {}
+    rank: {
+      "2": true,
+      "5": true,
+      "6": true,
+      "7": true
+    }
   }
 };
 export const rosterReducer = (state: RosterState = defaultState, action: RosterAction = Action) => {

@@ -5,6 +5,7 @@ import { Question, Application, ApplicationTemplate, ApplicationCharacter } from
 
 import * as UUID from "uuid";
 import { SELECT_CHARACTER_CLASS, APPLICATION_CHARACTER_DATA_CHANGED } from '../../actions';
+import { ApplicationValidationErrors, ValidationError, PropertyValidationErrors, ERROR } from '../../models/application';
 
 const questionReducer: Reducer<Question> = (state: Question = {}, action: ApplicationAction = Action) => {
   switch (action.type) {
@@ -123,13 +124,15 @@ const appCharacterReducer: Reducer<ApplicationCharacter> = (state: ApplicationCh
     case SELECT_CHARACTER_CLASS:
       if (state.guid === action.characterGuid) {
         return Object.assign({}, state, {
-          class: action.className
+          class: action.className,
+          primarySpecialization: undefined,
+          secondarySpecialization: undefined
         });
       } else {
         return state;
       }
     default:
-      return state;//.map(x => appQuestionReducer(x, action));
+      return state;
   }
 };
 const appCharactersReducer: Reducer<ApplicationCharacter[]> = (state: ApplicationCharacter[] = [], action: ApplicationAction = Action) => {
@@ -170,8 +173,65 @@ const statusReducer: Reducer<number> = (state: number = 0, action: ApplicationAc
     default:
       return state;
   }
-}
+};
 
+
+// const appCharacterValidationReducer: Reducer<PropertyValidationErrors> = (state: PropertyValidationErrors = {}, action: ApplicationAction = Action) => {
+
+//   switch (action.type) {
+//     case APPLICATION_CHARACTER_DATA_CHANGED:
+//       state = Object.assign({}, state);
+//       state[action.characterGuid] = validateCharacter(action.changed);
+//       return state;
+//     case SELECT_CHARACTER_CLASS:
+//       state = Object.assign({}, state);
+//       state[action.characterGuid] = validateCharacter({ class: action.className });
+//       return state;
+//     case GET_APPLICATION_TEMPLATE_SUCCESS:
+//       state = {};
+//       action.template.characters.forEach((c, i) => {
+//         state[c.guid] = validateCharacter(c, i == 0);
+//       });
+//       return state;
+//     case REMOVE_APPLICATION_CHARACTER:
+//       let newState = {};
+//       for (let key in state) {
+//         if (key !== action.guid) {
+//           newState[key] = state[key];
+//         }
+//       }
+//       return newState;
+//     default:
+//       return state;
+//   }
+// };
+
+// const appQuestionValidationReducer: Reducer<number[]> = (state: number[] = [], action: ApplicationAction = Action) => {
+
+//   switch (action.type) {
+//     case APPLICATION_QUESTION_VALUE_CHANGED:
+//       const errorIndex = state.indexOf(action.qid);
+//       const hasError = !!action.newValue;
+//       if (errorIndex !== -1 && !hasError) {
+//         // error => no error
+//         return [
+//             ...state.slice(0, errorIndex),
+//             ...state.slice(errorIndex + 1)
+//         ];
+//       } else if (errorIndex === -1 && hasError) {
+//         // no error => error 
+//         [...state, action.qid];
+//       }
+
+//       return state;
+//     case GET_APPLICATION_TEMPLATE_SUCCESS:
+//       return action.template.questions
+//         .filter(x => !x.value)
+//         .map(x => x.qid);
+//     default:
+//       return state;
+//   }
+// };
 // const applicationTemplateReducer: Reducer<ApplicationTemplate> = (state: ApplicationTemplate = {}, action: ApplicationAction = Action) => {
 
 //   switch (action.type) {
@@ -182,6 +242,12 @@ const statusReducer: Reducer<number> = (state: number = 0, action: ApplicationAc
 //       }
 //   }
 // };
+// const applicationValidationReducer = combineReducers<ApplicationValidationErrors>({
+//   questions: appQuestionValidationReducer,
+//   characters: appCharacterValidationReducer
+// });
+
+
 const applicationTemplateReducer = combineReducers<ApplicationTemplate>({
   appId: appIdReducer,
   questions: appQuestionsReducer,
@@ -193,5 +259,6 @@ export const applicationReducer = combineReducers<ApplicationState>({
   questions: questionsReducer,
   templateQuestions: templateQuestionsReducer,
   editQuestionIndex: editQuestionReducer,
-  template: applicationTemplateReducer
+  template: applicationTemplateReducer,
+  // validationErrors: applicationValidationReducer
 });

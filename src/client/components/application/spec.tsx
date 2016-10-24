@@ -6,34 +6,40 @@ import { bindActionCreators } from 'redux';
 import * as React from "react";
 import { connect } from 'react-redux';
 
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+
+
 interface CharacterSpecSelectorProps {
-  value?: string;
-  class?: string;
-  label?: string;
+  data?: {
+    class?: string;
+    label?: string;
+  }
   specs?: Specialization[];
-  onSelect?: (value: string) => void;
+  input?: any;
+  meta?: any;
 }
 
 const CharacterSpecSelector: React.StatelessComponent<CharacterSpecSelectorProps> = (props: CharacterSpecSelectorProps) => {
   return (
     <div>
-      <div className="mui-dropdown" style={{ width: 100 + "%" }}>
-        <button className="mui-btn mui-btn--light" data-mui-toggle="dropdown" style={{ width: 100 + "%" }}>
-          {props.value || props.label || "Specialization"}
-          <span className="mui-caret" />
-        </button>
-        <ul className="mui-dropdown__menu" style={{ width: 100 + "%" }}>
-          {
-            props.specs.map((x, i) => <li key={i}><a onClick={() => props.onSelect && props.onSelect(x.name)}>{x.name}</a></li>)
+       <SelectField
+          value={props.input.value}
+          onChange={(e, key, payload) => props.input.onChange(payload)}
+          errorText={props.meta.touched && props.meta.error}
+          floatingLabelText={props.data.label}
+          disabled={!props.data.class}
+        >
+           {
+            props.specs.map((x, i) => <MenuItem key={i} value={x.name} primaryText={x.name} />)
           }
-        </ul>
-      </div>
+        </SelectField>
     </div>
   );
 };
 
 const mapClassStateToProps = (state: State, ownProps: CharacterSpecSelectorProps) => {
-  const selectedClass = state.wow.classes.find(x => x.name === ownProps.class);
+  const selectedClass = state.wow.classes.find(x => x.name === ownProps.data.class);
   const props: CharacterSpecSelectorProps = {
     specs: selectedClass && selectedClass.specs || []
   };

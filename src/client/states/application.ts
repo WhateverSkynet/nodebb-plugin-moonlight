@@ -1,4 +1,4 @@
-import { Question } from '../../models/application';
+import { Question, ApplicationValidationErrors } from '../../models/application';
 import { ApplicationTemplate } from './../../models/application';
 
 export interface ApplicationState {
@@ -6,4 +6,5 @@ export interface ApplicationState {
   templateQuestions?: number[];
   editQuestionIndex?: number;
   template?: ApplicationTemplate;
+  validationErrors: ApplicationValidationErrors;
 }

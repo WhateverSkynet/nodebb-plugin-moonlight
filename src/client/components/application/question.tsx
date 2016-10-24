@@ -1,97 +1,40 @@
 import * as React from "react";
 
-import { State } from './../../states/state';
-import { connect } from 'react-redux';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
-import { bindActionCreators } from 'redux';
-import { APPLICATION_QUESTION_VALUE_CHANGED, ApplicationQuestionValueChangedAction } from './../../../actions';
-import { Question } from './../../../models/application';
+import { Field, FieldArray } from 'redux-form';
 
-interface QuestionProps extends React.HTMLAttributes<HTMLDivElement> {
-    value: string;
-    text: string;
-    onValueChanged: (text: string) => void;
-}
+import TextField from 'material-ui/TextField';
 
-class QuestionComponent extends React.Component<QuestionProps, {}> {
-    private subject = new Subject<string>();
-    private sub: Subscription;
-    constructor(props: QuestionProps) {
-        super(props);
-    }
-
-    componentDidMount() {
-        this.sub = this.subject
-            .throttleTime(350)
-            .subscribe(x => {
-                if (this.props.onValueChanged) {
-                    this.props.onValueChanged(x);
-                }
-            });
-    }
-
-    componentWillUnmount() {
-        this.sub.unsubscribe();
-    }
-    private onChangeHandler(event: any) {
-        this.subject.next(event.target.value);
-    }
-    render() {
-        return (
-            <li className="mui-row">
-                <div className="mui-col-md-16 mui-col-md-offset-4 mui-textfield mui-textfield--float-label">
-                    <textarea
-                        required={true}
-                        defaultValue={this.props.value}
-                        rows={5}
-                        onChange={(e) => this.onChangeHandler(e)}
-                        />
-                    <label>{this.props.text}</label>
-                </div>
-            </li>
-        );
-    }
-}
-
-interface QuestionListProps {
-    questions: Question[];
-    actions: {
-        questionValueChanged:  (qid: number, newValue: string) => ApplicationQuestionValueChangedAction
-    }
-}
-
-const QuestionList = (props: QuestionListProps) => (
-
-        <ul className="mui-list--unstyled">
-            {
-                props.questions.map(q => <QuestionComponent key={q.qid} text={q.text} value={q.value}  onValueChanged={val => props.actions.questionValueChanged(q.qid, val)}/>)
-            }
-
-        </ul>
-
+const renderTextField = ({ data, input, label, meta: { touched, error } }) => {
+    return (
+        <TextField
+            className="col-sm-12"
+            floatingLabelText={data.label}
+            multiLine={true}
+            fullWidth={true}
+            floatingLabelFixed={true}
+            errorText={touched && error}
+            rows={5}
+            defaultValue={input.value}
+            onBlur={input.onBlur}
+            onFocus={input.onFocus}
+            />
     );
-
-const mapStateToProps = (state: State) => {
-    return {
-        questions: state.app.application.template.questions
-    };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
- return {
-    actions: bindActionCreators({
-      questionValueChanged: (qid: number, newValue: string) => ({
-        type: APPLICATION_QUESTION_VALUE_CHANGED,
-        qid,
-        newValue
-      }),
+const renderQuestions = ({fields, data, meta: {touched: error}}) => (
+    <ul className="mui-list--unstyled">
+        {data.questions.map((q, index) => {
+            return (
+                <li key={index}>
+                    <Field name={`questions[${index}].value`} component={renderTextField} type="textarea" data={{label:`${index}. ${data.questions[index].text}`}} />
+                </li>
+            )
+        }
 
-    }, dispatch)
-  };
-};
+        )}
 
-export const QuestionListContainer = connect(mapStateToProps, mapDispatchToProps)(QuestionList);
+    </ul>
+);
 
-// onChange={(e) => this.onQuestionEnter(i, e.target.value)}
+
+export const QuestionListContainer = renderQuestions;

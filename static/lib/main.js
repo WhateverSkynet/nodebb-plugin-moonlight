@@ -22,17 +22,13 @@
   link.setAttribute("type", "text/css");
   link.setAttribute("href", "/src/modules/moonlight/style.css");
   document.head.appendChild(link);
-  script.setAttribute("src", "//cdn.muicss.com/mui-0.7.5/js/mui.min.js");
-  document.head.appendChild(script);
   var root = document.createElement("div");
   root.setAttribute("id", "moonlight-root");
-  require(["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, App) {
+  require(["moonlight/bundle"], function (App) {
     App.initSocket();
 
-    ReactDOM.render(
-      React.createElement(App.Page, {}),
-      root
-    );
+    App.render(root);
+
   });
   var matchRooms = function (path) {
     switch (path) {

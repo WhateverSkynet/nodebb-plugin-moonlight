@@ -41,7 +41,16 @@ const className = (id: number) => {
             return "Demonhunter";
     }
 };
-
+const rankNames = [
+    "G",
+    "O",
+    "OA",
+    "R",
+    "T",
+    "RA",
+    "A",
+    "S",
+];
 export interface RosterProps {
     ranks: number[];
     disabledRanks: {[key:string]:boolean};
@@ -68,7 +77,7 @@ class RosterImpl extends React.Component<RosterProps, {}> {
                     {
                         this.props.ranks.map((x, i) =>
                         <button className={toggleButtonClasses(this.props.disabledRanks[x.toString()] === undefined)}
-                         onClick={(e) =>  this.props.actions.toggleRank(x)}>{x}</button>
+                         onClick={(e) =>  this.props.actions.toggleRank(x)}>{rankNames[i]}</button>
                         )
                     }
                 </div>

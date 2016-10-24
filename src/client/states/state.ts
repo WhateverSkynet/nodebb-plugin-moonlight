@@ -9,4 +9,5 @@ export interface State {
   routing: any;
   wow: WoWState;
   admin: AdminState;
+  form: any;
 }
