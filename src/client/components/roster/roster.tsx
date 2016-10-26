@@ -56,9 +56,9 @@ const rankNames =
 ];
 
 export interface RosterProps {
-    ranks: number[];
-    disabledRanks: { [key: string]: boolean }; //TODO: 2, 5, 6, 7 should be disabled by default, but can be enabled
-    characters: RosterCharacter[];
+    ranks?: number[];
+    disabledRanks?: { [key: string]: boolean }; //TODO: 2, 5, 6, 7 should be disabled by default, but can be enabled
+    characters?: RosterCharacter[];
     actions?: {
         toggleRank: (rank: number) => ToogleRankFilterAction;
         sortBy: (propertyName: string) => SortRosterByAction;
@@ -155,7 +155,7 @@ const mapStateToProps = (state: State) => {
 };
 
 const mapDispatchToProps = (dispatch: any) => {
-    return {
+    const props: RosterProps =  {
         actions: bindActionCreators({
             toggleRank: (rank: number) => {
                 return {
@@ -170,7 +170,8 @@ const mapDispatchToProps = (dispatch: any) => {
                 };
             }
         }, dispatch)
-    }
+    };
+    return props;
 };
 
 export const Roster = connect(mapStateToProps, mapDispatchToProps)(RosterImpl);
