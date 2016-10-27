@@ -40,6 +40,8 @@
       return "mnl_apply";
       case "/applications":
       return "mnl_applications";
+      case "/application":
+      return "mnl_application";
       default:
         "mnl";
     }
@@ -48,7 +50,7 @@
   $(window).on("action:ajaxify.contentLoaded", function (data) {
 
     require(["moonlight/bundle"], function (App) {
-      if (validUrls.indexOf(ajaxify.data.url) !== -1) {
+      if (validUrls.indexOf(ajaxify.data.url) !== -1 || ajaxify.data.url.startsWith("/application")) {
         document.getElementById("moonlight-content").appendChild(root);
         if (ajaxify.data.action) {
           App.store.dispatch(ajaxify.data.action)
