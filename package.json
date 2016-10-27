@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-moonlight",
-  "version": "0.0.11",
+  "version": "0.0.13",
   "description": "Battle.net integration with Nodebb",
   "main": "library.js",
   "repository": {
@@ -20,40 +20,42 @@
   "readmeFilename": "README.md",
   "nbbpm": {
     "compatibility": "^1.0.0",
-    "index": false
+    "index": true
   },
   "devDependencies": {
+    "@types/jest": "^15.1.32",
     "@types/lodash": "^4.14.37",
     "@types/material-ui": "^0.15.37",
-    "@types/react": "^0.14.41",
     "@types/react-addons-pure-render-mixin": "^0.14.14",
     "@types/react-dom": "^0.14.18",
     "@types/react-redux": "^4.4.32",
-    "@types/react-router": "^2.0.38",
     "@types/react-router-redux": "^4.0.34",
+    "@types/react-router": "^2.0.38",
     "@types/react-tap-event-plugin": "0.0.30",
+    "@types/react": "^0.14.41",
     "@types/uuid": "^2.0.29",
     "core-js": "^2.4.1",
     "css-loader": "0.23.1",
     "extract-text-webpack-plugin": "1.0.1",
+    "jest-cli": "^16.0.2",
     "lodash": "^4.16.4",
     "material-ui": "^0.16.1",
     "node-sass": "3.8.0",
     "normalize.css": "^5.0.0",
-    "react": "15.3.0",
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-perf": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.3.2",
     "react-css-themr": "1.1.3",
-    "react-dom": "15.3.0",
+    "react-dom": "15.3.2",
     "react-redux": "4.4.5",
-    "react-router": "2.8.1",
     "react-router-redux": "4.0.6",
+    "react-router": "2.8.1",
     "react-tap-event-plugin": "^1.0.0",
-    "redux": "3.5.2",
+    "react": "15.3.2",
     "redux-devtools-extension": "^1.0.0",
     "redux-form": "^6.1.1",
     "redux-observable": "^0.12.1",
+    "redux": "3.5.2",
     "rxjs": "^5.0.0-beta.12",
     "sass-loader": "4.0.0",
     "source-map-loader": "0.1.5",
@@ -64,7 +66,7 @@
     "webpack": "1.13.2"
   },
   "dependencies": {
-    "battlenet-api": "0.13.0",
-    "muicss": "0.9.3"
+    "muicss": "0.9.3",
+    "battlenet-api": "0.13.0"
   }
 }

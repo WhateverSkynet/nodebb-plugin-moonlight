@@ -67,6 +67,8 @@ declare namespace ReduxForm {
          * Useful to be able to spec
          */
         id?: string;
+        data?: any;
+        normalize?: any;
     }
 
     export class Field<P> extends Component<InputFieldProps<P>, {}> {
@@ -252,6 +254,7 @@ declare namespace ReduxForm {
         withRef?: boolean;
 
         props?: Object;
+        data?: any;
     }
 
     export class FieldArray<T, P> extends Component<InputFieldArrayProps<P>, {}> {
@@ -569,7 +572,7 @@ declare namespace ReduxForm {
         valid?: boolean;
     }
 
-    export function reduxForm<T extends ComponentClass<P> | StatelessComponent<P>, FormData extends DataShape, P, S>(
+    export function reduxForm<T extends ComponentConstructor, FormData extends DataShape, P, S>(
         config: Config<FormData, P, S>
     ): FormDecorator<T, FormData, P, S>;
 

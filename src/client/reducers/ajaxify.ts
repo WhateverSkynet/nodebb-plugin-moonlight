@@ -19,7 +19,7 @@ export const ajaxifyReducer = (state: AjaxifyState = defaultState, action: Ajaxi
         recruitment: state.recruitment,
         roster: state.roster
       };
-      newState.roster = action.characters.sort((a: RosterCharacter, b: RosterCharacter) => a.rank - b.rank);
+      newState.roster = action.characters;
       return newState;
     case AJAXIFY_RECRUITMENT:
        newState = {
