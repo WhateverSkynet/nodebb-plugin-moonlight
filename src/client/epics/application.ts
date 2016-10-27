@@ -5,6 +5,7 @@ import { applyMiddleware } from 'redux';
 import { Socket } from './helpers';
 import { State } from '../states/state';
 import { store } from '../index';
+import { INITIALIZE_REDUX_FORM, SUBMIT_APPLICATION, START_SUBMIT_REDUX_FORM, ReduxFormAction, END_SUBMIT_REDUX_FORM } from '../../actions';
 
 
 export const getQuestionsEpic: Epic<ApplicationAction> = action$ =>
@@ -34,25 +35,39 @@ export const getApplicationTemplateEpic: Epic<ApplicationAction> = action$ =>
   action$.ofType(AJAXIFY_NEW_APPLICATION)
     .mergeMap(action => Socket
       .emit({ event: 'plugins.ml.application.getApplicationTemplate' })
-      .map(data => ({
-        type: GET_APPLICATION_TEMPLATE_SUCCESS,
-        template: data
-      }))
-     // .catch(err => console.log(err))
+      .flatMap(data =>
+        Observable.concat(
+          // Form needs to be initilized first with correct values else question inputs will be empty. TODO: find better solution.
+          Observable.of({
+            type: INITIALIZE_REDUX_FORM,
+            meta: { form: 'application' },
+            payload: {
+              characters: data.characters,
+              questions: data.questions
+            }
+          }),
+          Observable.of({
+            type: GET_APPLICATION_TEMPLATE_SUCCESS,
+            template: data
+          })
+        )
+      )
+    // .catch(err => console.log(err))
     );
 
-const getApplicationForm = (state: State) => {
+
+// TODO: make this private
+export const getApplicationForm = (state: State) => {
   const form = state.form.application;
   const payload = Object.assign({}, state.app.application.template);
-  payload.characters = Object.assign({}, form.values.characters);
+  payload.characters = [...form.values.characters];
   for (let i = 0; i < payload.questions.length; i++) {
     if (form.values && form.values.questions && form.values.questions.length > i) {
-    payload.questions[i].value = form.values.questions[i].value;
+    payload.questions[i].value = form.values.questions[i] && form.values.questions[i].value;
     }
   }
-  return payload
+  return payload;
 };
-
 
 export const saveApplication: Epic<ApplicationAction> = action$ =>
   action$.ofType(SAVE_APPLICATION)

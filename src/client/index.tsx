@@ -36,6 +36,9 @@ injectTapEventPlugin();
 //Rxjs
 // import 'rxjs/add/operator/mergeMap';
 import { ApplicationForm } from './components/application/form';
+import { dbReducer } from './reducers/db';
+import { AppListContainer } from './components/application/list';
+import { AppDetailsContainer } from './components/application/app';
 
 const reducer = combineReducers<State>({
   routing: routerReducer,
@@ -43,7 +46,8 @@ const reducer = combineReducers<State>({
   ajaxify: ajaxifyReducer,
   wow: wowReducer,
   admin: adminReducer,
-  form: formReducer
+  form: formReducer,
+  db: dbReducer
 });
 
 const epicMiddleware = createEpicMiddleware(appEpic);
@@ -74,6 +78,8 @@ export class Page extends React.Component<{}, {}> {
             <Route path="/" component={App}>
               <Route path="/landing" component={RecruitmentWidget} />
               <Route path="/apply" component={ApplicationForm} />
+              <Route path="/applications" component={AppListContainer} />
+              <Route path="/application/:id" component={AppDetailsContainer} />
               <Route path="/roster" component={Roster} />
             </Route>
             <Route path='*' />

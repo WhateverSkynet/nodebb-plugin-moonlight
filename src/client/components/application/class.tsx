@@ -1,4 +1,3 @@
-import { SelectCharacterClassAction, SELECT_CHARACTER_CLASS } from '../../../actions';
 import { CharacterClass } from '../../../models/wow';
 import { State } from '../../states/state';
 import { bindActionCreators } from 'redux';

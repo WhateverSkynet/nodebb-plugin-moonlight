@@ -16,28 +16,35 @@ import { reduxForm, Field, FieldArray, FormProps } from 'redux-form';
 import { State } from '../../states/state';
 import { connect } from 'react-redux';
 import { Question } from '../../../models/application';
+import { SUBMIT_APPLICATION } from '../../../actions';
+import { Socket } from '../../epics/helpers';
+import { getApplicationForm } from '../../epics/application';
 
 
 const validateCharacter = (character, uiUrlRequired = false) => {
   const errors: any = {};
+  // TODO: Remove store ref
+  const realms = store.getState().wow.realms;
   if (!character.name) {
-    errors.name = "Required";
+    errors.name = "Required.";
   }
   if (!character.realm) {
     errors.realm = "Required";
+  } else if (realms.indexOf(character.realm) === -1) {
+    errors.realm = "Invalid Realm."
   }
   if (!character.class) {
-    errors.class = "Required";
+    errors.class = "Required.";
   }
   if (!character.primarySpecialization) {
-    errors.primarySpecialization = "Required";
+    errors.primarySpecialization = "Required.";
   }
   if (!character.secondarySpecialization) {
-    errors.secondarySpecialization = "Required";
+    errors.secondarySpecialization = "Required.";
   }
   if (!character.userInterfaceUrl) {
     if (uiUrlRequired) {
-      errors.userInterfaceUrl = "Required";
+      errors.userInterfaceUrl = "Required.";
     }
   } else if (!/^(?:https?:\/\/(?:www\.)?(?:imgur\.com)|(?:i\.imgur\.com))\/([A-z0-9]{7})\.?|^([A-z0-9]{7})$/.test(character.userInterfaceUrl)) {
     errors.userInterfaceUrl = "Invalid URL.";
@@ -54,84 +61,79 @@ const validate = (values) => {
     errors.characters[i] = validateCharacter(c, i === 0);
   });
 
-  values.questions && values.questions.forEach((q, i) => {
-    if (!q.value) {
-      errors.questions[i].value = "Required";
-    }
-  });
+  errors.questions = values.questions
+    ? values.questions.map(q => !q || !q.value ? {value:"Required."} : null)
+    : [];
 
   return errors
 };
 
-const formConfig = {
-  form: "application",
-  validate
+const onSubmit = () => {
+   return Socket.emit({ event: 'plugins.ml.application.submitApplication', payload: getApplicationForm(store.getState()) }).toPromise();
 };
 
-
+const formConfig = {
+  form: "application",
+  validate,
+  onSubmit
+};
 
 interface ApplicationFormProps extends FormProps<{}, {}> {
-    questions: Question[];
+  questions: Question[];
+  valid: boolean;
+  //fix for missing typings
+  submitSucceeded: boolean;
 }
+
 
 class ApplicationFormImpl extends React.PureComponent<ApplicationFormProps, {}> {
 
-    private sub: Subscription;
-    constructor(props: {}) {
-        super(props);
-        getWoWData(() => { });
-        this.sub = Observable.timer(30000, 30000)
-            .subscribe(x => {
-                store.dispatch({
-                    type: SAVE_APPLICATION
-                });
-            });
-    }
+  private sub: Subscription;
+  constructor(props: {}) {
+    super(props);
+    getWoWData(() => { });
+    this.sub = Observable.timer(30000, 30000)
+      .subscribe(x => {
+        if (!this.props.submitting && !this.props.submitSucceeded) {
+          store.dispatch({
+            type: SAVE_APPLICATION
+          });
+        }
+      });
+  }
 
-    componentWillUnmount() {
-        this.sub.unsubscribe();
-    }
+  componentWillUnmount() {
+    this.sub.unsubscribe();
+  }
 
-    render() {
-        return (
+  render() {
+    return (
+      <Card>
+        <CardHeader
+          title="Application"
+          />
+        <CardText>
+          <h2 className="app-title">Characters</h2>
 
-            <Card>
-                <CardHeader
-                    title="Application"
-                    />
-                <CardText>
-                    <h2 className="app-title">Characters</h2>
+          <FieldArray name="characters" component={renderCharacterList} />
+          <h2 className="app-title">Questions</h2>
 
-                    <FieldArray name="characters" component={renderCharacterList} />
-                    <h2 className="app-title">Questions</h2>
+          <FieldArray name="questions" component={QuestionListContainer} data={{ questions: this.props.questions }} />
+          <RaisedButton label="Save" primary={true} disabled={this.props.submitting || this.props.submitSucceeded} onClick={() => store.dispatch({
+            type: SAVE_APPLICATION
+          })} />
+          <RaisedButton label="Submit" primary={true} disabled={this.props.submitting || !this.props.valid || this.props.submitSucceeded} onClick={(e: any) => this.props.handleSubmit(e)} />
+        </CardText>
+      </Card>
 
-                    <FieldArray name="questions" component={QuestionListContainer} data={{ questions: this.props.questions }} />
-                    <RaisedButton label="Submit" primary={true} onClick={() => {
-                        store.dispatch({
-                            type: SAVE_APPLICATION
-                        });
-                    } } />
-                </CardText>
-            </Card>
-
-        );
-    }
+    );
+  }
 }
 
 const mapStateToProps = (state: State) => {
-    return {
-        questions: state.app.application.template.questions
-    };
+  return {
+    questions: state.app.application.template.questions
+  };
 };
 
-
 export const ApplicationForm = connect(mapStateToProps)(reduxForm(formConfig)(ApplicationFormImpl));
-
-//   <CharacterListContainer></CharacterListContainer>
-  // {
-                    //     this.props.questions.map((x, i) => (
-                    //         <ApplicationQuestion key={x.id} text={x.text} value={x.value}>
-
-                    //         </ApplicationQuestion>))
-                    // }
-    //  onChange={(e) => this.onQuestionEnter(i, e.target.value) }

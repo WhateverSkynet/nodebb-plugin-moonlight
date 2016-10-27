@@ -39,11 +39,21 @@ export type AjaxifyChangeRecruitmentStatusAction = {
   status: string;
 };
 
+export type AjaxifyApplicationList = "@mnl/ajaxify/APPLICATION_LIST";
+export const AJAXIFY_APPLICATION_LIST: AjaxifyApplicationList = "@mnl/ajaxify/APPLICATION_LIST";
+export type AjaxifyApplicationListAction = {
+  type: AjaxifyApplicationList;
+  payload: {
+    applications: ApplicationTemplate[]
+  };
+};
+
 
 export type AjaxifyAction = AjaxifyRosterAction
   | AjaxifyChangeRecruitmentStatusAction
   | AjaxifyNewApplicationAction
   | AjaxifyRecruitmentAction
+  | AjaxifyApplicationListAction
   | Action;
 
 // WoW Actions
@@ -234,34 +244,26 @@ export type SaveApplicationSuccessAction = {
   template: ApplicationTemplate;
 };
 
-export type AddApplicationCharacter = "@mnl/application/ADD_CHARACTER";
-export const ADD_APPLICATION_CHARACTER: AddApplicationCharacter = "@mnl/application/ADD_CHARACTER";
-export type AddApplicationCharacterAction = {
-  type: AddApplicationCharacter;
+export type SubmitApplication = "@mnl/application/SUBMIT";
+export const SUBMIT_APPLICATION: SubmitApplication = "@mnl/application/SUBMIT";
+export type SubmitApplicationAction = {
+  type: SubmitApplication;
+  template: ApplicationTemplate;
 };
 
-export type RemoveApplicationCharacter = "@mnl/application/REMOVE_CHARACTER";
-export const REMOVE_APPLICATION_CHARACTER: RemoveApplicationCharacter = "@mnl/application/REMOVE_CHARACTER";
-export type RemoveApplicationCharacterAction = {
-  type: RemoveApplicationCharacter;
-  guid: string;
+export type GetApplicationList = "@mnl/application/GET_LIST";
+export const GET_APPLICATION_LIST: GetApplicationList = "@mnl/application/GET_LIST";
+export type GetApplicationListAction = {
+  type: GetApplicationList;
 };
 
-export type SelectCharacterClass = "@mnl/application/SELECT_CHARACTER_CLASS";
-export const SELECT_CHARACTER_CLASS: SelectCharacterClass = "@mnl/application/SELECT_CHARACTER_CLASS";
-export type SelectCharacterClassAction = {
-  type: SelectCharacterClass;
-  className: string;
-  characterGuid: string;
-};
-
-// Can use object to describe changes
-export type ApplicationCharacterDataChanged = "@mnl/application/CHARACTER_DATA_CHANGED";
-export const APPLICATION_CHARACTER_DATA_CHANGED: ApplicationCharacterDataChanged = "@mnl/application/CHARACTER_DATA_CHANGED";
-export type ApplicationCharacterDataChangedAction = {
-  type: ApplicationCharacterDataChanged;
-  characterGuid: string;
-  changed: ApplicationCharacterChange;
+export type GetApplicationListSuccess = "@mnl/application/GET_APPLICATION_LIST_SUCCESS";
+export const GET_APPLICATION_LIST_SUCCESS: GetApplicationListSuccess = "@mnl/application/GET_APPLICATION_LIST_SUCCESS";
+export type GetApplicationListSuccessAction = {
+  type: GetApplicationListSuccess;
+  payload: {
+    applications: ApplicationTemplate[]
+  };
 };
 
 export type ApplicationAction = GetQuestionsAction
@@ -283,8 +285,55 @@ export type ApplicationAction = GetQuestionsAction
   | ApplicationQuestionValueChangedAction
   | SaveApplicationAction
   | SaveApplicationSuccessAction
-  | RemoveApplicationCharacterAction
-  | AddApplicationCharacterAction
-  | SelectCharacterClassAction
-  | ApplicationCharacterDataChangedAction
+  | InitializeReduxFormAction
+  | SubmitApplicationAction
+  | GetApplicationListAction
+  | GetApplicationListSuccessAction
+  | ReduxFormAction
+  | Action;
+
+
+// Redux Form
+
+export type InitializeReduxForm = "redux-form/INITIALIZE";
+export const INITIALIZE_REDUX_FORM: InitializeReduxForm = "redux-form/INITIALIZE";
+export type InitializeReduxFormAction = {
+  type: InitializeReduxForm;
+  meta: any;
+  payload: any;
+};
+
+export type StartSubmitReduxForm = "redux-form/START_SUBMIT";
+export const START_SUBMIT_REDUX_FORM: StartSubmitReduxForm = "redux-form/START_SUBMIT";
+export type StartSubmitReduxFormAction = {
+  type: StartSubmitReduxForm;
+  meta: {
+    form: string;
+  };
+};
+
+export type EndSubmitReduxForm = "redux-form/END_SUBMIT";
+export const END_SUBMIT_REDUX_FORM: EndSubmitReduxForm = "redux-form/END_SUBMIT";
+export type EndSubmitReduxFormAction = {
+  type: EndSubmitReduxForm;
+  meta: {
+    form: string;
+  };
+};
+
+export type SetSubmitSucceededReduxForm = "redux-form/SET_SUBMIT_SUCCEDED";
+export const SET_SUBMIT_SUCCEDED_REDUX_FORM: SetSubmitSucceededReduxForm = "redux-form/SET_SUBMIT_SUCCEDED";
+export type SetSubmitSucceededReduxFormAction = {
+  type: SetSubmitSucceededReduxForm;
+  meta: {
+    form: string;
+    fields?: any[];
+  };
+  error: boolean;
+};
+
+export type ReduxFormAction = InitializeReduxFormAction
+  | StartSubmitReduxFormAction
+  | EndSubmitReduxFormAction
+  | SetSubmitSucceededReduxFormAction
   | Action;

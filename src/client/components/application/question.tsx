@@ -22,7 +22,7 @@ const renderTextField = ({ data, input, label, meta: { touched, error } }) => {
 };
 
 const renderQuestions = ({fields, data, meta: {touched: error}}) => (
-    <ul className="mui-list--unstyled">
+    <ul className="list--unstyled">
         {data.questions.map((q, index) => {
             return (
                 <li key={index}>
