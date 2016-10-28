@@ -1,3 +1,4 @@
+@import "colors";
 @import "base";
 // import MUI colors
 // @import "~muicss/lib/sass/mui-colors";
@@ -263,52 +264,52 @@
 
 
 
-// .character-class[data-character-class="hunter"] a {
-//   color: $color-hunter;
-// }
+.character-class[data-character-class="hunter"] {
+  color: $color-hunter;
+}
 
-// .character-class[data-character-class="druid"] a {
-//   color: $color-druid;
-// }
+.character-class[data-character-class="druid"] {
+  color: $color-druid;
+}
 
-// .character-class[data-character-class="mage"] a {
-//   color: $color-mage;
-// }
+.character-class[data-character-class="mage"] {
+  color: $color-mage;
+}
 
-// .character-class[data-character-class="monk"] a {
-//   color: $color-monk;
-// }
+.character-class[data-character-class="monk"] {
+  color: $color-monk;
+}
 
-// .character-class[data-character-class="paladin"] a {
-//   color: $color-paladin;
-// }
+.character-class[data-character-class="paladin"] {
+  color: $color-paladin;
+}
 
-// .character-class[data-character-class="priest"] a {
-//   color: $color-priest;
-// }
+.character-class[data-character-class="priest"] {
+  color: $color-priest;
+}
 
-// .character-class[data-character-class="rogue"] a {
-//   color: $color-rogue;
-// }
+.character-class[data-character-class="rogue"] {
+  color: $color-rogue;
+}
 
-// .character-class[data-character-class="shaman"] a {
-//   color: $color-shaman;
-// }
+.character-class[data-character-class="shaman"] {
+  color: $color-shaman;
+}
 
-// .character-class[data-character-class="warlock"] a {
-//   color: $color-warlock;
-// }
+.character-class[data-character-class="warlock"] {
+  color: $color-warlock;
+}
 
-// .character-class[data-character-class="warrior"] a {
-//   color: $color-warrior;
-// }
+.character-class[data-character-class="warrior"] {
+  color: $color-warrior;
+}
 
-// .character-class[data-character-class="deathknight"] a {
-//   color: $color-death-knight;
-// }
-// .character-class[data-character-class="demonhunter"] a {
-//   color: $color-demon-hunter;
-// }
+.character-class[data-character-class="deathknight"] {
+  color: $color-death-knight;
+}
+.character-class[data-character-class="demonhunter"] {
+  color: $color-demon-hunter;
+}
 
 // .realm-list {
 //   max-height: 300px;
@@ -323,4 +324,7 @@
   }
 }
 
+.clickable{
+  cursor: pointer;
+}
 

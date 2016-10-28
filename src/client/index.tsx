@@ -16,8 +16,13 @@ import { ajaxifyReducer } from './reducers/ajaxify';
 import { wowReducer } from './reducers/wow';
 import { Roster } from "./components/roster/roster";
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { RecruitmentWidget } from "./components/recruitment/recruitment";
+
+const injectTapEventPlugin = require('react-tap-event-plugin');
+
+injectTapEventPlugin();
 
 const reducer = combineReducers<State>({
   routing: routerReducer,
@@ -47,13 +52,16 @@ export class Page extends React.Component<{}, {}> {
   render() {
     return (
       <Provider store={store}>
-        <Router history={history}>
-          <Route path="/" component={App}>
-            <Route path="/landing" component={RecruitmentWidget} />
-            <Route path="/roster" component={Roster} />
-          </Route>
+        <MuiThemeProvider>
 
-        </Router>
+          <Router history={history}>
+            <Route path="/" component={App}>
+              <Route path="/landing" component={RecruitmentWidget} />
+              <Route path="/roster" component={Roster} />
+            </Route>
+
+          </Router>
+        </MuiThemeProvider>
       </Provider>);
   }
 }
