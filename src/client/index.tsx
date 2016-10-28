@@ -38,7 +38,7 @@ injectTapEventPlugin();
 import { ApplicationForm } from './components/application/form';
 import { dbReducer } from './reducers/db';
 import { AppListContainer } from './components/application/list';
-import { AppDetailsContainer } from './components/application/app';
+import { AppDetailsContainer } from './components/application/details';
 
 const reducer = combineReducers<State>({
   routing: routerReducer,

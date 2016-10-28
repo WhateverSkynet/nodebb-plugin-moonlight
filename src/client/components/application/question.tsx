@@ -26,7 +26,7 @@ const renderQuestions = ({fields, data, meta: {touched: error}}) => (
         {data.questions.map((q, index) => {
             return (
                 <li key={index}>
-                    <Field name={`questions[${index}].value`} component={renderTextField} type="textarea" data={{label:`${index}. ${data.questions[index].text}`}} />
+                    <Field name={`questions[${index}].value`} component={renderTextField} type="textarea" data={{label:`${index + 1}. ${data.questions[index].text}`}} />
                 </li>
             )
         }

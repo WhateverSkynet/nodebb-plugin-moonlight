@@ -48,12 +48,21 @@ export type AjaxifyApplicationListAction = {
   };
 };
 
+export type AjaxifyApplication = "@mnl/ajaxify/APPLICATION";
+export const AJAXIFY_APPLICATION: AjaxifyApplication = "@mnl/ajaxify/APPLICATION";
+export type AjaxifyApplicationAction = {
+  type: AjaxifyApplication;
+   payload: {
+    application: ApplicationTemplate
+  };
+};
 
 export type AjaxifyAction = AjaxifyRosterAction
   | AjaxifyChangeRecruitmentStatusAction
   | AjaxifyNewApplicationAction
   | AjaxifyRecruitmentAction
   | AjaxifyApplicationListAction
+  | AjaxifyApplicationAction
   | Action;
 
 // WoW Actions
