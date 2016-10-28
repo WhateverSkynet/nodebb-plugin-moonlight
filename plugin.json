@@ -30,10 +30,11 @@
   "modules": {
     "react.js": "../react/dist/react.min.js",
     "reactDOM.js": "../react-dom/dist/react-dom.min.js",
-    "muicss.js": "../muicss/dist/js/mui.min.js",
     "moonlight/bundle.js": "/dist/main.js",
     "moonlight/bundle.map.js": "/dist/main.map.js",
-    "moonlight/style.css": "/dist/style.css",
-    "moonlight/style.map": "/dist/style.map"
+    "moonlight/moonlight.css": "/dist/moonlight.css",
+    "moonlight/moonlight.map": "/dist/moonlight.map",
+    "moonlight/admin.css": "/dist/admin.css",
+    "moonlight/admin.map": "/dist/admin.map"
   }
 }

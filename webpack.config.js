@@ -4,8 +4,11 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     context: __dirname,
     entry: {
-        style: [
+        moonlight: [
             "./src/client/main.scss"
+        ],
+        admin: [
+            "./src/client/admin.scss"
         ],
         main: [
             "./src/client/index.tsx"
@@ -50,7 +53,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin('style.css', {
+        new ExtractTextPlugin('[name].css', {
             allChunks: true
         })
     ],

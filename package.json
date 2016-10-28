@@ -65,7 +65,6 @@
     "webpack": "1.13.2"
   },
   "dependencies": {
-    "muicss": "0.9.3",
     "battlenet-api": "0.13.0"
   }
 }
