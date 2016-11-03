@@ -4,7 +4,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { store } from "../index";
 
-interface RecruitmentSetting {
+export interface RecruitmentSetting {
   class: string;
   spec: string;
   status: string;

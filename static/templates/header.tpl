@@ -53,8 +53,12 @@
 	<div class="header-container">
 
 		<div class="header">
-			<img class="logo" src="//ktek.online/whatever/img/we-logo.png" alt="Whatever">
-			<h2 class="title">Mythic raiding guild on Auchindoun-EU</h2>
+			<div class="header-row">
+				<a href="<!-- IF brand:logo:url -->{brand:logo:url}<!-- ELSE -->{relative_path}/<!-- ENDIF brand:logo:url -->">
+					<img alt="{brand:logo:alt}" class="{brand:logo:display} logo" src="{brand:logo}" />
+				</a>
+				<h2 class="mnl-title">Mythic raiding guild on Auchindoun-EU</h2>
+			</div>
 			<div class="menu">
         	<!-- IMPORT partials/menu.tpl -->
 			</div>

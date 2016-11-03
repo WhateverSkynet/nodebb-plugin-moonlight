@@ -20,7 +20,7 @@ legend,
 textarea,
 pre,
 iframe,
-hr,
+//hr,
 h1,
 h2,
 h3,
@@ -98,21 +98,12 @@ html {
   background-repeat: repeat;
 }
 
-h1, h2, h3 {
-  font-family: 'Aldrich', sans-serif;
-}
-
 h2.section-title {
   font-size: 36px;
   margin-bottom: 30px;
 }
 
 /* This hell of a content right here */
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
 .section {
   margin: 30px;
@@ -132,8 +123,18 @@ h2.section-title {
   display:flex;
   padding: 0 30px 0 30px;
   height: 300px;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
+}
+
+.header-row {
+  /*max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  padding: 0 30px 0 30px;
+  height: 300px;
+  flex-direction: row;
+  justify-content: space-between;*/
 }
 
 .menu {
@@ -144,17 +145,7 @@ h2.section-title {
   justify-content: space-between;
 }
 
-.logo {
-  align-self: center;
-}
-
-
-
-.title-container {
-
-}
-
-h2.title {
+.mnl-title {
   color: #f0f0f0;
   font-family: 'Aldrich', sans-serif;
   font-size: 22px;
@@ -168,7 +159,7 @@ h2.title {
 .button {
   background-color: #002032;
   color: #f0f0f0;
-  padding: 16px 32px;
+  padding: 16px 32px !important;
   font-family: 'Aldrich', sans-serif;
   font-size: 14px;
   line-height: 1;
@@ -176,7 +167,7 @@ h2.title {
   text-align: center;
   border: 1px solid #002C45;
   box-sizing: border-box;
-  margin-right: 10px;
+  margin-right: 10px !important;
   cursor: pointer;
   transition: all 0.25s;
   transition-timing-function: cubic-bezier(0.77, 0, 0.175, 1);

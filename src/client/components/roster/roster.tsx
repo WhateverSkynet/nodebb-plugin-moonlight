@@ -101,48 +101,53 @@ const RosterImpl = (props: RosterProps) => {
           ))
         }
       </div>
-      <Table
-        fixedHeader={true}
-        selectable={true}
-        >
-        <TableHeader
-          adjustForCheckbox={false}
-          displaySelectAll={false}
-          >
-          <TableRow onCellClick={onHeaderCellClick}>
-            <TableHeaderColumn tooltip="Name" >Name</TableHeaderColumn>
-            <TableHeaderColumn tooltip="Ask Mr. Robot" >Ask Mr. Robot</TableHeaderColumn>
-            <TableHeaderColumn className="clickable" tooltip="Rank" onClick={() => this.props.actions.sortBy("rank")}>Rank</TableHeaderColumn>
-            <TableHeaderColumn className="clickable" tooltip="Item Level">Item Level</TableHeaderColumn>
-            <TableHeaderColumn className="clickable" tooltip="Artifact">Item Level</TableHeaderColumn>
-            <TableHeaderColumn className="clickable" tooltip="AP">AP</TableHeaderColumn>
-            <TableHeaderColumn className="clickable" tooltip="Traits">Traits</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody
-          deselectOnClickaway={true}
-          displayRowCheckbox={false}
-          stripedRows={false}
-          preScanRows={false}
-          >
-          {props.characters.map((m, index) => (
-            <TableRow key={m.name + m.realm} >
-              <TableRowColumn>
-                <a className="character-class" data-character-class={getCssName(className(m.class))} href={`https://eu.battle.net/wow/en/character/${m.realm}/${m.name}/advanced`} target="_blank">{m.name}</a>
-              </TableRowColumn>
-              <TableRowColumn>
-                <a href={`https://www.askmrrobot.com/wow/gear/eu/${m.realm}/${m.name}`} target="_blank">
-                  <img src="https://media-curse.cursecdn.com/attachments/81/383/a7c1e08f4816cf2632752d5949eb7bdc.png" height="15" width="15" />
-                </a></TableRowColumn>
-              <TableRowColumn>{rankNames[m.rank]}</TableRowColumn>
-              <TableRowColumn>{m.averageItemLevelEquipped}</TableRowColumn>
-              <TableRowColumn>{m.audit.artifact.itemLevel}</TableRowColumn>
-              <TableRowColumn>{formatLargeNumbers(m.totalArtifactPower)}</TableRowColumn>
-              <TableRowColumn>{m.audit.artifact.traitCount}</TableRowColumn>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+
+      <table className="table">
+        <thead>
+          <tr className="row">
+            <th className="col-xs-2" >Name</th>
+            <th className="col-xs-2" >Links</th>
+            <th className="col-xs-3 clickable" onClick={() => props.actions.sortBy("rank")} >Rank</th>
+            <th className="col-xs-1 clickable" onClick={() => props.actions.sortBy("averageItemLevelEquipped")} >Item Level</th>
+            <th className="col-xs-1 clickable" onClick={() => props.actions.sortBy("audit.artifact.itemLevel")} >Artifact</th>
+            <th className="col-xs-2 clickable" onClick={() => props.actions.sortBy("totalArtifactPower")} >AP</th>
+            <th className="col-xs-1 clickable" onClick={() => props.actions.sortBy("audit.artifact.traitCount")} >Traits</th>
+          </tr>
+        </thead>
+        <tbody style={
+          {
+            background: "rgba(22,39,53,1)",
+            color: "#fff"
+          }
+        }>
+          {
+            props.characters
+              .map((m, i) =>
+                <tr key={m.name + m.realm} className="row" style={
+                  {
+                    background: i % 2 === 0 ? "rgba(127, 221, 233, 0.4)" : "transparent"
+                  }
+                } >
+                  <td className="col-xs-2">
+                    <a className="character-class" data-character-class={getCssName(className(m.class))} href={"https://eu.battle.net/wow/en/character/" + m.realm + "/" + m.name + "/advanced"} target="_blank">{m.name}</a>
+                  </td>
+                  <td className="col-xs-2">
+                    <a href={`https://www.askmrrobot.com/wow/gear/eu/${m.realm}/${m.name}`} target="_blank">
+                      <img src="https://media-curse.cursecdn.com/attachments/81/383/a7c1e08f4816cf2632752d5949eb7bdc.png" height="15" width="15" />
+                    </a>
+                    <a href={`http://www.wowprogress.com/character/eu/${m.realm}/${m.name}`} target="_blank">
+                      wowprogress
+                    </a>
+                  </td>
+                  <td className="col-xs-3">{rankNames[m.rank]}</td>
+                  <td className="col-xs-1">{m.averageItemLevelEquipped}</td>
+                  <td className="col-xs-1">{m.audit.artifact.itemLevel}</td>
+                  <td className="col-xs-2">{formatLargeNumbers(m.totalArtifactPower)}</td>
+                  <td className="col-xs-1">{m.audit.artifact.traitCount}</td>
+                </tr>)
+          }
+        </tbody>
+      </table>
 
     </div>
   );

@@ -19,6 +19,7 @@ import { Roster } from "./components/roster/roster";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { RecruitmentWidget } from "./components/recruitment/recruitment";
+import { LandingPage } from './components/landing';
 
 const injectTapEventPlugin = require('react-tap-event-plugin');
 
@@ -56,7 +57,7 @@ export class Page extends React.Component<{}, {}> {
 
           <Router history={history}>
             <Route path="/" component={App}>
-              <Route path="/landing" component={RecruitmentWidget} />
+              <Route path="/landing" component={LandingPage} />
               <Route path="/roster" component={Roster} />
             </Route>
 
