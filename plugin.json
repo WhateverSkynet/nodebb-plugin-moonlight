@@ -13,7 +13,8 @@
     }
   ],
   "staticDirs": {
-    "static": "./static"
+    "static": "./static",
+    "public": "./dist"
   },
   "scripts": [
     "static/lib/main.js"

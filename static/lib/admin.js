@@ -14,13 +14,10 @@
 
   var root = document.createElement("div");
   root.setAttribute("id", "moonlight-root");
-  require(["react", "reactDOM", "moonlight/bundle"], function (React, ReactDOM, App) {
+  require(["moonlight/bundle"], function (App) {
     App.initSocket();
 
-    ReactDOM.render(
-      React.createElement(App.AdminPage, {}),
-      root
-    );
+    App.renderAdmin(root);
   });
 
   $(window).on("action:ajaxify.contentLoaded", function (data) {

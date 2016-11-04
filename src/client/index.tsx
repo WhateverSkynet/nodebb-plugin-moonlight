@@ -20,6 +20,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { RecruitmentWidget } from "./components/recruitment/recruitment";
 import { LandingPage } from './components/landing';
+import { AdminPage } from './admin/index';
 
 const injectTapEventPlugin = require('react-tap-event-plugin');
 
@@ -80,6 +81,12 @@ export const initSocket = () => {
 export const render = (container: Element) => {
   renderDom(
     React.createElement(Page, {}),
+    container
+  );
+}
+export const renderAdmin = (container: Element) => {
+  renderDom(
+    React.createElement(AdminPage, {}),
     container
   );
 }

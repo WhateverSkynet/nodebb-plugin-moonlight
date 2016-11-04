@@ -1,6 +1,8 @@
 import * as React from "react";
 import { RecruitmentWidget } from './recruitment/recruitment';
-
+// import image from "../../assests/uploads/m-xavius.jpg!jpg";
+import { publicPath } from '../util';
+const image =  require("../../assets/uploads/m-xavius.jpg");
 export const LandingPage = () => {
   return (
     <div className="section">
@@ -8,7 +10,7 @@ export const LandingPage = () => {
         <div className="col-md-8">
           <div className="news-container">
             <div className="news-item">
-              <img src="http://ktek.online/whatever/uploads/m-xavius.jpg" alt="Xavius down"></img>
+              <img src={`${publicPath}/${image}`} alt="Xavius down"></img>
               <div className="news-item--content">
                 <div className="news-item--title">
                   <div className="news-title">M Xavius down!</div>
@@ -18,7 +20,6 @@ export const LandingPage = () => {
                 </p>
                 <div className="news-item--date">
                   <div className="news-date">25.10.2016</div>
-                  <span className="more">Read more...</span>
                 </div>
               </div>
             </div>

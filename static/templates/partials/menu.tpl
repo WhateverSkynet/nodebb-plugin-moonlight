@@ -69,7 +69,15 @@
 		<!-- END navigation -->
 			<!-- IF config.loggedIn -->
 
-
+			<li class="dropdown text-center hidden-xs" >
+			<a href="#" title="" class="dropdown-toggle button" data-toggle="dropdown" id="tools_dropdown">
+				Tools
+			</a>
+			<ul class="dropdown-menu" aria-labelledby="tools_dropdown">
+				<li><a href="{relative_path}/roster">Roster</a></li>
+				<li><a href="{relative_path}/applications">Applications</a></li>
+				<li><a href="{relative_path}/admin">Admin</a></li>
+			</ul>
 
 		<li class="notifications dropdown text-center hidden-xs" component="notifications">
 			<a href="#" title="[[global:header.notifications]]" class="dropdown-toggle button" data-toggle="dropdown" id="notif_dropdown">

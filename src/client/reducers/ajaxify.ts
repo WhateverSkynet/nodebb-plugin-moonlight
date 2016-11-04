@@ -4,6 +4,7 @@ import { RosterCharacter } from '../../models/wow';
 
 import { Reducer } from "redux";
 import { AJAXIFY_NEW_APPLICATION, AJAXIFY_ROSTER, AJAXIFY_RECRUITMENT, AJAXIFY_CHANGE_RECRUITMENT_STATUS, AjaxifyAction, Action } from '../../actions';
+import { Recruitment } from '../../models/recruitment';
 
 const LOCATION_CHANGE = "@@router/LOCATION_CHANGE";
 const defaultState = {
@@ -16,21 +17,21 @@ export const ajaxifyReducer = (state: AjaxifyState = defaultState, action: Ajaxi
   let newState: AjaxifyState;
   switch (action.type) {
     case AJAXIFY_ROSTER:
-       newState = {
+      newState = {
         recruitment: state.recruitment,
         roster: state.roster
       };
       newState.roster = action.characters;
       return newState;
     case AJAXIFY_RECRUITMENT:
-       newState = {
+      newState = {
         questions: state.questions,
         roster: state.roster
       };
       newState.recruitment = action.classes;
       return newState;
     case AJAXIFY_NEW_APPLICATION:
-       newState = {
+      newState = {
         recruitment: state.recruitment,
         roster: state.roster
       };
@@ -41,18 +42,14 @@ export const ajaxifyReducer = (state: AjaxifyState = defaultState, action: Ajaxi
         questions: state.questions,
         roster: state.roster
       };
-      newState.recruitment = state.recruitment.map(c => {
-        return {
-          name: c.name, 
-          specs: c.specs.map(spec => {
-            return {
-              name: spec.name,
-              status: c.name == action.class && spec.name === action.spec
-                ? action.status
-                : spec.status
-            };
-          })
+      newState.recruitment = state.recruitment.map((x, i) => {
+        const item: Recruitment.RecruitmentItem = {
+          class: x.class,
+          role: x.role,
+          spec: x.spec,
+          status: i === action.index ? action.status : x.status
         };
+        return item;
       });
       return newState;
     default:

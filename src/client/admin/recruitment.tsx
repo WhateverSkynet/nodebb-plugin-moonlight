@@ -3,26 +3,17 @@ import { State } from '../states/state';
 import * as React from "react";
 import { connect } from "react-redux";
 import { store } from "../index";
+import { Recruitment } from '../../models/recruitment';
 
-export interface RecruitmentSetting {
-  class: string;
-  spec: string;
-  status: string;
-}
 
 interface RecruitmentWidgetProps {
-  classes: RecruitmentSetting[];
+  classes: Recruitment.RecruitmentItem[];
 }
 
-const handleChange = (list: RecruitmentSetting[], index: number, status: string) => {
-  const setting = list[index];
-  if (setting.status === status) {
-    return;
-  }
+const handleChange = (index: number, status: Recruitment.Status) => {
   const action: AjaxifyChangeRecruitmentStatusAction = {
     type: AJAXIFY_CHANGE_RECRUITMENT_STATUS,
-    class: setting.class,
-    spec: setting.spec,
+    index: index,
     status: status
   }
   store.dispatch(action);
@@ -64,13 +55,13 @@ const RecruitmentWidgetImpl: React.StatelessComponent<RecruitmentWidgetProps> = 
       <tbody>
         {
           props.classes.map((x, i) => (
-            <tr className="mui-row">
+            <tr key={x.class + x.role + x.spec} className="mui-row">
               <td className="mui-col-md-8 character-class" data-character-class={getCssName(x.class)}><a style={{cursor: "default"}}>{x.class}</a></td>
-              <td className="mui-col-md-10">{x.spec}</td>
-              <td className="mui-col-md-3"><input type="radio" checked={x.status === "None"} onClick={() => handleChange(props.classes, i, "None")} /></td>
-              <td className="mui-col-md-3"><input type="radio" checked={x.status === "Low"} onClick={() => handleChange(props.classes, i, "Low")} /></td>
-              <td className="mui-col-md-3"><input type="radio" checked={x.status === "Medium"} onClick={() => handleChange(props.classes, i, "Medium")} /></td>
-              <td className="mui-col-md-3"><input type="radio" checked={x.status === "High"} onClick={() => handleChange(props.classes, i, "High")} /></td>
+              <td className="mui-col-md-10">{x.spec || x.role}</td>
+              <td className="mui-col-md-3"><input type="radio" checked={x.status === "None"} onClick={() => handleChange(i, "None")} /></td>
+              <td className="mui-col-md-3"><input type="radio" checked={x.status === "Low"} onClick={() => handleChange(i, "Low")} /></td>
+              <td className="mui-col-md-3"><input type="radio" checked={x.status === "Medium"} onClick={() => handleChange(i, "Medium")} /></td>
+              <td className="mui-col-md-3"><input type="radio" checked={x.status === "High"} onClick={() => handleChange(i, "High")} /></td>
             </tr>
           ))
         }
@@ -85,15 +76,7 @@ const RecruitmentWidgetImpl: React.StatelessComponent<RecruitmentWidgetProps> = 
 const mapStateToProps = (state: State) => {
   const classes = state.ajaxify.recruitment || [];
   const props: RecruitmentWidgetProps = {
-    classes: classes.reduce((total, current) => {
-      return total.concat(current.specs.map(x => {
-        return {
-          class: current.name,
-          spec: x.name,
-          status: x.status
-        };  
-      }))
-    }, [])
+    classes: classes
   };
   return props;
 };
