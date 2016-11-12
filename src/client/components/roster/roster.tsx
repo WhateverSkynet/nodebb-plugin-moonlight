@@ -1,4 +1,5 @@
-import { TOGGLE_RANK_FILTER, SORT_ROSTER_BY, ToogleRankFilterAction, SortRosterByAction } from '../../../actions';
+
+import { TOGGLE_RANK_FILTER, SORT_ROSTER_BY, ToogleRankFilterAction, SortRosterByAction, TOGGLE_CLASS_FILTER } from '../../../actions';
 import { State } from '../../states/state';
 import { RosterCharacter } from '../../../models/wow';
 import * as React from "react";
@@ -16,63 +17,57 @@ const getCssName = (str: string) => {
 };
 
 //Replace these with class images?
-const className = (id: number) => {
-  switch (id) {
-    case 1:
-      return "Warrior";
-    case 2:
-      return "Paladin";
-    case 3:
-      return "Hunter";
-    case 4:
-      return "Rogue";
-    case 5:
-      return "Priest";
-    case 6:
-      return "Deathknight";
-    case 7:
-      return "Shaman";
-    case 8:
-      return "Mage";
-    case 9:
-      return "Warlock";
-    case 10:
-      return "Monk";
-    case 11:
-      return "Druid";
-    case 12:
-      return "Demonhunter";
-  }
-};
+const className = [
+  "Warrior",
+  "Paladin",
+  "Hunter",
+  "Rogue",
+  "Priest",
+  "Deathknight",
+  "Shaman",
+  "Mage",
+  "Warlock",
+  "Monk",
+  "Druid",
+  "Demonhunter",
+];
 
-const rankNames =
-  [
-    "GM",
-    "O",
-    "OA",
-    "R",
-    "T",
-    "RA",
-    "A",
-    "S",
-  ];
+const rankNames = [
+  "GM",
+  "O",
+  "OA",
+  "R",
+  "T",
+  "RA",
+  "A",
+  "S",
+];
 
 export interface RosterProps {
   ranks?: number[];
-  disabledRanks?: { [key: string]: boolean }; //TODO: 2, 5, 6, 7 should be disabled by default, but can be enabled
+  disabledRanks?: { [key: string]: boolean };
   characters?: RosterCharacter[];
+
+  charClasses?: number[];
+  disabledClasses?: { [key: string]: boolean };
   actions?: {
-    toggleRank: (rank: number) => ToogleRankFilterAction;
-    sortBy: (propertyName: string) => SortRosterByAction;
+    toggleRank?: (rank: number) => ToogleRankFilterAction;
+    toggleClass?: (rank: number) => ToogleRankFilterAction;
+    sortBy?: (propertyName: string) => SortRosterByAction;
   };
 }
 
 const styles = {
   checkbox: {
     marginBottom: 16,
-    maxWidth: 90,
-    display: "inline-block"
+    width: "auto",
+    display: "inline-block",
+    marginRight: 16
   },
+  row: {
+    display: "flex",
+    flexWrap: "wrap"
+  }
 };
 
 const formatLargeNumbers = (num: number) => {
@@ -89,11 +84,11 @@ const RosterImpl = (props: RosterProps) => {
   return (
     <div>
       <h4>Ranks</h4>
-      <div>
+      <div style={styles.row}>
         {
           props.ranks.map((x) => (
             <Checkbox key={x}
-              checked={props.disabledRanks[props.ranks[x].toString()] === undefined}
+              checked={props.disabledRanks[props.ranks[x]] === undefined}
               onCheck={() => props.actions.toggleRank(x)}
               label={rankNames[x]}
               style={styles.checkbox}
@@ -101,7 +96,19 @@ const RosterImpl = (props: RosterProps) => {
           ))
         }
       </div>
-
+      <h4>Classes</h4>
+      <div style={styles.row}>
+        {
+          props.charClasses.map((x, i) => (
+            <Checkbox key={x}
+              checked={props.disabledClasses[props.charClasses[i]] === undefined}
+              onCheck={() => props.actions.toggleClass(x)}
+              label={className[i]}
+              style={styles.checkbox}
+              />
+          ))
+        }
+      </div>
       <table className="table">
         <thead>
           <tr className="row">
@@ -129,7 +136,7 @@ const RosterImpl = (props: RosterProps) => {
                   }
                 } >
                   <td className="col-xs-2">
-                    <a className="character-class" data-character-class={getCssName(className(m.class))} href={"https://eu.battle.net/wow/en/character/" + m.realm + "/" + m.name + "/advanced"} target="_blank">{m.name}</a>
+                    <a className="character-class" data-character-class={getCssName(className[m.class - 1])} href={"https://eu.battle.net/wow/en/character/" + m.realm + "/" + m.name + "/advanced"} target="_blank">{m.name}</a>
                   </td>
                   <td className="col-xs-2">
                     <a href={`https://www.askmrrobot.com/wow/gear/eu/${m.realm}/${m.name}`} target="_blank">
@@ -180,21 +187,29 @@ export const mapStateToProps = (state: State) => {
   const roster = state.ajaxify.roster || [];
   const sortBy = state.app.roster.filters.sortBy;
   var props: RosterProps = {
-    characters: roster.filter((x) => state.app.roster.filters.rank[x.rank] === undefined)
+    characters: roster.filter((x) => state.app.roster.filters.rank[x.rank] === undefined && state.app.roster.filters.charClass[x.class] === undefined)
       .sort(sort(sortBy, state.app.roster.filters.sortDirection)),
     disabledRanks: state.app.roster.filters.rank,
-    ranks: Object.keys(groupBy(state.ajaxify.roster, (x: RosterCharacter) => x.rank)).map(x => parseInt(x, 10))
+    disabledClasses: state.app.roster.filters.charClass,
+    ranks: Object.keys(groupBy(state.ajaxify.roster, (x: RosterCharacter) => x.rank)).map(x => parseInt(x, 10)),
+    charClasses: Object.keys(groupBy(state.ajaxify.roster, (x: RosterCharacter) => x.class)).map(x => parseInt(x, 10))
   };
   return props;
 };
 
 const mapDispatchToProps = (dispatch: any) => {
-  const props: RosterProps = {
+  return {
     actions: bindActionCreators({
       toggleRank: (rank: number) => {
         return {
           type: TOGGLE_RANK_FILTER,
           rank
+        };
+      },
+      toggleClass: (charClass: number) => {
+        return {
+          type: TOGGLE_CLASS_FILTER,
+          charClass
         };
       },
       sortBy: (propertyName: string) => {
@@ -205,7 +220,6 @@ const mapDispatchToProps = (dispatch: any) => {
       }
     }, dispatch)
   };
-  return props;
 };
 
 export const Roster = connect(mapStateToProps, mapDispatchToProps)(RosterImpl);

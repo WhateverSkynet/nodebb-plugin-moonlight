@@ -14,7 +14,8 @@ const defaultState = {
             "7": true
         },
         sortBy: "rank",
-        sortDirection: "ASC"
+        sortDirection: "ASC",
+        charClass: {}
     }
 };
 
@@ -29,7 +30,8 @@ const rank1Toggled = {
             "7": true
         },
         sortBy: "rank",
-        sortDirection: "ASC"
+        sortDirection: "ASC",
+        charClass: {}
     }
 };
 

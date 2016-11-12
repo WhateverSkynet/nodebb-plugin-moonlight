@@ -80,6 +80,13 @@ export type ToogleRankFilterAction = {
   rank: number;
 }
 
+export type ToggleClassFilter = "@mnl/roster/CLASS_TOGGLE";
+export const TOGGLE_CLASS_FILTER: ToggleClassFilter = "@mnl/roster/CLASS_TOGGLE";
+export type ToggleClassFilterAction = {
+  type: ToggleClassFilter;
+  charClass: number;
+};
+
 export type SortRosterBy = "@mnl/roster/SORT_BY";
 export const SORT_ROSTER_BY: SortRosterBy = "@mnl/roster/SORT_BY";
 export type SortRosterByAction = {
@@ -87,7 +94,7 @@ export type SortRosterByAction = {
   propertyName: string;
 };
 
-export type RosterAction = SortRosterByAction | ToogleRankFilterAction | Action;
+export type RosterAction = SortRosterByAction | ToogleRankFilterAction | ToggleClassFilterAction | Action;
 
 // Admin Actions
 
