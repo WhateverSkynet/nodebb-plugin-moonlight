@@ -9,3 +9,4 @@ tsconfig.joson
 .travis.yml
 Dockerfile
 .dockerignore
+__data__

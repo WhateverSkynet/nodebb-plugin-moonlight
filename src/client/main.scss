@@ -1,0 +1,332 @@
+@import "colors";
+@import "base";
+@import "overrides";
+@import "account";
+// import MUI colors
+// @import "~muicss/lib/sass/mui-colors";
+
+// // customize MUI variables
+// $mui-primary-color: mui-color('light-blue', '800');
+// $mui-primary-color-dark:  mui-color('light-blue', '900');
+// $mui-primary-color-light: mui-color('light-blue', '500');
+
+// $mui-secondary-color: mui-color('white-alpha-30');
+// $mui-secondary-color-dark: mui-color('white-alpha-12');
+// $mui-secondary-color-light: mui-color('white-alpha-70');
+
+// $mui-accent-color: mui-color('light-green'd, '600');
+// $mui-accent-color-dark:   mui-color('light-green', '800');
+// $mui-accent-color-light:  mui-color('light-green', '300');
+
+// $mui-grid-columns: 24;
+
+// $mui-body-bg-color: mui-color('grey', '900');
+// $mui-dropdown-link-font-color: mui-color('grey', '900');
+// $mui-hr-color: mui-color('white-alpha-12');
+// $mui-base-font-color: mui-color('white');
+// $mui-base-font-family: "Work Sans";
+// $mui-base-font-size: 16px;
+// $mui-base-font-weight: 300;
+
+// $mui-btn-default-bg-color: $mui-primary-color;
+// $mui-btn-primary-font-color: mui-color('white');
+// $mui-btn-default-ripple-color: lighten(mui-color('white'), 35%);
+// $mui-btn-flat-bg-color-hover: lighten(mui-color('white'), 5%);
+// $mui-btn-flat-ripple-color: lighten(mui-color('white'), 35%);
+
+// $mui-input-placeholder-color: mui-color('white-alpha-30');
+// $mui-label-font-color: mui-color('white-alpha-70');
+
+// $mui-panel-bg-color: mui-color('white-alpha-12');
+
+// $mui-divider-color: mui-color(white-alpha-12);
+
+// // import MUI SASS
+// @import "~muicss/lib/sass/mui";
+
+// @import url(https://fonts.googleapis.com/css?family=Work+Sans:400,300,500,600,700,200);
+// @import url(https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900);
+
+// @import "colors";
+// //Character colors
+
+// #moonlight-content {
+//   font-size: 1em;
+//   line-height: 1.6;
+//   font-weight: 300;
+//   font-family: 'Work Sans', sans-serif;
+//   color: $mui-base-font-color;
+// }
+
+// .mui-btn--light {
+//   background: $mui-secondary-color;
+//   color: $mui-base-font-color;
+// }
+
+// .videoWrap {
+//   position:absolute;
+//   top:0px;
+//   left:0px;
+//   width:100%;
+//   height:100%;
+//   z-index:-10;
+// }
+
+// video{
+//   position: fixed;
+//   top: 50%;
+//   left: 50%;
+//   min-width: 100%;
+//   min-height: 100%;
+//   width: auto;
+//   height: auto;
+//   z-index: -100;
+//   -webkit-transform: translateX(-50%) translateY(-50%);
+//   transform: translateX(-50%) translateY(-50%);
+//   background-size:cover;
+//   opacity: 0.3;
+// }
+
+// table.interactive tbody tr {
+//   cursor: pointer;
+// }
+
+// .clickable{
+//   cursor: pointer
+// }
+
+// .character {
+
+//   &:hover {
+//       cursor: pointer;
+//   }
+
+//   &.deathknight { color: $color-death-knight }
+
+//   &.druid { color: $color-druid; }
+
+//   &.hunter { color: $color-hunter; }
+
+//   &.mage { color: $color-mage; }
+
+//   &.monk { color: $color-monk; }
+
+//   &.paladin { color: $color-paladin; }
+
+//   &.priest { color: $color-priest; }
+
+//   &.rogue { color: $color-rogue; }
+
+//   &.shaman { color: $color-shaman; }
+
+//   &.warlock { color: $color-warlock; }
+
+//   &.warrior { color: $color-warrior; }
+
+//   &.demon-hunger { color: $color-demon-hunter; }
+
+// }
+
+
+
+// .recruitment-class__name {
+
+//   > div {
+//     background-color: #1e1e1e;
+//     height: 4rem;
+//     line-height: 4rem;
+//   }
+
+//   height: 100%;
+//   border-top-left-radius: 0.25rem;
+//   border-bottom-left-radius: 0.25rem;
+//   text-align: center;
+// }
+
+
+// .recruitment-class__specs li {
+//    margin: 0.25rem;
+// }
+
+// .recruitment-class__specs li {
+//     height: 4rem;
+//    background-color: rgba(0, 0, 0, 0.2);
+// }
+
+// .recruitment-class__specs li .apply-btn {
+//   height: 100%;
+//   width: 100%;
+//   display: none;
+//   margin: 0;
+// }
+
+// .recruitment-class__specs li:hover .apply-btn {
+//   display: inline-block;
+// }
+
+// .recruitment-class__specs li:hover .spec__status {
+//   width: 10rem;
+//   height: 100%;
+//   float: right;
+//   border-top-left-radius: 0.25rem;
+//   border-bottom-left-radius: 0.25rem;
+// }
+
+// .recruitment-class__specs li[data-status="None"] {
+//   text-decoration: line-through;
+// }
+
+// .recruitment-class__specs li .spec__status {
+//   width: 0.5rem;
+//   height: 100%;
+//   float: right;
+// }
+
+// .recruitment-class__specs li:first-child .spec__status {
+//   border-top-right-radius: 0.25rem;
+// }
+
+// .recruitment-class__specs li:last-child .spec__status {
+//   border-bottom-right-radius: 0.25rem;
+// }
+
+// .recruitment-class__specs li[data-status="High"] .spec__status,
+// .recruitment-class__specs li[data-status="High"] .apply-btn{
+//   background-color: #ff0000;
+// }
+
+// .recruitment-class__specs li[data-status="Medium"] .spec__status,
+// .recruitment-class__specs li[data-status="Medium"] .apply-btn{
+//   background-color: #f9ee98;
+// }
+
+// .recruitment-class__specs li[data-status="Low"] .spec__status,
+// .recruitment-class__specs li[data-status="Low"] .apply-btn{
+//   background-color: #8f9d6a;
+// }
+
+// .recruitment-class__specs li[data-status="None"] .spec__status,
+// .recruitment-class__specs li[data-status="None"] .apply-btn{
+//   background-color: #666;
+// }
+
+// /* .recruitment-class__specs li .apply-btn span {
+//    display: none;
+// }
+//     */
+
+// .recruitment-class__name:hover[data-character-class="hunter"] > div {
+//   background-color: $color-hunter;
+// }
+
+// .recruitment-class__name:hover[data-character-class="druid"] > div {
+//   background-color: $color-druid;
+// }
+
+// .recruitment-class__name:hover[data-character-class="mage"] > div {
+//   background-color: $color-mage;
+// }
+
+// .recruitment-class__name:hover[data-character-class="monk"] > div {
+//   background-color: $color-monk;
+// }
+
+// .recruitment-class__name:hover[data-character-class="paladin"] > div {
+//   background-color: $color-paladin;
+// }
+
+// .recruitment-class__name:hover[data-character-class="priest"] > div {
+//   background-color: $color-priest;
+// }
+
+// .recruitment-class__name:hover[data-character-class="rogue"] > div {
+//   background-color: $color-rogue;
+// }
+
+// .recruitment-class__name:hover[data-character-class="shaman"] > div {
+//   background-color: $color-shaman;
+// }
+
+// .recruitment-class__name:hover[data-character-class="warlock"] > div {
+//   background-color: $color-warlock;
+// }
+
+// .recruitment-class__name:hover[data-character-class="warrior"] > div {
+//   background-color: $color-warrior;
+// }
+
+// .recruitment-class__name:hover[data-character-class="deathknight"] > div {
+//   background-color: $color-death-knight;
+// }
+// .recruitment-class__name:hover[data-character-class="demonhunter"] > div {
+//   background-color: $color-demon-hunter;
+// }
+
+
+
+
+
+.character-class[data-character-class="hunter"] {
+  color: $color-hunter;
+}
+
+.character-class[data-character-class="druid"] {
+  color: $color-druid;
+}
+
+.character-class[data-character-class="mage"] {
+  color: $color-mage;
+}
+
+.character-class[data-character-class="monk"] {
+  color: $color-monk;
+}
+
+.character-class[data-character-class="paladin"] {
+  color: $color-paladin;
+}
+
+.character-class[data-character-class="priest"] {
+  color: $color-priest;
+}
+
+.character-class[data-character-class="rogue"] {
+  color: $color-rogue;
+}
+
+.character-class[data-character-class="shaman"] {
+  color: $color-shaman;
+}
+
+.character-class[data-character-class="warlock"] {
+  color: $color-warlock;
+}
+
+.character-class[data-character-class="warrior"] {
+  color: $color-warrior;
+}
+
+.character-class[data-character-class="deathknight"] {
+  color: $color-death-knight;
+}
+.character-class[data-character-class="demonhunter"] {
+  color: $color-demon-hunter;
+}
+
+// .realm-list {
+//   max-height: 300px;
+//   overflow-y: auto;
+// }
+
+//Admin
+.admin.page-admin-moonlight {
+  background-color: #212121;
+  .header {
+    margin-bottom: 5px;
+  }
+}
+
+.clickable{
+  cursor: pointer;
+}
+
