@@ -53,11 +53,10 @@
 	<div class="header-container">
 
 		<div class="header">
-			<div class="header-row">
-				<a href="<!-- IF brand:logo:url -->{brand:logo:url}<!-- ELSE -->{relative_path}/<!-- ENDIF brand:logo:url -->">
+			<div class="header-row hidden-xs">
+				<a class="logo-wrapper" href="<!-- IF brand:logo:url -->{brand:logo:url}<!-- ELSE -->{relative_path}/<!-- ENDIF brand:logo:url -->">
 					<img alt="{brand:logo:alt}" class="{brand:logo:display} logo" src="{brand:logo}" />
 				</a>
-				<h2 class="mnl-title">Mythic raiding guild on Auchindoun-EU</h2>
 			</div>
 			<div class="menu">
         	<!-- IMPORT partials/menu.tpl -->
@@ -76,9 +75,28 @@
 			<!-- ENDIF user.uid -->
 		</section>
 
-		<section class="menu-section" data-section="navigation">
+		<section class="menu-section">
 			<h3 class="menu-section-title">[[global:header.navigation]]</h3>
-			<ul class="menu-section-list"></ul>
+			<ul class="menu-section-list">
+				<li>
+					<a href="/categories">Apply</a>
+				</li>
+				<li>
+					<a href="/categories">Forum</a>
+				</li>
+			</ul>
+		</section>
+
+		<section class="menu-section">
+			<h3 class="menu-section-title">Tools</h3>
+			<ul class="menu-section-list">
+				<li>
+					<a href="/applications">Applications</a>
+				</li>
+				<li>
+					<a href="/roster">Roster</a>
+				</li>
+			</ul>
 		</section>
 
 		<!-- IF config.loggedIn -->

@@ -116,7 +116,7 @@ const RosterImpl = (props: RosterProps) => {
         </thead>
         <tbody style={
           {
-            background: "rgba(22,39,53,1)",
+            background: "rgba(0, 32, 50, 0.9)",
             color: "#fff"
           }
         }>
@@ -125,7 +125,7 @@ const RosterImpl = (props: RosterProps) => {
               .map((m, i) =>
                 <tr key={m.name + m.realm} className="row" style={
                   {
-                    background: i % 2 === 0 ? "rgba(127, 221, 233, 0.4)" : "transparent"
+                    background: i % 2 === 0 ? "rgba(0, 32, 50, 1)" : "transparent"
                   }
                 } >
                   <td className="col-xs-2">
@@ -135,8 +135,13 @@ const RosterImpl = (props: RosterProps) => {
                     <a href={`https://www.askmrrobot.com/wow/gear/eu/${m.realm}/${m.name}`} target="_blank">
                       <img src="https://media-curse.cursecdn.com/attachments/81/383/a7c1e08f4816cf2632752d5949eb7bdc.png" height="15" width="15" />
                     </a>
-                    <a href={`http://www.wowprogress.com/character/eu/${m.realm}/${m.name}`} target="_blank">
-                      wowprogress
+                    &nbsp;
+                    <a href={`http://www.wowprogress.com/character/eu/${m.realm}/${m.name}`} target="_blank" style={
+                      {
+                        color: "#fff"
+                      }
+                    }>
+                      wp
                     </a>
                   </td>
                   <td className="col-xs-3">{rankNames[m.rank]}</td>

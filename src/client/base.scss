@@ -103,6 +103,16 @@ h2.section-title {
   margin-bottom: 30px;
 }
 
+.title--landing {
+  color: #002C45;
+  font-family: 'Aldrich', sans-serif;
+  font-size: 32px;
+  line-height: 1.2;
+  text-align: center;
+  align-self: center;
+  margin-bottom: 30px;
+}
+
 /* This hell of a content right here */
 
 .section {
@@ -127,6 +137,18 @@ h2.section-title {
   }
 }
 
+@media (max-width: 767px) {
+  .header {
+    height: 48px !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .header-row {
+    align-self: center;
+  }
+}
+
 
 .header-container {
   background-image: url(http://ktek.online/whatever/img/header-bg.jpg);
@@ -145,7 +167,13 @@ h2.section-title {
   justify-content: space-between;
 }
 
+
+
+
+
 .header-row {
+  flex-grow: 2;
+  display: flex;
   /*max-width: 1200px;
   margin: 0 auto;
   display: flex;
@@ -153,6 +181,9 @@ h2.section-title {
   height: 300px;
   flex-direction: row;
   justify-content: space-between;*/
+  .logo-wrapper {
+    align-self: center;
+  }
 }
 
 .menu {
