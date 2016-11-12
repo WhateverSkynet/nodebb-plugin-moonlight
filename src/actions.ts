@@ -27,16 +27,15 @@ export type AjaxifyRecruitment = "@mnl/ajaxify/RECRUITMENT";
 export const AJAXIFY_RECRUITMENT: AjaxifyRecruitment = "@mnl/ajaxify/RECRUITMENT";
 export type AjaxifyRecruitmentAction = {
   type: AjaxifyRecruitment;
-  classes: Recruitment.Class[]
+  classes: Recruitment.RecruitmentItem[]
 }
 
 export type AjaxifyChangeRecruitmentStatus = "@mnl/ajaxify/CHANGE_RECRUITMENT_STATUS";
 export const AJAXIFY_CHANGE_RECRUITMENT_STATUS: AjaxifyChangeRecruitmentStatus = "@mnl/ajaxify/CHANGE_RECRUITMENT_STATUS";
 export type AjaxifyChangeRecruitmentStatusAction = {
   type: AjaxifyChangeRecruitmentStatus;
-  class: string;
-  spec: string;
-  status: string;
+  index: number;
+  status: Recruitment.Status;
 }
 
 

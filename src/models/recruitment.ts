@@ -16,4 +16,11 @@ export namespace Recruitment {
     name: string;
     specs: Spec[];
   }
+
+  export interface RecruitmentItem {
+    class: string;
+    spec?: string;
+    role?: string;
+    status: Status;
+  }
 };
