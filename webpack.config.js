@@ -4,8 +4,11 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     context: __dirname,
     entry: {
-        style: [
+        moonlight: [
             "./src/client/main.scss"
+        ],
+        admin: [
+            "./src/client/admin.scss"
         ],
         main: [
             "./src/client/index.tsx"
@@ -38,7 +41,14 @@ module.exports = {
                 loader: "ts"
             }, {
                 test: /(\.scss|\.css)$/,
-                loader: ExtractTextPlugin.extract(['css?sourceMap','sass?sourceMap'])
+                loader: ExtractTextPlugin.extract(['css?sourceMap', 'sass?sourceMap'])
+            },
+            {
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                loaders: [
+                    'file?hash=sha512&digest=hex&name=[hash].[ext]',
+                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+                ]
             }
         ],
         preLoaders: [
@@ -50,7 +60,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin('style.css', {
+        new ExtractTextPlugin('[name].css', {
             allChunks: true
         })
     ],

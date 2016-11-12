@@ -1,0 +1,32 @@
+
+.account {
+  margin-top: 0;
+}
+
+.header .logo {
+  align-self: center;
+}
+
+.nav>li>a:hover, .nav>li>a:focus {
+  background-color: #002032;
+}
+
+.nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
+  background-color: #fff;
+  border-color: #DDB763;
+  color: #DDB763;
+}
+
+body {
+  background-color: transparent;
+}
+
+.navbar-toggle {
+  .icon-bar {
+    background-color: white;
+  }
+}
+
+#panel {
+  padding-top: 0 !important;
+}
