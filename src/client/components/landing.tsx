@@ -1,8 +1,9 @@
 import * as React from "react";
 import { RecruitmentWidget } from './recruitment/recruitment';
-// import image from "../../assests/uploads/m-xavius.jpg!jpg";
 import { publicPath } from '../util';
+
 const image = require("../../assets/uploads/m-xavius.jpg");
+
 export const LandingPage = () => {
   return (
     <div className="section">

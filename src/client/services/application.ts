@@ -1,6 +1,6 @@
 import * as actions from "../../actions";
 import { store } from "../index";
-import { Application, Question } from './../../models/application';
+import { Question } from './../../models/application';
 import { GET_QUESTIONS, GET_APPLICATION_QUESTIONS_INIT } from './../../actions';
 
 

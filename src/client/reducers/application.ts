@@ -1,7 +1,7 @@
 import { Reducer, combineReducers } from 'redux';
 import { ApplicationState } from './../states/application';
 import { ApplicationAction, Action, GET_QUESTIONS, QUESTION_CREATED, QUESTION_UPDATE_INITIATED, EDIT_QUESTION, QUESTION_LIST_UPDATED, QUESTION_UPDATE_SUCCESS, ADD_QUESTION_TO_TEMPLATE, REMOVE_QUESTION_FROM_TEMPLATE, MOVE_TEMPLATE_QUESTION_UP, MOVE_TEMPLATE_QUSTION_DOWN, GET_APPLICATION_TEMPLATE_QUESTIONS_SUCCESS, GET_APPLICATION_TEMPLATE_SUCCESS, APPLICATION_QUESTION_VALUE_CHANGED, SAVE_APPLICATION_SUCCESS } from './../../actions';
-import { Question, Application, ApplicationTemplate, ApplicationCharacter } from './../../models/application';
+import { Question, ApplicationTemplate, ApplicationCharacter } from './../../models/application';
 
 import * as UUID from "uuid";
 import { ApplicationValidationErrors, ValidationError, PropertyValidationErrors, ERROR } from '../../models/application';

@@ -5,7 +5,7 @@ import { applyMiddleware } from 'redux';
 import { Socket } from './helpers';
 import { State } from '../states/state';
 import { store } from '../index';
-import { INITIALIZE_REDUX_FORM, SUBMIT_APPLICATION, START_SUBMIT_REDUX_FORM, ReduxFormAction, END_SUBMIT_REDUX_FORM } from '../../actions';
+import { INITIALIZE_REDUX_FORM, SUBMIT_APPLICATION, START_SUBMIT_REDUX_FORM, ReduxFormAction, END_SUBMIT_REDUX_FORM, ReplyToApplicationAction, REPLY_TO_APPLICATION_SUCCESS, REPLY_TO_APPLICATION } from '../../actions';
 
 
 export const getQuestionsEpic: Epic<ApplicationAction> = action$ =>
@@ -86,6 +86,25 @@ export const saveApplication: Epic<ApplicationAction> = action$ =>
         // })
     }
     );
+
+export const replyToApplication: Epic<ApplicationAction> = action$ =>
+  action$.ofType(REPLY_TO_APPLICATION)
+    .mergeMap((action: ReplyToApplicationAction) => {
+      return Socket
+        .emit({ event: 'plugins.ml.application.createReply', payload: action.payload.reply })
+        .map(data => ({
+          type: REPLY_TO_APPLICATION_SUCCESS,
+          template: data
+        })) //TODO: can this be done better?
+        // .catch((err: any) => {
+        //   console.log(err);
+        //   return {
+        //     type: ''
+        //    };
+        // })
+    }
+    );
+
 
 // Just catch errors. updates are broadcasted.
 export const updateQuestion: Epic<ApplicationAction> = action$ =>

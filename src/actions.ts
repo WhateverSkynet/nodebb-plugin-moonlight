@@ -1,5 +1,5 @@
 import { BlizzardSettingsState } from './client/states/admin/blizzard-settings';
-import { Application, Question, ApplicationTemplate, ApplicationCharacter, ApplicationCharacterChange } from './models/application';
+import { Question, ApplicationTemplate, ApplicationCharacter, ApplicationCharacterChange, ApplicationReply } from './models/application';
 import { RosterCharacter, CharacterClass } from './models/wow';
 import { Recruitment } from "./models/recruitment";
 
@@ -20,7 +20,7 @@ export const AJAXIFY_NEW_APPLICATION: AjaxifyNewApplication = "@mnl/ajaxify/NEW_
 
 export type AjaxifyNewApplicationAction = {
   type: AjaxifyNewApplication;
-  application: Application;
+  application: ApplicationTemplate;
 };
 
 export type AjaxifyRecruitment = "@mnl/ajaxify/RECRUITMENT";
@@ -51,7 +51,7 @@ export type AjaxifyApplication = "@mnl/ajaxify/APPLICATION";
 export const AJAXIFY_APPLICATION: AjaxifyApplication = "@mnl/ajaxify/APPLICATION";
 export type AjaxifyApplicationAction = {
   type: AjaxifyApplication;
-   payload: {
+  payload: {
     application: ApplicationTemplate
   };
 };
@@ -288,6 +288,21 @@ export type GetApplicationListSuccessAction = {
   };
 };
 
+export type ReplyToApplication = "@mnl/application/REPLY";
+export const REPLY_TO_APPLICATION: ReplyToApplication = "@mnl/application/REPLY";
+export type ReplyToApplicationAction = {
+  type: ReplyToApplication;
+  payload: {
+    reply: ApplicationReply;
+  };
+};
+
+export type ReplyToApplicationSuccess = "@mnl/application/REPLY_SUCCESS";
+export const REPLY_TO_APPLICATION_SUCCESS: ReplyToApplicationSuccess = "@mnl/application/REPLY_SUCCESS";
+export type ReplyToApplicationSuccessAction = {
+  type: ReplyToApplicationSuccess;
+};
+
 export type ApplicationAction = GetQuestionsAction
   | QuestionsListUpdatedAction
   | QuestionUpdateInitiateAction
@@ -312,6 +327,8 @@ export type ApplicationAction = GetQuestionsAction
   | GetApplicationListAction
   | GetApplicationListSuccessAction
   | ReduxFormAction
+  | ReplyToApplicationAction
+  | ReplyToApplicationSuccessAction
   | Action;
 
 

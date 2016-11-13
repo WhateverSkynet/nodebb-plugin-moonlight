@@ -81,7 +81,7 @@ export class Page extends React.Component<{}, {}> {
 
           <Router history={history}>
             <Route path="/" component={App}>
-              <Route path="/landing" component={RecruitmentWidget} />
+              <Route path="/landing" component={LandingPage} />
               <Route path="/apply" component={ApplicationForm} />
               <Route path="/applications" component={AppListContainer} />
               <Route path="/application/:id" component={AppDetailsContainer} />

@@ -8,6 +8,8 @@ import { ApplicationTemplate, ApplicationCharacter } from '../../../models/appli
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card, CardText, CardHeader } from 'material-ui/Card';
 import { List, ListItem } from 'material-ui/List';
+import { ApplicationReplyComponent } from './reply';
+import { MessageList } from './reply-list';
 
 
 const Character = ({character}:{character: ApplicationCharacter}) => {
@@ -77,7 +79,19 @@ export const AppDetails = ({routeParams: { id }, app}: AppDetailsProps) => {
                   ))
                 }
               </ul>
-              <RaisedButton label="Reply" primary={true} />
+              <h2 className="app-title">Replies</h2>
+              <ul className="list--unstyled">
+                {
+                  app.questions.map((q, i) => (
+                    <li key={q.qid} >
+                      <p>{`${i + 1}. ${q.text}`}</p>
+                      <p>{q.value}</p>
+                    </li>
+                  ))
+                }
+              </ul>
+              <MessageList authorId={app.uid} messages={app.replies} ></MessageList>
+              <ApplicationReplyComponent appId={parseInt(id, 10)} />
             </CardText>
           </Card>)
           : "Whoops... the application does not exist."

@@ -16,6 +16,15 @@ interface AppListProps {
   navigateToDetails?: (row: number, column: number) => void;
 }
 
+const appStatus = [
+  "Draft",
+  "New",
+  "Pending",
+  "Withdrawn",
+  "Interview",
+  "Accepted",
+  "Declined"
+]
 
 const AppList = (props: AppListProps) => {
   return (
@@ -32,6 +41,7 @@ const AppList = (props: AppListProps) => {
           <TableRow>
             <TableHeaderColumn tooltip="Id">ID</TableHeaderColumn>
             <TableHeaderColumn tooltip="Author">Author</TableHeaderColumn>
+            <TableHeaderColumn tooltip="Class">Class</TableHeaderColumn>
             <TableHeaderColumn tooltip="Status">Status</TableHeaderColumn>
           </TableRow>
         </TableHeader>
@@ -43,9 +53,9 @@ const AppList = (props: AppListProps) => {
           {props.apps.map((app, index) => (
             <TableRow key={app.appId} >
               <TableRowColumn>{app.appId}</TableRowColumn>
-              <TableRowColumn>{app.uid}</TableRowColumn>
-              <TableRowColumn>{app.status}</TableRowColumn>
-              <TableRowColumn>{app.status}</TableRowColumn>
+              <TableRowColumn>{app.author}</TableRowColumn>
+              <TableRowColumn>{app.characters[0].class}</TableRowColumn>
+              <TableRowColumn>{appStatus[app.status]}</TableRowColumn>
             </TableRow>
           ))}
         </TableBody>

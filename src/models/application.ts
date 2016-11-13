@@ -9,21 +9,25 @@ export interface Question {
   deleted?: string;
 }
 
-export interface Application {
-  realms: string[];
-  characterClasses: CharacterClass[];
-  questions: Question[];
-  characters: ApplicationCharacter[];
+export interface ApplicationReply {
+  id?: number;
+  uid?: number;
+  author?: string;
+  appId?: number;
+  message?: string;
+  timestamp?: number;
 }
 
 export interface ApplicationTemplate {
   appId?: number;
   status?: number;
   uid?: number;
+  author?: string;
   changed?: number;
   deleted?: number;
   questions?: Question[];
   characters?: ApplicationCharacter[];
+  replies?: ApplicationReply[];
 }
 
 export interface ApplicationCharacter {

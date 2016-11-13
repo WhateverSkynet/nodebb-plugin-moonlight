@@ -26,6 +26,10 @@ interface Window {
     app: {
         alert: (def: AlertDescription) => void;
     };
+    utils: {
+        toISOString: (timestamp: number) => string;
+    };
+    jQuery: any;
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
 }
 
