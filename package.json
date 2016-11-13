@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-moonlight",
-  "version": "0.0.13",
+  "version": "0.1.1",
   "description": "Battle.net integration with Nodebb",
   "main": "library.js",
   "repository": {
@@ -42,6 +42,9 @@
     "material-ui": "^0.16.1",
     "node-sass": "3.8.0",
     "normalize.css": "^5.0.0",
+    "base64-image-loader": "^1.1.0",
+    "image-webpack-loader": "^3.0.0",
+    "react": "15.3.2",
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-perf": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.3.2",
@@ -51,11 +54,10 @@
     "react-router-redux": "4.0.6",
     "react-router": "2.8.1",
     "react-tap-event-plugin": "^1.0.0",
-    "react": "15.3.2",
     "redux-devtools-extension": "^1.0.0",
     "redux-form": "^6.1.1",
-    "redux-observable": "^0.12.1",
     "redux": "3.5.2",
+    "redux-observable": "^0.12.1",
     "rxjs": "^5.0.0-beta.12",
     "sass-loader": "4.0.0",
     "source-map-loader": "0.1.5",
@@ -66,7 +68,9 @@
     "webpack": "1.13.2"
   },
   "dependencies": {
-    "muicss": "0.9.3",
+    "typescript": "2.0.6",
+    "uuid": "2.0.3",
+    "webpack": "1.13.2",
     "battlenet-api": "0.13.0"
   }
 }

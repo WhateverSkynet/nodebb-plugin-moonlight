@@ -32,3 +32,13 @@ interface Window {
 interface EventTarget {
     value: any;
 }
+
+declare module "*.png" {
+    var _: string;
+    export default _;
+}
+
+declare module "*.jpg!jpg" {
+    var _: string;
+    export default _;
+}

@@ -27,17 +27,16 @@ export type AjaxifyRecruitment = "@mnl/ajaxify/RECRUITMENT";
 export const AJAXIFY_RECRUITMENT: AjaxifyRecruitment = "@mnl/ajaxify/RECRUITMENT";
 export type AjaxifyRecruitmentAction = {
   type: AjaxifyRecruitment;
-  classes: Recruitment.Class[]
-};
+  classes: Recruitment.RecruitmentItem[]
+}
 
 export type AjaxifyChangeRecruitmentStatus = "@mnl/ajaxify/CHANGE_RECRUITMENT_STATUS";
 export const AJAXIFY_CHANGE_RECRUITMENT_STATUS: AjaxifyChangeRecruitmentStatus = "@mnl/ajaxify/CHANGE_RECRUITMENT_STATUS";
 export type AjaxifyChangeRecruitmentStatusAction = {
   type: AjaxifyChangeRecruitmentStatus;
-  class: string;
-  spec: string;
-  status: string;
-};
+  index: number;
+  status: Recruitment.Status;
+}
 
 export type AjaxifyApplicationList = "@mnl/ajaxify/APPLICATION_LIST";
 export const AJAXIFY_APPLICATION_LIST: AjaxifyApplicationList = "@mnl/ajaxify/APPLICATION_LIST";
@@ -100,6 +99,13 @@ export type ToogleRankFilterAction = {
   rank: number;
 };
 
+export type ToggleClassFilter = "@mnl/roster/CLASS_TOGGLE";
+export const TOGGLE_CLASS_FILTER: ToggleClassFilter = "@mnl/roster/CLASS_TOGGLE";
+export type ToggleClassFilterAction = {
+  type: ToggleClassFilter;
+  charClass: number;
+};
+
 export type SortRosterBy = "@mnl/roster/SORT_BY";
 export const SORT_ROSTER_BY: SortRosterBy = "@mnl/roster/SORT_BY";
 export type SortRosterByAction = {
@@ -107,7 +113,7 @@ export type SortRosterByAction = {
   propertyName: string;
 };
 
-export type RosterAction = SortRosterByAction | ToogleRankFilterAction | Action;
+export type RosterAction = SortRosterByAction | ToogleRankFilterAction | ToggleClassFilterAction | Action;
 
 // Admin Actions
 

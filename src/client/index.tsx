@@ -20,25 +20,29 @@ import { ajaxifyReducer } from './reducers/ajaxify';
 import { wowReducer } from './reducers/wow';
 import { Roster } from "./components/roster/roster";
 
-import { RecruitmentWidget } from "./components/recruitment/recruitment";
 import { ApplicationSocket } from './socket/application';
 import { appEpic } from "./epics";
 
 import { reducer as formReducer } from 'redux-form'
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
-const injectTapEventPlugin = require("react-tap-event-plugin");
-
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
 //Rxjs
 // import 'rxjs/add/operator/mergeMap';
 import { ApplicationForm } from './components/application/form';
 import { dbReducer } from './reducers/db';
 import { AppListContainer } from './components/application/list';
 import { AppDetailsContainer } from './components/application/details';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+import { RecruitmentWidget } from "./components/recruitment/recruitment";
+import { LandingPage } from './components/landing';
+import { AdminPage } from './admin/index';
+
+const injectTapEventPlugin = require('react-tap-event-plugin');
+
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
 
 const reducer = combineReducers<State>({
   routing: routerReducer,
@@ -74,6 +78,7 @@ export class Page extends React.Component<{}, {}> {
     return (
       <Provider store={store}>
         <MuiThemeProvider>
+
           <Router history={history}>
             <Route path="/" component={App}>
               <Route path="/landing" component={RecruitmentWidget} />
@@ -104,6 +109,13 @@ export const initSocket = () => {
 export const render = (container: Element) => {
   renderDom(
     React.createElement(Page, {}),
+    container
+  );
+
+}
+export const renderAdmin = (container: Element) => {
+  renderDom(
+    React.createElement(AdminPage, {}),
     container
   );
 }

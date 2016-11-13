@@ -5,6 +5,6 @@ export interface AjaxifyState {
   
   roster?: RosterCharacter[];
 
-  recruitment?: Recruitment.Class[];
+  recruitment?: Recruitment.RecruitmentItem[];
 
 }

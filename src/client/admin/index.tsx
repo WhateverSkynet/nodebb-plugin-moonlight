@@ -11,6 +11,7 @@ import { BlizzardSettings } from "./blizzard";
 import { RosterSettings } from "./roster";
 import { ApplicationService } from './../services/application';
 import { ApplicationSettings } from './application';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 export class AdminTab extends Link {
   render() {
@@ -68,18 +69,17 @@ export class AdminPage extends React.Component<{}, {}> {
   render() {
     return (
       <Provider store={store}>
-        <Router history={history}>
-          <Route path="/admin/plugins/moonlight" component={AdminTabs} >
-            <IndexRedirect to="/admin/plugins/moonlight#recruitment" />
-            <Route path="/admin/plugins/moonlight#recruitment" component={RecruitmentSettings} />
-            <Route path="/admin/plugins/moonlight#application" component={ApplicationSettings} />
-            <Route path="/admin/plugins/moonlight#roster" component={RosterSettings} />
-            <Route path="/admin/plugins/moonlight#blizzard" component={BlizzardSettings} />
-          </Route>
-
-        </Router>
-
-
+        <MuiThemeProvider>
+          <Router history={history}>
+            <Route path="/admin/plugins/moonlight" component={AdminTabs} >
+              <IndexRedirect to="/admin/plugins/moonlight#recruitment" />
+              <Route path="/admin/plugins/moonlight#recruitment" component={RecruitmentSettings} />
+              <Route path="/admin/plugins/moonlight#application" component={ApplicationSettings} />
+              <Route path="/admin/plugins/moonlight#roster" component={RosterSettings} />
+              <Route path="/admin/plugins/moonlight#blizzard" component={BlizzardSettings} />
+            </Route>
+          </Router>
+        </MuiThemeProvider>
       </Provider>
     );
   }
