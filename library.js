@@ -13,8 +13,8 @@ plugin.init = function (params, callback) {
   // We create two routes for every view. One API call, and the actual route itself.
   // Just add the buildHeader middleware to your route and NodeBB will take care of everything for you.
 
-  var middlewares = [hostMiddleware.ensureLoggedIn, hostMiddleware.registrationComplete, hostMiddleware.pageView, hostMiddleware.pluginHooks];
-
+  var publicMiddlewares = [hostMiddleware.registrationComplete, hostMiddleware.pageView, hostMiddleware.pluginHooks];
+  var middlewares = [hostMiddleware.ensureLoggedIn, ...publicMiddlewares];
  // router.get(name, middleware.busyCheck, middleware.buildHeader, middlewares, controller);
 
 
@@ -27,8 +27,8 @@ plugin.init = function (params, callback) {
   router.get('/apply', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderApplyPage);
   router.get('/api/apply', middlewares, controllers.renderApplyPage);
 
-  router.get('/landing', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderLandingPage);
-  router.get('/api/landing', middlewares, controllers.renderLandingPage);
+  router.get('/landing', hostMiddleware.busyCheck, hostMiddleware.buildHeader, publicMiddlewares, controllers.renderLandingPage);
+  router.get('/api/landing', publicMiddlewares, controllers.renderLandingPage);
 
   router.get('/roster', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderRosterPage);
   router.get('/api/roster', middlewares, controllers.renderRosterPage);

@@ -122,7 +122,7 @@ const RosterImpl = (props: RosterProps) => {
         </thead>
         <tbody style={
           {
-            background: "rgba(0, 32, 50, 0.9)",
+            backgroundColor: "#007ABE",
             color: "#fff"
           }
         }>
@@ -131,7 +131,7 @@ const RosterImpl = (props: RosterProps) => {
               .map((m, i) =>
                 <tr key={m.name + m.realm} className="row" style={
                   {
-                    background: i % 2 === 0 ? "rgba(0, 32, 50, 1)" : "transparent"
+                    background: i % 2 === 0 ? "#DDB763" : "transparent"
                   }
                 } >
                   <td className="col-xs-2">

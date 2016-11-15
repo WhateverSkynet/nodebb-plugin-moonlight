@@ -1,0 +1,106 @@
+
+.panel {
+  width: 100%;
+  display:flex;
+  flex-direction: column;
+  
+}
+
+.panel__header {
+  padding: 10px 20px;
+  width: 100%;
+  color: #f0f0f0;
+  background-color: #002C45;
+  font-family: 'Aldrich', sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  line-height: 1;
+  text-align: left;
+  border-radius: 4px 4px 0 0;
+}
+
+.panel__content {
+  padding: 1em 2em; 
+}
+
+.panel__description {
+  padding: 20px 20px;
+  font-family: 'Open Sans', sans-serif;
+  color: #0B0D11;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: left;
+  background-color: #f0f0f0;
+  border-left: 2px solid #e0e0e0;
+  border-right: 2px solid #e0e0e0;
+}
+
+.panel__button {
+  padding: 16px 32px;
+  font-family: 'Aldrich', sans-serif;
+  font-size: 14px;
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 0 0 4px 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: all 0.25s;
+  transition-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+
+    &[disabled] {
+    background-color: #e0e0e0;
+    color: #999;
+    border:none;
+  }
+
+  &:hover:not([disabled]) {
+    transition: all 0.25s;
+    transition-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  &:active,
+  &:focus {
+    transition: all 0.25s;
+    transition-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+  }
+}
+
+.panel__button--action {
+  background-color: #007ABE;
+  color: #f0f0f0;
+  border: 1px solid #006AA4;
+  &[disabled] {
+    background-color: #e0e0e0;
+    color: #999;
+    border:none;
+  }
+  &:hover:not([disabled]) {
+    color: #101010;
+    background-color: #DDB763;
+    border-color: #DDB763;
+  }
+  &:active,
+  &:focus {
+    color: #101010;
+    background-color: #DDB763;
+    border-color: #DDB763;
+  }
+}
+
+.panel__button--destructive {
+  background-color: #ba251e;
+  color: #f0f0f0;
+  border: none;
+
+  &:hover:not([disabled]) {
+    background-color: #d0312a;
+  }
+
+  &:active,
+  &:focus {
+    background-color: #d0312a;
+  }
+}
+

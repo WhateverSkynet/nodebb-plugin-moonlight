@@ -19,7 +19,7 @@ const statusPriority = [
 
 const apply = () => {
   if (window.ajaxify.data.loggedIn) {
-    window.ajaxify.go("/categories")
+    window.ajaxify.go("/apply")
   } else {
     window.ajaxify.go("/login")
   }

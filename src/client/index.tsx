@@ -37,6 +37,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { RecruitmentWidget } from "./components/recruitment/recruitment";
 import { LandingPage } from './components/landing';
 import { AdminPage } from './admin/index';
+import { muiTheme } from './theme';
 
 const injectTapEventPlugin = require('react-tap-event-plugin');
 
@@ -56,6 +57,7 @@ const reducer = combineReducers<State>({
 
 const epicMiddleware = createEpicMiddleware(appEpic);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 export const store = createStore<State>(reducer, composeEnhancers(
   applyMiddleware(epicMiddleware)
 ));
@@ -77,7 +79,7 @@ export class Page extends React.Component<{}, {}> {
   render() {
     return (
       <Provider store={store}>
-        <MuiThemeProvider>
+        <MuiThemeProvider muiTheme={muiTheme}>
 
           <Router history={history}>
             <Route path="/" component={App}>

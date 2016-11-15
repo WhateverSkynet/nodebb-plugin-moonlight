@@ -28,6 +28,7 @@ const CharacterSpecSelector: React.StatelessComponent<CharacterSpecSelectorProps
           errorText={props.meta.touched && props.meta.error}
           floatingLabelText={props.data.label}
           disabled={!props.data.class}
+          fullWidth={true}
         >
            {
             props.specs.map((x, i) => <MenuItem key={i} value={x.name} primaryText={x.name} />)

@@ -30,6 +30,7 @@ const RealmSelector: React.StatelessComponent<RealmSelectorProps> = (props: Real
         maxSearchResults={5}
         onUpdateInput={props.input.onChange}
         onNewRequest={props.input.onChange}
+        fullWidth={true}
         />
     </div>
   );

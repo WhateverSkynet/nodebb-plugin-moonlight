@@ -62,7 +62,7 @@ const validateUrl = (url: string) => {
       return matches[1];
     } else if (matches[2]) {
       return matches[2];
-    } 
+    }
   }
   return url;
 };
@@ -97,7 +97,7 @@ const Character = (props: CharacterProps) => {
         label: "Secondary Specialization",
         class: props.class
       }} />
-      <Field name={`${props.field}.userInterfaceUrl`} component={renderTextField} data={{ label: "UI Screenshot URL" }} normalize={validateUrl}/>
+      <Field name={`${props.field}.userInterfaceUrl`} component={renderTextField} data={{ label: "UI Screenshot URL" }} normalize={validateUrl} />
 
 
       {
@@ -139,23 +139,32 @@ const CharacterContainer = connect(mapStateToProps)(Character);
 
 export const renderCharacterList = ({fields, meta: {error}}) => (
   <div>
-    <RaisedButton label="Add" primary={true} onClick={() => fields.push({ guid: UUID.v4() })} />
+
     <ul className="list--unstyled">
       {
         fields.map((f, i) => {
           const remove = () => fields.remove(i);
           return <li key={i}>
-            {
-              i !== 0
-                ? (<RaisedButton label="Remove" primary={true} onClick={() => fields.remove(i)}></RaisedButton>)
-                : ""
-            }
-
-            <CharacterContainer field={f} onRemoveClick={remove} index={i} />
+            <div className="panel">
+              <h2 className="panel__header">
+                Character
+            </h2>
+              <div className="panel__content">
+                <CharacterContainer field={f} onRemoveClick={remove} index={i} />
+              </div>
+              {
+                i !== 0
+                  ? (<button className="panel__button panel__button--destructive" onClick={() => fields.remove(i)}>Remove</button>)
+                  : ""
+              }
+            </div>
           </li>
         })
       }
     </ul>
+    <div className="panel__button panel__button--action" onClick={() => fields.push({ guid: UUID.v4() })}>
+      Add Character
+    </div>
   </div>
 );
 

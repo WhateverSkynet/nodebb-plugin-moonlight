@@ -8,7 +8,7 @@ export const LandingPage = () => {
   return (
     <div className="section">
       <div className="row">
-        <div className="col-12">
+        <div className="col-xs-12">
           <h2 className="title title--landing">Mythic raiding guild on Auchindoun-EU</h2>
         </div>
         <div className="col-md-8">

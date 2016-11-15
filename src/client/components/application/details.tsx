@@ -80,16 +80,6 @@ export const AppDetails = ({routeParams: { id }, app}: AppDetailsProps) => {
                 }
               </ul>
               <h2 className="app-title">Replies</h2>
-              <ul className="list--unstyled">
-                {
-                  app.questions.map((q, i) => (
-                    <li key={q.qid} >
-                      <p>{`${i + 1}. ${q.text}`}</p>
-                      <p>{q.value}</p>
-                    </li>
-                  ))
-                }
-              </ul>
               <MessageList authorId={app.uid} messages={app.replies} ></MessageList>
               <ApplicationReplyComponent appId={parseInt(id, 10)} />
             </CardText>

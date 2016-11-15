@@ -24,6 +24,7 @@ const CharacterClassSelector: React.StatelessComponent<CharacterClassSelectorPro
         errorText={props.meta.touched && props.meta.error}
         onChange={(e, key, payload) => props.input.onChange(payload)}
         floatingLabelText={props.data.label}
+        fullWidth={true}
         >
         {
           props.classes.map((x, i) => <MenuItem key={i} value={x.name} primaryText={x.name} />)

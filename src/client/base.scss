@@ -116,25 +116,18 @@ h2.section-title {
 /* This hell of a content right here */
 
 .section {
-  margin: 30px;
+  margin: 30px 0;
 }
 
 @media (min-width: 768px) {
-  .header {
-    max-width: 750px;
-  }
+
 }
 
 @media (min-width: 992px) {
-  .header {
-    max-width: 970px;
-  }
 }
 
 @media (min-width: 1200px) {
-  .header {
-    max-width: 1170px;
-  }
+
 }
 
 @media (max-width: 767px) {
@@ -161,14 +154,10 @@ h2.section-title {
 .header {
   margin: 0 auto;
   display:flex;
-  padding: 0 30px 0 30px;
   height: 300px;
   flex-direction: column;
   justify-content: space-between;
 }
-
-
-
 
 
 .header-row {
@@ -203,6 +192,10 @@ h2.section-title {
   align-self: center;
 }
 
+.mnl-label {
+  font-family: 'Open Sans', sans-serif;
+}
+
 /* Some motherfucking buttons right here */
 
 .button {
@@ -216,7 +209,7 @@ h2.section-title {
   text-align: center;
   border: 1px solid #002C45;
   box-sizing: border-box;
-  margin-right: 10px !important;
+  margin-left: 10px !important;
   cursor: pointer;
   transition: all 0.25s;
   transition-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
@@ -385,9 +378,6 @@ h2.section-title {
   margin-bottom: 30px;
 }
 
-.news-item--content {
-
-}
 
 .news-item--content p {
   background-color: #f0f0f0;

@@ -62,14 +62,14 @@ const validate = (values) => {
   });
 
   errors.questions = values.questions
-    ? values.questions.map(q => !q || !q.value ? {value:"Required."} : null)
+    ? values.questions.map(q => !q || !q.value ? { value: "Required." } : null)
     : [];
 
   return errors
 };
 
 const onSubmit = () => {
-   return Socket.emit({ event: 'plugins.ml.application.submitApplication', payload: getApplicationForm(store.getState()) }).toPromise();
+  return Socket.emit({ event: 'plugins.ml.application.submitApplication', payload: getApplicationForm(store.getState()) }).toPromise();
 };
 
 const formConfig = {
@@ -108,23 +108,28 @@ class ApplicationFormImpl extends React.PureComponent<ApplicationFormProps, {}> 
 
   render() {
     return (
-      <Card>
-        <CardHeader
-          title="Application"
-          />
-        <CardText>
-          <h2 className="app-title">Characters</h2>
-
-          <FieldArray name="characters" component={renderCharacterList} />
-          <h2 className="app-title">Questions</h2>
-
-          <FieldArray name="questions" component={QuestionListContainer} data={{ questions: this.props.questions }} />
-          <RaisedButton label="Save" primary={true} disabled={this.props.submitting || this.props.submitSucceeded} onClick={() => store.dispatch({
-            type: SAVE_APPLICATION
-          })} />
-          <RaisedButton label="Submit" primary={true} disabled={this.props.submitting || !this.props.valid || this.props.submitSucceeded} onClick={(e: any) => this.props.handleSubmit(e)} />
-        </CardText>
-      </Card>
+      <div className="section">
+        <div className="row">
+          <div className="col-xs-12">
+            <h2 className="title--landing">Application</h2>
+          </div>
+          <div className="col-md-4">
+            <FieldArray name="characters" component={renderCharacterList} />
+          </div>
+          <div className="col-md-8">
+            <div className="panel">
+              <h2 className="panel__header">
+                Questions
+            </h2>
+              <div className="panel__content">
+                <FieldArray name="questions" component={QuestionListContainer} data={{ questions: this.props.questions }} />
+              </div>
+              <button className="panel__button panel__button--action" disabled={this.props.submitting || !this.props.valid || this.props.submitSucceeded}
+                onClick={(e: any) => this.props.handleSubmit(e)}>Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     );
   }

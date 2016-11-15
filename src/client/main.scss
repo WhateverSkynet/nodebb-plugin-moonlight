@@ -2,6 +2,8 @@
 @import "base";
 @import "overrides";
 @import "account";
+@import "common/panel/panel";
+@import "components/application/app-form";
 
 .character-class[data-character-class="hunter"] {
   color: $color-hunter;
