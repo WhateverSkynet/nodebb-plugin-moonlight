@@ -25,6 +25,10 @@ interface Window {
     };
     app: {
         alert: (def: AlertDescription) => void;
+        user: {
+            uid: number;
+            username: string;
+        };
     };
     utils: {
         toISOString: (timestamp: number) => string;

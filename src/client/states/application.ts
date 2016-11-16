@@ -7,4 +7,8 @@ export interface ApplicationState {
   editQuestionIndex?: number;
   template?: ApplicationTemplate;
   validationErrors: ApplicationValidationErrors;
+  actions?: string[];
 }
+
+// export type Reply = "REPLY";
+// export const REPLY : Reply = "REPLY";

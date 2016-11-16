@@ -54,7 +54,8 @@ const appAction = {
         },
       ],
       uid: 1
-    }
+    },
+    actions: []
   }
 };
 

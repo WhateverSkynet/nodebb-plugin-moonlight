@@ -4,6 +4,9 @@
 @import "account";
 @import "common/panel/panel";
 @import "components/application/app-form";
+@import "components/application/app-details";
+@import "components/application/message";
+@import "components/roster/roster";
 
 .character-class[data-character-class="hunter"] {
   color: $color-hunter;

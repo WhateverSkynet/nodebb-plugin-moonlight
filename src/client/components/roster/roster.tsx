@@ -10,10 +10,28 @@ import { groupBy } from "lodash";
 
 import Checkbox from 'material-ui/Checkbox';
 import { Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+
+import { publicPath } from '../../util';
+
+const icons = {
+  "warrior": require("../../../assets/icons/warrior-60x60.png"),
+  "paladin": require("../../../assets/icons/paladin-60x60.png"),
+  "hunter": require("../../../assets/icons/hunter-60x60.png"),
+  "rogue": require("../../../assets/icons/rogue-60x60.png"),
+  "priest": require("../../../assets/icons/priest-60x60.png"),
+  "death-knight": require("../../../assets/icons/death-knight-60x60.png"),
+  "shaman": require("../../../assets/icons/shaman-60x60.png"),
+  "mage": require("../../../assets/icons/mage-60x60.png"),
+  "warlock": require("../../../assets/icons/warlock-60x60.png"),
+  "monk": require("../../../assets/icons/monk-60x60.png"),
+  "druid": require("../../../assets/icons/druid-60x60.png"),
+  "demon-hunter": require("../../../assets/icons/demon-hunter-60x60.png"),
+};
+
 const getCssName = (str: string) => {
   if (!str) return "";
   return str.toLowerCase()
-    .replace(/ /, "");
+    .replace(/ /, "-");
 };
 
 //Replace these with class images?
@@ -23,13 +41,13 @@ const className = [
   "Hunter",
   "Rogue",
   "Priest",
-  "Deathknight",
+  "Death Knight",
   "Shaman",
   "Mage",
   "Warlock",
   "Monk",
   "Druid",
-  "Demonhunter",
+  "Demon Hunter",
 ];
 
 const rankNames = [
@@ -122,8 +140,7 @@ const RosterImpl = (props: RosterProps) => {
         </thead>
         <tbody style={
           {
-            backgroundColor: "#007ABE",
-            color: "#fff"
+            // backgroundColor: "#cce4f2",
           }
         }>
           {
@@ -131,22 +148,20 @@ const RosterImpl = (props: RosterProps) => {
               .map((m, i) =>
                 <tr key={m.name + m.realm} className="row" style={
                   {
-                    background: i % 2 === 0 ? "#DDB763" : "transparent"
+                    background: i % 2 === 0 ? "#cce4f2" : "transparent",
+                  //  color:  i % 2 === 0 ? "#000" : "#FFF",
                   }
                 } >
                   <td className="col-xs-2">
-                    <a className="character-class" data-character-class={getCssName(className[m.class - 1])} href={"https://eu.battle.net/wow/en/character/" + m.realm + "/" + m.name + "/advanced"} target="_blank">{m.name}</a>
+                    <img className="roster__class-icon" src={`${publicPath}/${icons[className[m.class - 1].toLowerCase().replace(" ", "-")]}`} alt={className[m.class - 1]}></img>
+                    <a className="roster__text" href={"https://eu.battle.net/wow/en/character/" + m.realm + "/" + m.name + "/advanced"} target="_blank">{m.name}</a>
                   </td>
                   <td className="col-xs-2">
                     <a href={`https://www.askmrrobot.com/wow/gear/eu/${m.realm}/${m.name}`} target="_blank">
                       <img src="https://media-curse.cursecdn.com/attachments/81/383/a7c1e08f4816cf2632752d5949eb7bdc.png" height="15" width="15" />
                     </a>
                     &nbsp;
-                    <a href={`http://www.wowprogress.com/character/eu/${m.realm}/${m.name}`} target="_blank" style={
-                      {
-                        color: "#fff"
-                      }
-                    }>
+                    <a className="roster__text" href={`http://www.wowprogress.com/character/eu/${m.realm}/${m.name}`} target="_blank" >
                       wp
                     </a>
                   </td>

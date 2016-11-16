@@ -16,6 +16,7 @@ export interface ApplicationReply {
   appId?: number;
   message?: string;
   timestamp?: number;
+  isApplicant?: boolean;
 }
 
 export interface ApplicationTemplate {

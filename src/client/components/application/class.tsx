@@ -25,6 +25,10 @@ const CharacterClassSelector: React.StatelessComponent<CharacterClassSelectorPro
         onChange={(e, key, payload) => props.input.onChange(payload)}
         floatingLabelText={props.data.label}
         fullWidth={true}
+        floatingLabelStyle={{
+          color: "#007ABE",
+          fontWeight: 400
+        }}
         >
         {
           props.classes.map((x, i) => <MenuItem key={i} value={x.name} primaryText={x.name} />)

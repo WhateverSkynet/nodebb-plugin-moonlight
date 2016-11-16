@@ -23,6 +23,10 @@ const RealmSelector: React.StatelessComponent<RealmSelectorProps> = (props: Real
     <div>
       <AutoComplete
         floatingLabelText={props.data.label}
+        floatingLabelStyle={{
+          color: "#007ABE",
+          fontWeight: 400
+        }}
         filter={AutoComplete.fuzzyFilter}
         dataSource={props.realms}
         errorText={props.meta.error}

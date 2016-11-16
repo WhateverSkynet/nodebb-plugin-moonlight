@@ -1,0 +1,29 @@
+.app-details__questions {
+  font-weight: 600;
+  font-size: 12px;
+  color: #999;
+  margin-bottom: -5px;
+}
+
+.app-details__header {
+  display: flex;
+  justify-content: center;
+
+  .character-class {
+    height: 38px;
+    width: 38px;
+    margin-right: 10px;
+  }
+}
+
+.icon-wow {
+  background-position: 0 0;
+  width: 70px;
+  height: 70px;
+  background-image: url("https://eu.battle.net/wow/static/images/nav-client/game-icons-70.png");
+}
+
+.link-icon {
+  width: 90px;
+  width: 90px;
+}

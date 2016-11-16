@@ -4,11 +4,12 @@ import { Field, FieldArray } from 'redux-form';
 
 import TextField from 'material-ui/TextField';
 
-const renderTextField = ({ data, input, label, meta: { touched, error } }) => {
+const renderTextField = ({ name, data, input, label, meta: { touched, error } }) => {
     return (
         <div>
         <label className="mnl-label">{data.label}</label>
         <TextField
+            id={name}
             multiLine={true}
             fullWidth={true}
             floatingLabelFixed={true}

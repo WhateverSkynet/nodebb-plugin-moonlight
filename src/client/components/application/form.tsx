@@ -72,10 +72,15 @@ const onSubmit = () => {
   return Socket.emit({ event: 'plugins.ml.application.submitApplication', payload: getApplicationForm(store.getState()) }).toPromise();
 };
 
+const onSubmitSuccess = (result: any, dispatch: any) => {
+  window.ajaxify.go(`/application/${result.appId}`);
+};
+
 const formConfig = {
   form: "application",
   validate,
-  onSubmit
+  onSubmit,
+  onSubmitSuccess
 };
 
 interface ApplicationFormProps extends FormProps<{}, {}> {

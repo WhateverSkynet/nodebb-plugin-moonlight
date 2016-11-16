@@ -5,6 +5,7 @@ import { Question, ApplicationTemplate, ApplicationCharacter } from './../../mod
 
 import * as UUID from "uuid";
 import { ApplicationValidationErrors, ValidationError, PropertyValidationErrors, ERROR } from '../../models/application';
+import { AjaxifyAction, AJAXIFY_APPLICATION } from '../../actions';
 
 const questionReducer: Reducer<Question> = (state: Question = {}, action: ApplicationAction = Action) => {
   switch (action.type) {
@@ -117,7 +118,7 @@ const appCharactersReducer: Reducer<ApplicationCharacter[]> = (state: Applicatio
   switch (action.type) {
     case GET_APPLICATION_TEMPLATE_SUCCESS:
       return [...action.template.characters];
-  
+
     default:
       return state;
   }
@@ -143,78 +144,15 @@ const statusReducer: Reducer<number> = (state: number = 0, action: ApplicationAc
   }
 };
 
+const actionsReducer = (state: string[] = [], action: AjaxifyAction = Action) => {
+  switch (action.type) {
+    case AJAXIFY_APPLICATION:
+      return [...action.payload.actions];
+    default:
+      return state;
+  }
 
-// const appCharacterValidationReducer: Reducer<PropertyValidationErrors> = (state: PropertyValidationErrors = {}, action: ApplicationAction = Action) => {
-
-//   switch (action.type) {
-//     case APPLICATION_CHARACTER_DATA_CHANGED:
-//       state = Object.assign({}, state);
-//       state[action.characterGuid] = validateCharacter(action.changed);
-//       return state;
-//     case SELECT_CHARACTER_CLASS:
-//       state = Object.assign({}, state);
-//       state[action.characterGuid] = validateCharacter({ class: action.className });
-//       return state;
-//     case GET_APPLICATION_TEMPLATE_SUCCESS:
-//       state = {};
-//       action.template.characters.forEach((c, i) => {
-//         state[c.guid] = validateCharacter(c, i == 0);
-//       });
-//       return state;
-//     case REMOVE_APPLICATION_CHARACTER:
-//       let newState = {};
-//       for (let key in state) {
-//         if (key !== action.guid) {
-//           newState[key] = state[key];
-//         }
-//       }
-//       return newState;
-//     default:
-//       return state;
-//   }
-// };
-
-// const appQuestionValidationReducer: Reducer<number[]> = (state: number[] = [], action: ApplicationAction = Action) => {
-
-//   switch (action.type) {
-//     case APPLICATION_QUESTION_VALUE_CHANGED:
-//       const errorIndex = state.indexOf(action.qid);
-//       const hasError = !!action.newValue;
-//       if (errorIndex !== -1 && !hasError) {
-//         // error => no error
-//         return [
-//             ...state.slice(0, errorIndex),
-//             ...state.slice(errorIndex + 1)
-//         ];
-//       } else if (errorIndex === -1 && hasError) {
-//         // no error => error 
-//         [...state, action.qid];
-//       }
-
-//       return state;
-//     case GET_APPLICATION_TEMPLATE_SUCCESS:
-//       return action.template.questions
-//         .filter(x => !x.value)
-//         .map(x => x.qid);
-//     default:
-//       return state;
-//   }
-// };
-// const applicationTemplateReducer: Reducer<ApplicationTemplate> = (state: ApplicationTemplate = {}, action: ApplicationAction = Action) => {
-
-//   switch (action.type) {
-
-//     default:
-//       return {
-//         questions: appQuestionsReducer(state.questions, action)
-//       }
-//   }
-// };
-// const applicationValidationReducer = combineReducers<ApplicationValidationErrors>({
-//   questions: appQuestionValidationReducer,
-//   characters: appCharacterValidationReducer
-// });
-
+};
 
 const applicationTemplateReducer = combineReducers<ApplicationTemplate>({
   appId: appIdReducer,
@@ -228,5 +166,5 @@ export const applicationReducer = combineReducers<ApplicationState>({
   templateQuestions: templateQuestionsReducer,
   editQuestionIndex: editQuestionReducer,
   template: applicationTemplateReducer,
-  // validationErrors: applicationValidationReducer
+  actions: actionsReducer,
 });

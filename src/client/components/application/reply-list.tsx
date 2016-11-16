@@ -15,10 +15,10 @@ const MessageListItem = ({message}: { message: ApplicationReply }) => {
   const date = new Date(timestamp).toString();
 
   return (
-    <div>
-      <div>{message.author}</div>
-      <span title={date}>{window.jQuery.timeago(timeago)}</span>
-      <p>
+    <div className="message__container">
+      <div className="message__author" data-author={message.isApplicant ? "applicant" : "officer"}>{message.author}</div>
+      <span className="message__timestamp" title={date}>{window.jQuery.timeago(timeago)}</span>
+      <p className="message__text">
         {message.message}
       </p>
     </div>

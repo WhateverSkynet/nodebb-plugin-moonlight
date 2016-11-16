@@ -71,6 +71,10 @@ const renderTextField = ({ data, input, label, meta: { touched, error } }) => {
   return (
     <TextField
       floatingLabelText={data.label}
+      floatingLabelStyle={{
+        color: "#007ABE",
+        fontWeight: 400
+      }}
       fullWidth={true}
       floatingLabelFixed={true}
       errorText={touched && error}
@@ -93,13 +97,9 @@ const Character = (props: CharacterProps) => {
         label: "Primary Specialization",
         class: props.class
       }} />
-      <Field name={`${props.field}.secondarySpecialization`} component={CharacterSpecSelectorContainer} data={{
-        label: "Secondary Specialization",
-        class: props.class
-      }} />
-      <Field name={`${props.field}.userInterfaceUrl`} component={renderTextField} data={{ label: "UI Screenshot URL" }} normalize={validateUrl} />
+      <Field name={`${props.field}.userInterfaceUrl`} component={renderTextField} data={{ label: "UI Screenshot URL." }} normalize={validateUrl} />
 
-
+      <label>Use <a href="https://imgur.com/" target="_blank">imgur</a>.</label>
       {
         props.userInterfaceUrl && !props.isInvalidUserInterfaceUrl
           ? (
@@ -114,8 +114,6 @@ const Character = (props: CharacterProps) => {
           )
           : ""
       }
-
-
 
     </div>
   );

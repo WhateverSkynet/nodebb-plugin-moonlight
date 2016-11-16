@@ -52,7 +52,8 @@ export const AJAXIFY_APPLICATION: AjaxifyApplication = "@mnl/ajaxify/APPLICATION
 export type AjaxifyApplicationAction = {
   type: AjaxifyApplication;
   payload: {
-    application: ApplicationTemplate
+    application: ApplicationTemplate,
+    actions: string[]
   };
 };
 

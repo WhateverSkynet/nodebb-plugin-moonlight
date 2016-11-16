@@ -22,18 +22,22 @@ interface CharacterSpecSelectorProps {
 const CharacterSpecSelector: React.StatelessComponent<CharacterSpecSelectorProps> = (props: CharacterSpecSelectorProps) => {
   return (
     <div>
-       <SelectField
-          value={props.input.value}
-          onChange={(e, key, payload) => props.input.onChange(payload)}
-          errorText={props.meta.touched && props.meta.error}
-          floatingLabelText={props.data.label}
-          disabled={!props.data.class}
-          fullWidth={true}
+      <SelectField
+        value={props.input.value}
+        floatingLabelStyle={{
+          color: "#007ABE",
+          fontWeight: 400
+        }}
+        onChange={(e, key, payload) => props.input.onChange(payload)}
+        errorText={props.meta.touched && props.meta.error}
+        floatingLabelText={props.data.label}
+        disabled={!props.data.class}
+        fullWidth={true}
         >
-           {
-            props.specs.map((x, i) => <MenuItem key={i} value={x.name} primaryText={x.name} />)
-          }
-        </SelectField>
+        {
+          props.specs.map((x, i) => <MenuItem key={i} value={x.name} primaryText={x.name} />)
+        }
+      </SelectField>
     </div>
   );
 };

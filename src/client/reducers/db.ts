@@ -4,6 +4,7 @@ import { Action, AJAXIFY_APPLICATION_LIST, AjaxifyAction, AJAXIFY_APPLICATION, R
 import { ApplicationTemplate } from '../../models/application';
 import { State } from '../states/state';
 
+import * as UUID from "uuid";
 
 export const selectApplications = (state: State) => {
   return state.db.applications.allIds.map(x => state.db.applications.byId[x]);
@@ -20,7 +21,14 @@ export const byIdApplicationReducer = (state: { [appId: number]: ApplicationTemp
       return state;
     case REPLY_TO_APPLICATION:
       const app = state[action.payload.reply.appId];
-      const newApp = Object.assign({}, app, { replies: [...app.replies, action.payload.reply] });
+      // Add runtime user data for optimistic update.
+      const reply = Object.assign({}, action.payload.reply, {
+        id: UUID.v4(),
+        uid: window.app.user.uid,
+        author: window.app.user.username,
+        isApplicant: app.uid === window.app.user.uid
+      });
+      const newApp = Object.assign({}, app, { replies: [...app.replies, reply] });
       return Object.assign({}, state, { [action.payload.reply.appId]: newApp });
     case AJAXIFY_APPLICATION:
       state = Object.assign({}, state);
@@ -36,7 +44,9 @@ export const allIdApplicationReducer = (state: number[] = [], action: AjaxifyAct
     case AJAXIFY_APPLICATION_LIST:
       return action.payload.applications.map(x => x.appId);
     case AJAXIFY_APPLICATION:
-      return [...state, action.payload.application.appId];
+      return state.indexOf(action.payload.application.appId) === -1
+          ? [...state, action.payload.application.appId]
+          : state;
     default:
       return state;
   }
