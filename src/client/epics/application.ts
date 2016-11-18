@@ -5,7 +5,7 @@ import { applyMiddleware } from 'redux';
 import { Socket } from './helpers';
 import { State } from '../states/state';
 import { store } from '../index';
-import { INITIALIZE_REDUX_FORM, SUBMIT_APPLICATION, START_SUBMIT_REDUX_FORM, ReduxFormAction, END_SUBMIT_REDUX_FORM, ReplyToApplicationAction, REPLY_TO_APPLICATION_SUCCESS, REPLY_TO_APPLICATION } from '../../actions';
+import { INITIALIZE_REDUX_FORM, SUBMIT_APPLICATION, START_SUBMIT_REDUX_FORM, ReduxFormAction, END_SUBMIT_REDUX_FORM, ReplyToApplicationAction, REPLY_TO_APPLICATION_SUCCESS, REPLY_TO_APPLICATION, QUESTION_UPDATE_SUCCESS, DeleteApplicationAction, DELETE_APPLICATION, DELETE_APPLICATION_SUCCESS } from '../../actions';
 
 
 export const getQuestionsEpic: Epic<ApplicationAction> = action$ =>
@@ -16,7 +16,7 @@ export const getQuestionsEpic: Epic<ApplicationAction> = action$ =>
         type: QUESTION_LIST_UPDATED,
         questions: data
       }))
-     // .catch(err => console.log(err))
+    // .catch(err => console.log(err))
     );
 
 
@@ -63,7 +63,7 @@ export const getApplicationForm = (state: State) => {
   payload.characters = [...form.values.characters];
   for (let i = 0; i < payload.questions.length; i++) {
     if (form.values && form.values.questions && form.values.questions.length > i) {
-    payload.questions[i].value = form.values.questions[i] && form.values.questions[i].value;
+      payload.questions[i].value = form.values.questions[i] && form.values.questions[i].value;
     }
   }
   return payload;
@@ -78,12 +78,30 @@ export const saveApplication: Epic<ApplicationAction> = action$ =>
           type: SAVE_APPLICATION_SUCCESS,
           template: data
         })) //TODO: can this be done better?
-        // .catch((err: any) => {
-        //   console.log(err);
-        //   return {
-        //     type: ''
-        //    };
-        // })
+      // .catch((err: any) => {
+      //   console.log(err);
+      //   return {
+      //     type: ''
+      //    };
+      // })
+    }
+    );
+
+export const deleteApplication: Epic<ApplicationAction> = action$ =>
+  action$.ofType(DELETE_APPLICATION)
+    .mergeMap((action: DeleteApplicationAction) => {
+      return Socket
+        .emit({ event: 'plugins.ml.application.deleteApplication', payload: action.payload })
+        .map((payload: { appId: number }) => ({
+          type: DELETE_APPLICATION_SUCCESS,
+          payload
+        })) //TODO: can this be done better?
+      // .catch((err: any) => {
+      //   console.log(err);
+      //   return {
+      //     type: ''
+      //    };
+      // })
     }
     );
 
@@ -96,12 +114,12 @@ export const replyToApplication: Epic<ApplicationAction> = action$ =>
           type: REPLY_TO_APPLICATION_SUCCESS,
           template: data
         })) //TODO: can this be done better?
-        // .catch((err: any) => {
-        //   console.log(err);
-        //   return {
-        //     type: ''
-        //    };
-        // })
+      // .catch((err: any) => {
+      //   console.log(err);
+      //   return {
+      //     type: ''
+      //    };
+      // })
     }
     );
 
@@ -112,8 +130,12 @@ export const updateQuestion: Epic<ApplicationAction> = action$ =>
     .mergeMap((action: QuestionUpdateInitiateAction) => {
       return Socket
         .emit({ event: 'plugins.ml.application.updateQuestion', payload: action.question })
-        .map(data => Action) //TODO: can this be done better?
-     //   .catch(err => console.log(err))
+        .map(data => Action);
+      //  ({
+      //   type: QUESTION_UPDATE_SUCCESS,
+      //   question: data
+      // })) //TODO: can this be done better?
+      //   .catch(err => console.log(err))
     }
     );
 
@@ -122,7 +144,7 @@ export const updateTemplateQuestionsEpic: Epic<ApplicationAction> = action$ =>
     .mergeMap((action: InitializeApplicationTemplateSaveAction) => Socket
       .emit({ event: 'plugins.ml.application.updateTemplateQuestions', payload: action.qids })
       .map(data => Action) //TODO: can this be done better?
-      //.catch(err => console.log(err))
+    //.catch(err => console.log(err))
     );
 
 

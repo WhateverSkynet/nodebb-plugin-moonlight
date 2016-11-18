@@ -14,7 +14,7 @@ plugin.init = function (params, callback) {
   // Just add the buildHeader middleware to your route and NodeBB will take care of everything for you.
 
   var publicMiddlewares = [hostMiddleware.registrationComplete, hostMiddleware.pageView, hostMiddleware.pluginHooks];
-  var middlewares = [hostMiddleware.ensureLoggedIn, ...publicMiddlewares];
+  var middlewares = [hostMiddleware.authenticate, ...publicMiddlewares];
  // router.get(name, middleware.busyCheck, middleware.buildHeader, middlewares, controller);
 
 

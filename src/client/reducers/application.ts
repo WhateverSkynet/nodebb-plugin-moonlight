@@ -9,16 +9,18 @@ import { AjaxifyAction, AJAXIFY_APPLICATION } from '../../actions';
 
 const questionReducer: Reducer<Question> = (state: Question = {}, action: ApplicationAction = Action) => {
   switch (action.type) {
+    case ADD_QUESTION_TO_TEMPLATE:
+      return state.qid !== action.qid
+        ? state
+        : Object.assign({}, state, { active: true });
+    case REMOVE_QUESTION_FROM_TEMPLATE:
+      return state.qid !== action.qid
+        ? state
+        : Object.assign({}, state, { active: false });
     case QUESTION_UPDATE_SUCCESS:
       return state.qid !== action.question.qid
         ? state
-        : {
-          qid: action.question.qid,
-          changed: action.question.changed,
-          active: action.question.active,
-          deleted: action.question.deleted,
-          text: action.question.text,
-        };
+        : Object.assign({}, action.question);
     default:
       return state;
   }
@@ -26,8 +28,14 @@ const questionReducer: Reducer<Question> = (state: Question = {}, action: Applic
 
 const questionsReducer: Reducer<Question[]> = (state: Question[] = [], action: ApplicationAction = Action) => {
   switch (action.type) {
+    case QUESTION_UPDATE_SUCCESS:
+      return action.question.deleted === 1 ? state.filter(q => q.qid !== action.question.qid) : state.map(x => questionReducer(x, action));
     case QUESTION_LIST_UPDATED:
-      return action.questions.map(x => questionReducer(x, action))
+      return action.questions.map(x => questionReducer(x, action));
+    case ADD_QUESTION_TO_TEMPLATE:
+      return state.map(x => questionReducer(x, action));
+    case REMOVE_QUESTION_FROM_TEMPLATE:
+      return state.map(x => questionReducer(x, action));
     case QUESTION_CREATED:
       return [...state, action.question];
     default:
@@ -53,35 +61,35 @@ const templateQuestionsReducer: Reducer<number[]> = (state: number[] = [], actio
     // case GET_TQUESTIONS:
     //   return action.questions.map(x => questionReducer(x, action))
     case ADD_QUESTION_TO_TEMPLATE:
-      index = state.indexOf(action.question);
+      index = state.indexOf(action.qid);
       if (index !== -1) {
         return state;
       }
-      return [...state, action.question];
+      return [...state, action.qid];
     case REMOVE_QUESTION_FROM_TEMPLATE:
-      index = state.indexOf(action.question);
+      index = state.indexOf(action.qid);
       return [...state.slice(0, index),
       ...state.slice(index + 1)];
     case MOVE_TEMPLATE_QUESTION_UP:
-      index = state.indexOf(action.question);
+      index = state.indexOf(action.qid);
       if (index === 0) {
         return state;
       }
       return [
         ...state.slice(0, index - 1),
-        action.question,
+        action.qid,
         ...state.slice(index - 1, index),
         ...state.slice(index + 1)
       ];
     case MOVE_TEMPLATE_QUSTION_DOWN:
-      index = state.indexOf(action.question);
+      index = state.indexOf(action.qid);
       if (index === state.length - 1) {
         return state;
       }
       return [
         ...state.slice(0, index),
         ...state.slice(index + 1, index + 2),
-        action.question,
+        action.qid,
         ...state.slice(index + 2)
       ];
     case GET_APPLICATION_TEMPLATE_QUESTIONS_SUCCESS:
@@ -94,8 +102,7 @@ const appQuestionReducer: Reducer<Question> = (state: Question = {}, action: App
   switch (action.type) {
     case APPLICATION_QUESTION_VALUE_CHANGED:
       if (action.qid === state.qid) {
-        state = Object.assign({}, state);
-        state.value = action.newValue;
+        return Object.assign({}, state, { value: action.newValue });
       }
       return state;
     default:

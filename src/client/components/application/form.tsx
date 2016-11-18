@@ -46,8 +46,9 @@ const validateCharacter = (character, uiUrlRequired = false) => {
     if (uiUrlRequired) {
       errors.userInterfaceUrl = "Required.";
     }
-  } else if (!/^(?:https?:\/\/(?:www\.)?(?:imgur\.com)|(?:i\.imgur\.com))\/([A-z0-9]{7})\.?|^([A-z0-9]{7})$/.test(character.userInterfaceUrl)) {
-    errors.userInterfaceUrl = "Invalid URL.";
+  // } else if (!/^(?:https?:\/\/(?:www\.)?(?:imgur\.com)|(?:i\.imgur\.com))\/([A-z0-9]{7})\.?|^([A-z0-9]{7})$/.test(character.userInterfaceUrl)) {
+  //   errors.userInterfaceUrl = "Invalid URL.";
+  // }
   }
   return errors;
 };

@@ -23,7 +23,24 @@
   background-image: url("https://eu.battle.net/wow/static/images/nav-client/game-icons-70.png");
 }
 
-.link-icon {
-  width: 90px;
-  width: 90px;
+.app-details__character-item--link {
+ 
+ .link {
+
+   &:hover {
+     text-decoration: underline;
+   }
+ }
+}
+
+
+.app-details__character-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #999;
+  margin-right: 10px;
+}
+
+.app-details__character-item {
+  margin-bottom: 5px;
 }

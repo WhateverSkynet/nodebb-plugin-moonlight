@@ -10,6 +10,8 @@ import { navigate, store } from '../../index';
 import { browserHistory } from 'react-router';
 
 import { publicPath } from '../../util';
+import { DeleteApplicationAction, DELETE_APPLICATION } from '../../../actions';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const icons = {
   "warrior": require("../../../assets/icons/warrior-60x60.png"),
@@ -29,8 +31,9 @@ const icons = {
 
 interface AppListProps {
   apps?: ApplicationTemplate[];
-
+  isAdmin?: boolean;
   navigateToDetails?: (row: ApplicationTemplate) => void;
+  delete?: (appId: number) => DeleteApplicationAction;
 }
 
 const appStatus = [
@@ -44,6 +47,7 @@ const appStatus = [
 ];
 
 const AppList = (props: AppListProps) => {
+  const authorClassName = props.isAdmin ? "col-xs-4" : "col-xs-6";
   return (
     <div className="section">
       <div className="panel">
@@ -54,9 +58,14 @@ const AppList = (props: AppListProps) => {
               <tr className="row">
                 <th className="col-xs-1" ></th>
                 <th className="col-xs-1" >Id</th>
-                <th className="col-xs-6" >Author</th>
+                <th className={authorClassName} >Author</th>
                 <th className="col-xs-2 hidden-xs" >Class</th>
                 <th className="col-xs-2" >Status</th>
+                {
+                  props.isAdmin
+                    ? <th className="col-xs-2" ></th>
+                    : ""
+                }
               </tr>
             </thead>
             <tbody style={
@@ -79,9 +88,24 @@ const AppList = (props: AppListProps) => {
                       }
                     </td>
                     <td className="col-xs-1">{app.appId}</td>
-                    <td className="col-xs-6">{app.author}</td>
+                    <td className={authorClassName}>{app.author}</td>
                     <td className="col-xs-2 hidden-xs">{app.characters[0].class}</td>
                     <td className="col-xs-2">{appStatus[app.status]}</td>
+                    {
+                      props.isAdmin
+                        ? <td className="col-xs-2" >
+                          <RaisedButton 
+                            secondary={true}
+                            label="Delete"
+                            onClick={(e) => {
+                            //  debugger;
+                              props.delete(app.appId)
+                              e.stopPropagation();
+                            }}
+                            />
+                        </td>
+                        : ""
+                    }
                   </tr>)
               }
             </tbody>
@@ -94,7 +118,8 @@ const AppList = (props: AppListProps) => {
 
 const mapStateToProps = (state: State) => {
   const props: AppListProps = {
-    apps: selectApplications(state)
+    apps: selectApplications(state),
+    isAdmin: window.app.user.isAdmin
   };
   return props;
 };
@@ -103,6 +128,14 @@ const mapDispatchToProps = (dispatch: any, ownProps: AppListProps) => {
   const props: AppListProps = bindActionCreators({
     navigateToDetails: (app: ApplicationTemplate) => {
       return window.ajaxify.go(`/application/${app.appId}`);
+    },
+    delete: (appId: number) => {
+      return {
+        type: DELETE_APPLICATION,
+        payload: {
+          appId
+        }
+      }
     }
   }, dispatch);
   return props;

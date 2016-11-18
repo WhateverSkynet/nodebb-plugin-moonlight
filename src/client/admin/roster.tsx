@@ -12,10 +12,8 @@ const triggerRosterUpdate = () => {
 };
 
 export const RosterSettings = (props) => (
-  <div className="mui-panel">
-
-    <button className="mui-btn mui-btn-primary" onClick={() => triggerRosterUpdate()}>
-      Update Roster
-    </button>
-  </div>
+  <div className="panel">
+    <h2 className="panel__header">Roster</h2>
+    <button className="panel__button panel__button--action" onClick={() => triggerRosterUpdate()}>Update from Armory</button>
+  </div >
 );

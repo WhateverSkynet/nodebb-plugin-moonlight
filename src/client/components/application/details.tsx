@@ -29,22 +29,46 @@ const icons = {
 };
 
 const Character = ({character}: { character: ApplicationCharacter }) => {
+  const showUIImage = character.userInterfaceUrl && character.userInterfaceUrl.length === 7;
   return (
 
     <div className="panel">
       <h2 className="panel__header">Character</h2>
       <div className="panel__content">
         <ul className="list--unstyled">
-          <li>Name: {character.name}</li>
-          <li>Class: {character.class}</li>
-          <li>Realm: {character.realm}</li>
-          <li>Primary Specialization: {character.primarySpecialization}</li>
-          <li>
-            <a className="link-icon" href={"https://eu.battle.net/wow/en/character/" + character.realm + "/" + character.name + "/advanced"} target="_blank">
-              <div className="icon-wow"></div>
-            </a></li>
+          <li className="app-details__character-item">
+            <span className="app-details__character-label">Name:</span>
+            <span>{character.name}</span>
+          </li>
+          <li className="app-details__character-item">
+            <span className="app-details__character-label">Class:</span>
+            <span>{character.class}</span>
+          </li>
+          <li className="app-details__character-item">
+            <span className="app-details__character-label">Realm:</span>
+            <span>{character.realm}</span>
+          </li>
+          <li className="app-details__character-item">
+            <span className="app-details__character-label">Primar Specialization:</span>
+            <span>{character.primarySpecialization}</span>
+          </li>
+          <li className="app-details__character-item app-details__character-item--link">
+            <a className="link" href={`https://eu.battle.net/wow/en/character/${character.realm}/${character.name}/advanced`} target="_blank">
+              armory
+            </a>
+          </li>
+          <li className="app-details__character-item app-details__character-item--link">
+            <a className="link" href={`https://wowtrack.org/characters/EU/${character.realm}/${character.name}`} target="_blank">
+              wowtrack
+            </a>
+          </li>
+          <li className="app-details__character-item app-details__character-item--link">
+            <a className="link" href={`http://www.wowprogress.com/character/eu/${character.realm}/${character.name}`} target="_blank">
+              wowprogress
+            </a>
+          </li>
           {
-            character.userInterfaceUrl
+            showUIImage
               ? (
                 <div className="mrow">
                   <div className="col-sm-16 col-sm-4--offset">
@@ -57,7 +81,10 @@ const Character = ({character}: { character: ApplicationCharacter }) => {
                   </div>
                 </div>
               )
-              : ""
+              : (
+                <li className="app-details__character-item app-details__character-item--link">
+                  <a className="link" href={character.userInterfaceUrl} target="_blank">{character.userInterfaceUrl}</a>
+                </li>)
           }
         </ul>
       </div>

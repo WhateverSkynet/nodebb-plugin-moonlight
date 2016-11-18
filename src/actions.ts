@@ -180,28 +180,28 @@ export type AddQuestionToTemplate = "@mnl/application/ADD_QUESTION_TO_TEMPLATE";
 export const ADD_QUESTION_TO_TEMPLATE: AddQuestionToTemplate = "@mnl/application/ADD_QUESTION_TO_TEMPLATE";
 export type AddQuestionToTemplateAction = {
   type: AddQuestionToTemplate;
-  question: number;
+  qid: number;
 };
 
 export type RemoveQuestionFromTemplate = "@mnl/application/REMOVE_QUESTION_FROM_TEMPLATE";
 export const REMOVE_QUESTION_FROM_TEMPLATE: RemoveQuestionFromTemplate = "@mnl/application/REMOVE_QUESTION_FROM_TEMPLATE";
 export type RemoveQuestionFromTemplateAction = {
   type: RemoveQuestionFromTemplate;
-  question: number;
+  qid: number;
 };
 
 export type MoveTemplateQuestionUp = "@mnl/application/MOVE_TEMPLATE_QUESTION_UP";
 export const MOVE_TEMPLATE_QUESTION_UP: MoveTemplateQuestionUp = "@mnl/application/MOVE_TEMPLATE_QUESTION_UP";
 export type MoveTemplateQuestionUpAction = {
   type: MoveTemplateQuestionUp;
-  question: number;
+  qid: number;
 };
 
 export type MoveTemplateQuestionDown = "@mnl/application/MOVE_TEMPLATE_QUESTION_DOWN";
 export const MOVE_TEMPLATE_QUSTION_DOWN: MoveTemplateQuestionDown = "@mnl/application/MOVE_TEMPLATE_QUESTION_DOWN";
 export type MoveTemplateQuestionDownAction = {
   type: MoveTemplateQuestionDown;
-  question: number;
+  qid: number;
 };
 
 export type InitApplicationTemplateSave = "@mnl/application/INIT_APPLICATION_TEMPLATE_SAVE";
@@ -274,6 +274,24 @@ export type SubmitApplicationAction = {
   template: ApplicationTemplate;
 };
 
+export type DeleteApplication = "@mnl/application/DELETE";
+export const DELETE_APPLICATION: DeleteApplication = "@mnl/application/DELETE";
+export type DeleteApplicationAction = {
+  type: DeleteApplication;
+  payload: {
+    appId: number;
+  };
+};
+
+export type DeleteApplicationSuccess = "@mnl/application/DELTE_SUCCESS";
+export const DELETE_APPLICATION_SUCCESS: DeleteApplicationSuccess = "@mnl/application/DELTE_SUCCESS";
+export type DeleteApplicationSuccessAction = {
+  type: DeleteApplicationSuccess;
+  payload: {
+    appId: number;
+  };
+};
+
 export type GetApplicationList = "@mnl/application/GET_LIST";
 export const GET_APPLICATION_LIST: GetApplicationList = "@mnl/application/GET_LIST";
 export type GetApplicationListAction = {
@@ -325,6 +343,8 @@ export type ApplicationAction = GetQuestionsAction
   | SaveApplicationSuccessAction
   | InitializeReduxFormAction
   | SubmitApplicationAction
+  | DeleteApplicationAction
+  | DeleteApplicationSuccessAction
   | GetApplicationListAction
   | GetApplicationListSuccessAction
   | ReduxFormAction

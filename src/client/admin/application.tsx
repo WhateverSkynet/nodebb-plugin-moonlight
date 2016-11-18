@@ -9,6 +9,13 @@ import { store } from "../index";
 import { Question } from './../../models/application';
 import { ApplicationService } from './../services/application';
 import { EDIT_QUESTION, QUESTION_UPDATE_INITIATED, QUESTION_UPDATE_SUCCESS, ApplicationAction, ADD_QUESTION_TO_TEMPLATE, REMOVE_QUESTION_FROM_TEMPLATE, AddQuestionToTemplateAction, RemoveQuestionFromTemplateAction, MOVE_TEMPLATE_QUESTION_UP, MOVE_TEMPLATE_QUSTION_DOWN, MoveTemplateQuestionUpAction, MoveTemplateQuestionDownAction, INIT_APPLICATION_TEMPLATE_SAVE, InitializeApplicationTemplateSaveAction } from './../../actions';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+
+const buttonStyle = {
+  margin: 12,
+};
+
 
 interface QuestionInputProps {
   onClick: (value: string) => void;
@@ -18,22 +25,30 @@ interface QuestionInputProps {
 }
 
 const QuestionInput: React.StatelessComponent<QuestionInputProps> = (props: QuestionInputProps) => {
-  let input;
+  let textField;
   return (
-    <div className="mui-textfield mui-textfield--float-label">
-      <input ref={node => {
-        input = node;
-      } }
-        type="text"
+    <div>
+      <TextField
+        className="mnl-text-field"
+        ref={(node) => textField = node}
+        floatingLabelFixed={true}
+        fullWidth={true}
+        floatingLabelStyle={{
+          color: "#007ABE",
+          fontWeight: 400
+        }}
+        multiLine={true}
         defaultValue={props.defaultValue || ""}
-        />
-      <label>Question Text</label>
-      <button className="mui-btn  mui-btn--primary"
+        floatingLabelText="Question Text" />
+      <RaisedButton
+        primary={true}
+        label={props.buttonLabel}
         disabled={!props.buttonEnabled}
         onClick={() => {
-          props.onClick(input.value);
-          input.value = ""
-        } } >{props.buttonLabel}</button>
+          props.onClick(textField.input.refs.input.value);
+          textField.input.refs.input.value = "";
+        } }
+        style={buttonStyle} />
     </div>
   );
 };
@@ -41,16 +56,12 @@ const QuestionInput: React.StatelessComponent<QuestionInputProps> = (props: Ques
 interface QuestionMangerProps {
   questions: Question[];
   editIndex: number;
-  actions: {
-    updateQuestion: (question: Question, newText: string) => ApplicationAction;
-    addToTemplate: (question: Question) => AddQuestionToTemplateAction;
+  actions?: {
+    updateQuestion?: (question: Question, newText: string) => ApplicationAction;
+    deleteQuestion?: (question: Question) => ApplicationAction;
+    addToTemplate?: (question: Question) => AddQuestionToTemplateAction;
   }
 }
-
-const updateQuestionText = (question: Question, newText: string) => {
-
-};
-
 const createQuestion = (text: string) => {
   ApplicationService.createQuestion(text, (err) => { });
 }
@@ -78,6 +89,15 @@ const updateQuestion: (question: Question, newText: string) => ApplicationAction
   return action;
 };
 
+const deleteQuestion: (question: Question) => ApplicationAction = (question: Question) => {
+  const action: ApplicationAction = {
+    type: QUESTION_UPDATE_INITIATED,
+    question: Object.assign({}, question, { deleted: 1 })
+  };
+
+  return action;
+};
+
 const editQuestion = (index: number) => {
   const action = {
     type: EDIT_QUESTION,
@@ -85,24 +105,44 @@ const editQuestion = (index: number) => {
   };
   store.dispatch(action);
 };
-const QuestionManagerImpl= (props: QuestionMangerProps) => (
-  <div className="mui-col-md-12">
-    <QuestionInput buttonEnabled={true} buttonLabel="Create" onClick={(value) => createQuestion(value)}></QuestionInput>
-    <ul>
-      {
-        props.questions.map((q, i) => {
-          return i === props.editIndex
-            ? <li key={q.qid} ><QuestionInput buttonEnabled={true} buttonLabel="Update" defaultValue={q.text} onClick={(value) => props.actions.updateQuestion(q, value)}></QuestionInput></li>
-            : <li key={q.qid}>
-              <div>
-                {q.text}
-              </div>
-              <button className="mui-btn  mui-btn--primary" onClick={() => editQuestion(i)} >Edit</button>
-              <button className="mui-btn  mui-btn--primary" onClick={() => props.actions.addToTemplate(q.qid) } >Add</button>
-            </li>;
-        })
-      }
-    </ul>
+const QuestionManagerImpl = (props: QuestionMangerProps) => (
+  <div className="col-md-6">
+    <div className="panel">
+      <h2 className="panel__header">Questions</h2>
+      <div className="panel__content">
+
+        <QuestionInput buttonEnabled={true} buttonLabel="Create" onClick={(value) => createQuestion(value)}></QuestionInput>
+        <ul>
+          {
+            props.questions.map((q, i) => {
+              return i === props.editIndex
+                ? <li key={q.qid} ><QuestionInput buttonEnabled={true} buttonLabel="Update" defaultValue={q.text} onClick={(value) => props.actions.updateQuestion(q, value)}></QuestionInput></li>
+                : <li key={q.qid}>
+                  <div>
+                    {q.text}
+                  </div>
+                  <RaisedButton
+                    label="Edit"
+                    onClick={() => editQuestion(i)}
+                    style={buttonStyle} />
+                  <RaisedButton
+                    primary={true}
+                    label="Add"
+                    disabled={q.active}
+                    onClick={() => props.actions.addToTemplate(q.qid)}
+                    style={buttonStyle} />
+                  <RaisedButton
+                    secondary={true}
+                    label="Delete"
+                    disabled={q.active}
+                    onClick={() => props.actions.deleteQuestion(q)}
+                    style={buttonStyle} />
+                </li>;
+            })
+          }
+        </ul>
+      </div>
+    </div>
   </div>
 );
 
@@ -117,9 +157,10 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     actions: bindActionCreators({
       updateQuestion,
-       addToTemplate: (question: Question) => ({
+      deleteQuestion,
+      addToTemplate: (qid: Question) => ({
         type: ADD_QUESTION_TO_TEMPLATE,
-        question
+        qid
       }),
     }, dispatch)
   }
@@ -129,10 +170,11 @@ const mapDispatchToProps = (dispatch: any) => {
 const QuestionManager = connect(mapStateToProps, mapDispatchToProps)(QuestionManagerImpl);
 
 const ApplicationSettingsImpl = (props: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className="mui-row">
-
-    <QuestionManager></QuestionManager>
-    <ApplicationTemplate></ApplicationTemplate>
+  <div className="container">
+    <div className="row">
+      <QuestionManager></QuestionManager>
+      <ApplicationTemplate></ApplicationTemplate>
+    </div>
   </div>
 
 );
@@ -147,27 +189,44 @@ interface ApplicationTemplateProps {
   }
 }
 
-
 const ApplicationTemplateImpl: React.StatelessComponent<ApplicationTemplateProps> = (props: ApplicationTemplateProps) => {
   return (
-    <div className="mui-col-md-12">
-      <h3>Template <button className="mui-btn  mui-btn--primary" onClick={() => props.actions.save(props.questions) } >Save</button></h3>
-      <ul>
-        {
-          props.questions.map((q, i) => {
-            return (
-              <li key={q.qid}>
-                <div>
-                  {q.text}
-                </div>
-                <button className="mui-btn  mui-btn--primary" disabled={i === 0} onClick={() => props.actions.moveUp(q.qid) } >Up</button>
-                <button className="mui-btn  mui-btn--primary" disabled={i === props.questions.length - 1} onClick={() => props.actions.moveDown(q.qid) } >Down</button>
-                <button className="mui-btn  mui-btn--primary" onClick={() => props.actions.removeFromTemplate(q.qid) } >Remove</button>
-              </li>
-            )
-          })
-        }
-      </ul>
+    <div className="col-md-6">
+      <div className="panel">
+        <h2 className="panel__header">Template</h2>
+        <div className="panel__content">
+          <ul>
+            {
+              props.questions.map((q, i) => {
+                return (
+                  <li key={q.qid}>
+                    <div>
+                      {q.text}
+                    </div>
+                    <RaisedButton
+                      label="Up"
+                      disabled={i === 0}
+                      onClick={() => props.actions.moveUp(q.qid)}
+                      style={buttonStyle} />
+                    <RaisedButton
+                      label="Down"
+                      disabled={i === props.questions.length - 1}
+                      onClick={() => props.actions.moveDown(q.qid)}
+                      style={buttonStyle} />
+                    <RaisedButton
+                      secondary={true}
+                      label="Remove"
+                      onClick={() => props.actions.removeFromTemplate(q.qid)}
+                      style={buttonStyle} />
+                  </li>
+                )
+              })
+            }
+          </ul>
+
+        </div>
+        <button className="panel__button panel__button--action" onClick={() => props.actions.save(props.questions)}>Save</button>
+      </div>
     </div>
   );
 };
@@ -182,19 +241,19 @@ const mapStateToProps2 = (state: State) => {
 };
 
 const mapDispatchToProps2 = (dispatch: any) => {
- return {
+  return {
     actions: bindActionCreators({
-      removeFromTemplate: (question: Question) => ({
+      removeFromTemplate: (qid: Question) => ({
         type: REMOVE_QUESTION_FROM_TEMPLATE,
-        question
+        qid
       }),
-      moveUp: (question: Question) => ({
+      moveUp: (qid: Question) => ({
         type: MOVE_TEMPLATE_QUESTION_UP,
-        question
+        qid
       }),
-      moveDown: (question: Question) => ({
+      moveDown: (qid: Question) => ({
         type: MOVE_TEMPLATE_QUSTION_DOWN,
-        question
+        qid
       }),
       save: (questions: Question[]) => ({
         type: INIT_APPLICATION_TEMPLATE_SAVE,

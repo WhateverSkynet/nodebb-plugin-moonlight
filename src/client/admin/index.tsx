@@ -12,6 +12,7 @@ import { RosterSettings } from "./roster";
 import { ApplicationService } from './../services/application';
 import { ApplicationSettings } from './application';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { muiTheme } from '../theme';
 
 export class AdminTab extends Link {
   render() {
@@ -69,7 +70,7 @@ export class AdminPage extends React.Component<{}, {}> {
   render() {
     return (
       <Provider store={store}>
-        <MuiThemeProvider>
+        <MuiThemeProvider muiTheme={muiTheme}>
           <Router history={history}>
             <Route path="/admin/plugins/moonlight" component={AdminTabs} >
               <IndexRedirect to="/admin/plugins/moonlight#recruitment" />

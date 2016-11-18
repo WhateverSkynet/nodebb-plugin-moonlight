@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { DbState, ApplicationDbState } from '../states/db';
-import { Action, AJAXIFY_APPLICATION_LIST, AjaxifyAction, AJAXIFY_APPLICATION, REPLY_TO_APPLICATION, ApplicationAction } from '../../actions';
+import { Action, AJAXIFY_APPLICATION_LIST, AjaxifyAction, AJAXIFY_APPLICATION, REPLY_TO_APPLICATION, ApplicationAction, DELETE_APPLICATION_SUCCESS } from '../../actions';
 import { ApplicationTemplate } from '../../models/application';
 import { State } from '../states/state';
 
@@ -39,14 +39,19 @@ export const byIdApplicationReducer = (state: { [appId: number]: ApplicationTemp
   }
 };
 
-export const allIdApplicationReducer = (state: number[] = [], action: AjaxifyAction = Action) => {
+export const allIdApplicationReducer = (state: number[] = [], action: AjaxifyAction | ApplicationAction = Action) => {
   switch (action.type) {
     case AJAXIFY_APPLICATION_LIST:
       return action.payload.applications.map(x => x.appId);
     case AJAXIFY_APPLICATION:
       return state.indexOf(action.payload.application.appId) === -1
-          ? [...state, action.payload.application.appId]
-          : state;
+        ? [...state, action.payload.application.appId]
+        : state;
+    case DELETE_APPLICATION_SUCCESS:
+      const index = state.indexOf(action.payload.appId);
+      return index !== -1
+        ? [...state.slice(0, index), ...state.slice(index + 1)]
+        : state;
     default:
       return state;
   }

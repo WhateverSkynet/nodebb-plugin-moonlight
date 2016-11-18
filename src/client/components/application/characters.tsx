@@ -63,6 +63,8 @@ const validateUrl = (url: string) => {
     } else if (matches[2]) {
       return matches[2];
     }
+  } else {
+    const matchPost = url.match(/(?:https?:\/\/(?:www\.)?(?:imgur\.com))\/a\/([A-z0-9]{5})$/);
   }
   return url;
 };
@@ -101,7 +103,7 @@ const Character = (props: CharacterProps) => {
 
       <label>Use <a href="https://imgur.com/" target="_blank">imgur</a>.</label>
       {
-        props.userInterfaceUrl && !props.isInvalidUserInterfaceUrl
+        props.userInterfaceUrl && !props.isInvalidUserInterfaceUrl && props.userInterfaceUrl.length === 7
           ? (
             <div className="mui-row">
               <div className="mui-col-sm-16 mui-col-sm-4--offset">

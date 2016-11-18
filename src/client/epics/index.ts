@@ -1,5 +1,5 @@
 import { combineEpics } from 'redux-observable';
-import { getQuestionsEpic, updateQuestion, getTemplateQuestionsEpic, updateTemplateQuestionsEpic, getApplicationTemplateEpic, saveApplication, replyToApplication } from './application';
+import { getQuestionsEpic, updateQuestion, getTemplateQuestionsEpic, updateTemplateQuestionsEpic, getApplicationTemplateEpic, saveApplication, replyToApplication, deleteApplication } from './application';
 
 export const appEpic = combineEpics(
   getQuestionsEpic,
@@ -8,5 +8,6 @@ export const appEpic = combineEpics(
   updateTemplateQuestionsEpic,
   getApplicationTemplateEpic,
   saveApplication,
+  deleteApplication,
   replyToApplication
 );

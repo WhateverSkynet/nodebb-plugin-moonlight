@@ -23,6 +23,7 @@ const RealmSelector: React.StatelessComponent<RealmSelectorProps> = (props: Real
     <div>
       <AutoComplete
         floatingLabelText={props.data.label}
+        floatingLabelFixed={true}
         floatingLabelStyle={{
           color: "#007ABE",
           fontWeight: 400

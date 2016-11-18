@@ -14,6 +14,12 @@
 
   var root = document.createElement("div");
   root.setAttribute("id", "moonlight-root");
+  var link = document.createElement("link");
+  link.setAttribute("rel", "stylesheet");
+  link.setAttribute("type", "text/css");
+  link.setAttribute("href", "/plugins/nodebb-plugin-moonlight/public/admin.css");
+  document.head.appendChild(link);
+
   require(["moonlight/bundle"], function (App) {
     App.initSocket();
 

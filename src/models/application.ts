@@ -5,8 +5,8 @@ export interface Question {
   text?: string;
   changed?: number;
   value?: string;
-  active?: string;
-  deleted?: string;
+  active?: boolean;
+  deleted?: number;
 }
 
 export interface ApplicationReply {
