@@ -53,6 +53,7 @@ const appAction = {
           value: null
         },
       ],
+      replies: [],
       uid: 1
     },
     actions: []
@@ -78,6 +79,7 @@ const afterListAction = {
         value: null
       },
     ],
+    replies: [],
     uid: 1
   }
 };

@@ -26,8 +26,19 @@ interface Window {
     app: {
         alert: (def: AlertDescription) => void;
         user: {
+            banned: string;
+            email: string;
+            "email:confirmed": string;
+            "icon:bgColor": string;
+            "icon:text": string;
+            isAdmin: boolean;
+            isGlobalMod: boolean;
+            picture: string;
+            reputation: string;
+            status: string;
             uid: number;
             username: string;
+            userslug: string;
         };
     };
     utils: {

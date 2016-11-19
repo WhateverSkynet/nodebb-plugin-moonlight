@@ -32,7 +32,6 @@ const icons = {
 interface AppListProps {
   apps?: ApplicationTemplate[];
   isAdmin?: boolean;
-  navigateToDetails?: (row: ApplicationTemplate) => void;
   delete?: (appId: number) => DeleteApplicationAction;
 }
 
@@ -75,11 +74,11 @@ const AppList = (props: AppListProps) => {
             }>
               {
                 props.apps.map((app, i) =>
-                  <tr key={app.appId} className="row" style={
+                  <tr key={app.appId} className="row clickable" style={
                     {
                       background: i % 2 === 0 ? "#cce4f2" : "transparent",
                     }
-                  } onClick={() => props.navigateToDetails(app)}>
+                  } onClick={() => window.ajaxify.go(`/application/${app.appId}`)}>
                     <td className="col-xs-1">
                       {
                         app.characters[0].class
@@ -126,9 +125,6 @@ const mapStateToProps = (state: State) => {
 
 const mapDispatchToProps = (dispatch: any, ownProps: AppListProps) => {
   const props: AppListProps = bindActionCreators({
-    navigateToDetails: (app: ApplicationTemplate) => {
-      return window.ajaxify.go(`/application/${app.appId}`);
-    },
     delete: (appId: number) => {
       return {
         type: DELETE_APPLICATION,
