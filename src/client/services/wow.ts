@@ -1,9 +1,10 @@
 import * as actions from "../../actions";
 import { store } from "../index";
 
-//TODO: Clean up 
+//TODO: Clean up and improove perf
 export const getWoWData = (cb: () => void) => {
-  if (store.getState().wow) {
+  const wow = store.getState().wow;
+  if (wow.classes && wow.classes.length) {
     cb();
   } else {
     window.ajaxify.loadData("mnl/wow", (err, data) => {

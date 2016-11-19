@@ -1,0 +1,22 @@
+
+.message__author {
+  font-weight: 600;
+  font-size: 12px;
+  margin-bottom: -5px;
+  &[data-author="applicant"] {
+    color: #007ABE;
+  }
+  &[data-author="officer"] {
+    color: #DDB763;
+  }
+}
+
+.message__timestamp {
+  font-weight: 400;
+  font-size: 12px;
+  color: #999;
+}
+
+.message__text {
+ margin: 5px 10px 20px 10px;
+}

@@ -5,6 +5,22 @@ import { connect } from "react-redux";
 import { store } from "../index";
 import { Recruitment } from '../../models/recruitment';
 
+import { publicPath } from '../util';
+
+const icons = {
+  "warrior": require("../../assets/icons/warrior-60x60.png"),
+  "paladin": require("../../assets/icons/paladin-60x60.png"),
+  "hunter": require("../../assets/icons/hunter-60x60.png"),
+  "rogue": require("../../assets/icons/rogue-60x60.png"),
+  "priest": require("../../assets/icons/priest-60x60.png"),
+  "death-knight": require("../../assets/icons/death-knight-60x60.png"),
+  "shaman": require("../../assets/icons/shaman-60x60.png"),
+  "mage": require("../../assets/icons/mage-60x60.png"),
+  "warlock": require("../../assets/icons/warlock-60x60.png"),
+  "monk": require("../../assets/icons/monk-60x60.png"),
+  "druid": require("../../assets/icons/druid-60x60.png"),
+  "demon-hunter": require("../../assets/icons/demon-hunter-60x60.png"),
+};
 
 interface RecruitmentWidgetProps {
   classes: Recruitment.RecruitmentItem[];
@@ -34,42 +50,52 @@ const saveSettings = () => {
 };
 
 const getCssName = (str: string) => {
-    if (!str) return "";
-    return str.toLowerCase()
-        .replace(/ /, "");
+  if (!str) return "";
+  return str.toLowerCase()
+    .replace(/ /, "");
 };
 
 const RecruitmentWidgetImpl: React.StatelessComponent<RecruitmentWidgetProps> = (props: RecruitmentWidgetProps) => (
-  <div className="mui-panel">
-    <table>
-      <thead>
-        <tr className="mui-row">
-          <th className="mui-col-md-8">Class</th>
-          <th className="mui-col-md-10">Spec</th>
-          <th className="mui-col-md-3">None</th>
-          <th className="mui-col-md-3">Low</th>
-          <th className="mui-col-md-3">Medium</th>
-          <th className="mui-col-md-3">High</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          props.classes.map((x, i) => (
-            <tr key={x.class + x.role + x.spec} className="mui-row">
-              <td className="mui-col-md-8 character-class" data-character-class={getCssName(x.class)}><a style={{cursor: "default"}}>{x.class}</a></td>
-              <td className="mui-col-md-10">{x.spec || x.role}</td>
-              <td className="mui-col-md-3"><input type="radio" checked={x.status === "None"} onClick={() => handleChange(i, "None")} /></td>
-              <td className="mui-col-md-3"><input type="radio" checked={x.status === "Low"} onClick={() => handleChange(i, "Low")} /></td>
-              <td className="mui-col-md-3"><input type="radio" checked={x.status === "Medium"} onClick={() => handleChange(i, "Medium")} /></td>
-              <td className="mui-col-md-3"><input type="radio" checked={x.status === "High"} onClick={() => handleChange(i, "High")} /></td>
+  <div className="container">
+    <div className="panel">
+      <h2 className="panel__header">Recruitment Settings</h2>
+      <div className="panel__content">
+        <table className="table">
+          <thead>
+            <tr className="row">
+              <th className="col-md-4">Class</th>
+              <th className="col-md-4">Spec</th>
+              <th className="col-md-1">None</th>
+              <th className="col-md-1">Low</th>
+              <th className="col-md-1">Medium</th>
+              <th className="col-md-1">High</th>
             </tr>
-          ))
-        }
-
-      </tbody>
-
-    </table>
-    <button className="mui-btn  mui-btn--primary" onClick={() => saveSettings()}>Save</button>
+          </thead>
+          <tbody>
+            {
+              props.classes.map((x, i) => (
+                <tr key={x.class + x.role + x.spec} className="row" data-odd={i % 2 === 0 }>
+                  <td className="col-md-4">
+                    <img src={`${publicPath}/${icons[x.class.toLowerCase().replace(" ", "-")]}`} alt={x.class} style={{
+                      width: 22,
+                      height: 22,
+                      marginRight: 5
+                    }}></img>
+                    <span>{x.class}</span>
+                  </td>
+                  <td className="col-md-4">{x.spec || x.role}</td>
+                  <td className="col-md-1"><input type="radio" checked={x.status === "None"} onClick={() => handleChange(i, "None")} /></td>
+                  <td className="col-md-1"><input type="radio" checked={x.status === "Low"} onClick={() => handleChange(i, "Low")} /></td>
+                  <td className="col-md-1"><input type="radio" checked={x.status === "Medium"} onClick={() => handleChange(i, "Medium")} /></td>
+                  <td className="col-md-1"><input type="radio" checked={x.status === "High"} onClick={() => handleChange(i, "High")} /></td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <button className="panel__button panel__button--action" onClick={() => saveSettings()}>Save</button>
+    </div>
   </div>
 );
 

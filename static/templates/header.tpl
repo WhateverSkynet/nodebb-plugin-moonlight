@@ -39,20 +39,14 @@
 	{{customJS}}
 	<!-- ENDIF useCustomJS -->
 	<!-- IF useCustomCSS -->
-	<style type="text/css">
-		{
-			{
-				customCSS
-			}
-		}
-	</style>
+	<style type="text/css">{{customCSS}}</style>
 	<!-- ENDIF useCustomCSS -->
 </head>
 
 <body class="{bodyClass} skin-{config.bootswatchSkin}">
 	<div class="header-container">
 
-		<div class="header">
+		<div class="header container">
 			<div class="header-row hidden-xs">
 				<a class="logo-wrapper" href="<!-- IF brand:logo:url -->{brand:logo:url}<!-- ELSE -->{relative_path}/<!-- ENDIF brand:logo:url -->">
 					<img alt="{brand:logo:alt}" class="{brand:logo:display} logo" src="{brand:logo}" />

@@ -1,0 +1,50 @@
+@import "colors";
+
+/* reset this shit */
+
+button,
+input,
+select,
+textarea {
+  margin: 0;
+}
+
+h2,
+ {
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+  text-align: left;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+*:before, *:after {
+  box-sizing: inherit;
+}
+
+@import "common/panel/panel";
+@import "common/table";
+@import "admin/recruitment";
+
+.mnl-text-field {
+  input, textarea {
+    // Remove nodebb css.
+    box-shadow: none;
+  }
+}

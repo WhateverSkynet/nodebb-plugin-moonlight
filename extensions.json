@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "pmneo.tsimporter",
+        "kisstkondoros.typelens",
+        "dbaeumer.vscode-eslint"
+    ]
+}

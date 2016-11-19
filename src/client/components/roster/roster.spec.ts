@@ -1,11 +1,11 @@
 import { mapStateToProps, getProperty } from "./roster";
-import { characters } from '../../../../__data__/characters';
+//import { characters } from '../../../../__data__/characters';
 
 jest.dontMock('./roster');
 
 const defaultState = {
   ajaxify: {
-    roster: characters
+    roster: []
   },
   app: {
     filters: {
