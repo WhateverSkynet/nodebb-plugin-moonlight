@@ -23,15 +23,15 @@
   var matchRooms = function (path) {
     switch (path) {
       case "/landing":
-      return "mnl_landing";
+        return "mnl_landing";
       case "/roster":
-      return "mnl_roster";
+        return "mnl_roster";
       case "/apply":
-      return "mnl_apply";
+        return "mnl_apply";
       case "/applications":
-      return "mnl_applications";
+        return "mnl_applications";
       case "/application":
-      return "mnl_application";
+        return "mnl_application";
       default:
         "mnl";
     }

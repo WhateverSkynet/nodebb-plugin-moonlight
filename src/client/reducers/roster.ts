@@ -14,7 +14,6 @@ const defaultState = {
     sortBy: "rank",
     sortDirection: "ASC",
     charClass: {}
-
   }
 };
 
