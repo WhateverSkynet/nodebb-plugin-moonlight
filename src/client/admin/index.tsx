@@ -9,7 +9,10 @@ import { history, store } from "../index";
 
 import { BlizzardSettings } from "./blizzard";
 import { RosterSettings } from "./roster";
+import { ApplicationService } from './../services/application';
+import { ApplicationSettings } from './application';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { muiTheme } from '../theme';
 
 export class AdminTab extends Link {
   render() {
@@ -40,6 +43,9 @@ const AdminTabs = (props: React.HTMLAttributes<HTMLDivElement>) => (
           pathname: "/admin/plugins/moonlight#recruitment"
         }}>Recruitment</AdminTab>
         <AdminTab to={{
+          pathname: "/admin/plugins/moonlight#application"
+        }}>Application</AdminTab>
+        <AdminTab to={{
           pathname: "/admin/plugins/moonlight#roster"
         }}>Roster</AdminTab>
         <AdminTab to={{
@@ -58,23 +64,23 @@ export class AdminPage extends React.Component<{}, {}> {
     super(props);
     getSettings();
     getWoWData(() => { });
+    ApplicationService.getQuestions();
+    ApplicationService.getTemplateQuestions();
   }
   render() {
     return (
       <Provider store={store}>
-        <MuiThemeProvider>
+        <MuiThemeProvider muiTheme={muiTheme}>
           <Router history={history}>
             <Route path="/admin/plugins/moonlight" component={AdminTabs} >
               <IndexRedirect to="/admin/plugins/moonlight#recruitment" />
               <Route path="/admin/plugins/moonlight#recruitment" component={RecruitmentSettings} />
+              <Route path="/admin/plugins/moonlight#application" component={ApplicationSettings} />
               <Route path="/admin/plugins/moonlight#roster" component={RosterSettings} />
               <Route path="/admin/plugins/moonlight#blizzard" component={BlizzardSettings} />
             </Route>
-
           </Router>
         </MuiThemeProvider>
-
-
       </Provider>
     );
   }

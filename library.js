@@ -13,28 +13,28 @@ plugin.init = function (params, callback) {
   // We create two routes for every view. One API call, and the actual route itself.
   // Just add the buildHeader middleware to your route and NodeBB will take care of everything for you.
 
-  var middlewares = [hostMiddleware.registrationComplete, hostMiddleware.pageView, hostMiddleware.pluginHooks];
-
+  var publicMiddlewares = [hostMiddleware.registrationComplete, hostMiddleware.pageView, hostMiddleware.pluginHooks];
+  var middlewares = [hostMiddleware.authenticate, ...publicMiddlewares];
  // router.get(name, middleware.busyCheck, middleware.buildHeader, middlewares, controller);
 
 
   router.get('/admin/plugins/moonlight', hostMiddleware.admin.buildHeader, controllers.renderAdminPage);
   router.get('/api/admin/plugins/moonlight', middlewares, controllers.renderAdminPage);
 
-  // router.get('/applications', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderApplicationsPage);
-  // router.get('/api/applications', middlewares, controllers.renderApplicationsPage);
+  router.get('/applications', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderApplicationsPage);
+  router.get('/api/applications', middlewares, controllers.renderApplicationsPage);
 
-  // router.get('/apply', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderApplyPage);
-  // router.get('/api/apply', middlewares, controllers.renderApplyPage);
+  router.get('/apply', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderApplyPage);
+  router.get('/api/apply', middlewares, controllers.renderApplyPage);
 
-  router.get('/landing', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderLandingPage);
-  router.get('/api/landing', middlewares, controllers.renderLandingPage);
+  router.get('/landing', hostMiddleware.busyCheck, hostMiddleware.buildHeader, publicMiddlewares, controllers.renderLandingPage);
+  router.get('/api/landing', publicMiddlewares, controllers.renderLandingPage);
 
   router.get('/roster', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderRosterPage);
   router.get('/api/roster', middlewares, controllers.renderRosterPage);
 
-  router.get('/application/:app_id', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderApplicationPage);
-  router.get('/api/application/:app_id', middlewares, controllers.renderApplicationPage);
+  router.get('/application/:id', hostMiddleware.busyCheck, hostMiddleware.buildHeader, middlewares, controllers.renderApplicationPage);
+  router.get('/api/application/:id', middlewares, controllers.renderApplicationPage);
 
   router.get('/api/mnl/wow', [] , controllers.renderWoWData);
 

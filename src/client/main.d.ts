@@ -1,4 +1,5 @@
 ///<reference path="../../node_modules/redux/index.d.ts" />
+
 interface AlertDescription {
     type?: string;
     alert_id?: string;
@@ -20,10 +21,31 @@ interface Window {
     devToolsExtension: any;
     socket: {
         emit: (eventId: string, data: any, callback: (err, data) => void) => void;
-    }
+        on: (eventId: string, callback: (data) => void) => void;
+    };
     app: {
         alert: (def: AlertDescription) => void;
-    }
+        user: {
+            banned: string;
+            email: string;
+            "email:confirmed": string;
+            "icon:bgColor": string;
+            "icon:text": string;
+            isAdmin: boolean;
+            isGlobalMod: boolean;
+            picture: string;
+            reputation: string;
+            status: string;
+            uid: number;
+            username: string;
+            userslug: string;
+        };
+    };
+    utils: {
+        toISOString: (timestamp: number) => string;
+    };
+    jQuery: any;
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
 }
 
 interface EventTarget {
@@ -39,4 +61,3 @@ declare module "*.jpg!jpg" {
     var _: string;
     export default _;
 }
-

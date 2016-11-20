@@ -87,7 +87,7 @@
 			<ul class="dropdown-menu" aria-labelledby="tools_dropdown">
 				<li><a href="{relative_path}/roster">Roster</a></li>
 				<li><a href="https://www.warcraftlogs.com/guilds/2365/" target="_blank">Logs</a></li>
-				<!--<li><a href="{relative_path}/applications">Applications</a></li>-->
+				<li><a href="{relative_path}/applications">Applications</a></li>
 					<!-- IF user.isAdmin -->
 				<li><a href="{relative_path}/admin">Admin</a></li>
 					<!-- ENDIF user.isAdmin -->
