@@ -33,6 +33,9 @@ interface Window {
             "icon:text": string;
             isAdmin: boolean;
             isGlobalMod: boolean;
+            isMember: boolean;
+            isRaider: boolean;
+            isOfficer: boolean;
             picture: string;
             reputation: string;
             status: string;

@@ -81,6 +81,8 @@
 			</ul>
 		</section>
 
+		<!-- IF config.loggedIn -->
+
 		<section class="menu-section">
 			<h3 class="menu-section-title">Tools</h3>
 			<ul class="menu-section-list">
@@ -93,7 +95,6 @@
 			</ul>
 		</section>
 
-		<!-- IF config.loggedIn -->
 		<section class="menu-section" data-section="profile">
 			<h3 class="menu-section-title">[[global:header.profile]]</h3>
 			<ul class="menu-section-list" component="header/usercontrol"></ul>

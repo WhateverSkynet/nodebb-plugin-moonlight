@@ -7,20 +7,7 @@ import { Recruitment } from '../../models/recruitment';
 
 import { publicPath } from '../util';
 
-const icons = {
-  "warrior": require("../../assets/icons/warrior-60x60.png"),
-  "paladin": require("../../assets/icons/paladin-60x60.png"),
-  "hunter": require("../../assets/icons/hunter-60x60.png"),
-  "rogue": require("../../assets/icons/rogue-60x60.png"),
-  "priest": require("../../assets/icons/priest-60x60.png"),
-  "death-knight": require("../../assets/icons/death-knight-60x60.png"),
-  "shaman": require("../../assets/icons/shaman-60x60.png"),
-  "mage": require("../../assets/icons/mage-60x60.png"),
-  "warlock": require("../../assets/icons/warlock-60x60.png"),
-  "monk": require("../../assets/icons/monk-60x60.png"),
-  "druid": require("../../assets/icons/druid-60x60.png"),
-  "demon-hunter": require("../../assets/icons/demon-hunter-60x60.png"),
-};
+import { classIcons } from '../../assets/assets';
 
 interface RecruitmentWidgetProps {
   classes: Recruitment.RecruitmentItem[];
@@ -76,7 +63,7 @@ const RecruitmentWidgetImpl: React.StatelessComponent<RecruitmentWidgetProps> = 
               props.classes.map((x, i) => (
                 <tr key={x.class + x.role + x.spec} className="row" data-odd={i % 2 === 0 }>
                   <td className="col-md-4">
-                    <img src={`${publicPath}/${icons[x.class.toLowerCase().replace(" ", "-")]}`} alt={x.class} style={{
+                    <img src={`${publicPath}/${classIcons[x.class.toLowerCase().replace(" ", "-")]}`} alt={x.class} style={{
                       width: 22,
                       height: 22,
                       marginRight: 5

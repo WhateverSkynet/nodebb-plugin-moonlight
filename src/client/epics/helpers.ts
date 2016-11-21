@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-//Webpack doesn't bundle correctly without this. TODO: figure out why & fix.
+// Webpack doesn't bundle correctly without this. TODO: figure out why & fix.
 import 'rxjs/add/observable/bindNodeCallback';
 import 'rxjs/add/observable/bindCallback';
 
@@ -19,4 +19,18 @@ const on = Observable.bindCallback((options: SocketOptions, callback: (data: any
 export const Socket = {
   emit,
   on
+};
+
+export interface HttpOptions {
+  url: string;
+  payload?: any;
+}
+
+const get = Observable.bindNodeCallback((url: string, callback: (data: any) => void) => {
+  window.ajaxify.loadData(url, callback);
+});
+
+
+export const Http = {
+  get,
 };

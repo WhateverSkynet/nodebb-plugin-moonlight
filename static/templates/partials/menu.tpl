@@ -66,11 +66,17 @@
 	</ul>
 
 	<ul id="main-nav" class="nav navbar-nav menu">
+				<!-- IF !user.isMember -->
+			<li class="active">
+				<a class="button" href="/apply" title="Apply">
+				<span class="">Apply</span>
+				</a>
+			</li>
+			<!-- ENDIF !user.isMember -->
 		<!-- BEGIN navigation -->
 		<!-- IF function.displayMenuItem, @index -->
 		<li class="{navigation.class}">
 			<a class="button" href="{navigation.route}" title="{navigation.title}" <!-- IF navigation.id -->id="{navigation.id}"<!-- ENDIF navigation.id --><!-- IF navigation.properties.targetBlank --> target="_blank"<!-- ENDIF navigation.properties.targetBlank -->>
-
 							<!-- IF navigation.text -->
 							<span class="{navigation.textClass}">{navigation.text}</span>
 							<!-- ENDIF navigation.text -->
