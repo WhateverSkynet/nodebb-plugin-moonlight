@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 import { QuestionListContainer } from './question';
 import { Observable } from 'rxjs/Observable';
@@ -26,25 +26,25 @@ const validateCharacter = (character, uiUrlRequired = false) => {
   // TODO: Remove store ref
   const realms = store.getState().wow.realms;
   if (!character.name) {
-    errors.name = "Required.";
+    errors.name = 'Required.';
   }
   if (!character.realm) {
-    errors.realm = "Required";
+    errors.realm = 'Required';
   } else if (realms.indexOf(character.realm) === -1) {
-    errors.realm = "Invalid Realm."
+    errors.realm = 'Invalid Realm.';
   }
   if (!character.class) {
-    errors.class = "Required.";
+    errors.class = 'Required.';
   }
   if (!character.primarySpecialization) {
-    errors.primarySpecialization = "Required.";
+    errors.primarySpecialization = 'Required.';
   }
   if (!character.secondarySpecialization) {
-    errors.secondarySpecialization = "Required.";
+    errors.secondarySpecialization = 'Required.';
   }
   if (!character.userInterfaceUrl) {
     if (uiUrlRequired) {
-      errors.userInterfaceUrl = "Required.";
+      errors.userInterfaceUrl = 'Required.';
     }
   // } else if (!/^(?:https?:\/\/(?:www\.)?(?:imgur\.com)|(?:i\.imgur\.com))\/([A-z0-9]{7})\.?|^([A-z0-9]{7})$/.test(character.userInterfaceUrl)) {
   //   errors.userInterfaceUrl = "Invalid URL.";
@@ -63,10 +63,10 @@ const validate = (values) => {
   });
 
   errors.questions = values.questions
-    ? values.questions.map(q => !q || !q.value ? { value: "Required." } : null)
+    ? values.questions.map(q => !q || !q.value ? { value: 'Required.' } : null)
     : [];
 
-  return errors
+  return errors;
 };
 
 const onSubmit = () => {
@@ -78,7 +78,7 @@ const onSubmitSuccess = (result: any, dispatch: any) => {
 };
 
 const formConfig = {
-  form: "application",
+  form: 'application',
   validate,
   onSubmit,
   onSubmitSuccess
@@ -87,7 +87,7 @@ const formConfig = {
 interface ApplicationFormProps extends FormProps<{}, {}> {
   questions: Question[];
   valid: boolean;
-  //fix for missing typings
+  // fix for missing typings
   submitSucceeded: boolean;
 }
 
@@ -114,23 +114,23 @@ class ApplicationFormImpl extends React.PureComponent<ApplicationFormProps, {}> 
 
   render() {
     return (
-      <div className="section">
-        <div className="row">
-          <div className="col-xs-12">
-            <h2 className="title--landing">Application</h2>
+      <div className='section'>
+        <div className='row'>
+          <div className='col-xs-12'>
+            <h2 className='title--landing'>Application</h2>
           </div>
-          <div className="col-md-4">
-            <FieldArray name="characters" component={renderCharacterList} />
+          <div className='col-md-4'>
+            <FieldArray name='characters' component={renderCharacterList} />
           </div>
-          <div className="col-md-8">
-            <div className="panel">
-              <h2 className="panel__header">
+          <div className='col-md-8'>
+            <div className='panel'>
+              <h2 className='panel__header'>
                 Questions
             </h2>
-              <div className="panel__content">
-                <FieldArray name="questions" component={QuestionListContainer} data={{ questions: this.props.questions }} />
+              <div className='panel__content'>
+                <FieldArray name='questions' component={QuestionListContainer} data={{ questions: this.props.questions }} />
               </div>
-              <button className="panel__button panel__button--action" disabled={this.props.submitting || !this.props.valid || this.props.submitSucceeded}
+              <button className='panel__button panel__button--action' disabled={this.props.submitting || !this.props.valid || this.props.submitSucceeded}
                 onClick={(e: any) => this.props.handleSubmit(e)}>Submit</button>
             </div>
           </div>

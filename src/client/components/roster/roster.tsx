@@ -12,21 +12,7 @@ import Checkbox from 'material-ui/Checkbox';
 import { Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 import { publicPath } from '../../util';
-
-const icons = {
-  "warrior": require("../../../assets/icons/warrior-60x60.png"),
-  "paladin": require("../../../assets/icons/paladin-60x60.png"),
-  "hunter": require("../../../assets/icons/hunter-60x60.png"),
-  "rogue": require("../../../assets/icons/rogue-60x60.png"),
-  "priest": require("../../../assets/icons/priest-60x60.png"),
-  "death-knight": require("../../../assets/icons/death-knight-60x60.png"),
-  "shaman": require("../../../assets/icons/shaman-60x60.png"),
-  "mage": require("../../../assets/icons/mage-60x60.png"),
-  "warlock": require("../../../assets/icons/warlock-60x60.png"),
-  "monk": require("../../../assets/icons/monk-60x60.png"),
-  "druid": require("../../../assets/icons/druid-60x60.png"),
-  "demon-hunter": require("../../../assets/icons/demon-hunter-60x60.png"),
-};
+import { classIcons } from '../../../assets/assets';
 
 const getCssName = (str: string) => {
   if (!str) return "";
@@ -153,7 +139,7 @@ const RosterImpl = (props: RosterProps) => {
                   }
                 } >
                   <td className="col-xs-2">
-                    <img className="roster__class-icon" src={`${publicPath}/${icons[className[m.class - 1].toLowerCase().replace(" ", "-")]}`} alt={className[m.class - 1]}></img>
+                    <img className="roster__class-icon" src={`${publicPath}/${classIcons[className[m.class - 1].toLowerCase().replace(" ", "-")]}`} alt={className[m.class - 1]}></img>
                     <a className="roster__text" href={"https://eu.battle.net/wow/en/character/" + m.realm + "/" + m.name + "/advanced"} target="_blank">{m.name}</a>
                   </td>
                   <td className="col-xs-2">

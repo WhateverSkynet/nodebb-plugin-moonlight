@@ -12,21 +12,7 @@ import { ApplicationReplyComponent } from './reply';
 import { MessageList } from './reply-list';
 
 import { publicPath } from '../../util';
-
-const icons = {
-  "warrior": require("../../../assets/icons/warrior-60x60.png"),
-  "paladin": require("../../../assets/icons/paladin-60x60.png"),
-  "hunter": require("../../../assets/icons/hunter-60x60.png"),
-  "rogue": require("../../../assets/icons/rogue-60x60.png"),
-  "priest": require("../../../assets/icons/priest-60x60.png"),
-  "death-knight": require("../../../assets/icons/death-knight-60x60.png"),
-  "shaman": require("../../../assets/icons/shaman-60x60.png"),
-  "mage": require("../../../assets/icons/mage-60x60.png"),
-  "warlock": require("../../../assets/icons/warlock-60x60.png"),
-  "monk": require("../../../assets/icons/monk-60x60.png"),
-  "druid": require("../../../assets/icons/druid-60x60.png"),
-  "demon-hunter": require("../../../assets/icons/demon-hunter-60x60.png"),
-};
+import { classIcons } from '../../../assets/assets';
 
 const Character = ({character}: { character: ApplicationCharacter }) => {
   const showUIImage = character.userInterfaceUrl && character.userInterfaceUrl.length === 7;
@@ -123,7 +109,7 @@ export const AppDetails = ({routeParams: { id }, app, appActions}: AppDetailsPro
                 <div className="app-details__header">
                   {
                     app.characters[0].class
-                      ? <img className="character-class" src={`${publicPath}/${icons[app.characters[0].class.toLowerCase().replace(" ", "-")]}`} alt={app.characters[0].class}></img>
+                      ? <img className="character-class" src={`${publicPath}/${classIcons[app.characters[0].class.toLowerCase().replace(" ", "-")]}`} alt={app.characters[0].class}></img>
                       : ""
                   }
                   <h2 className="title--landing">{`[${appStatus[app.status]}] ${app.characters[0].name || ""} - ${app.characters[0].class || ""}`}</h2>

@@ -4,7 +4,7 @@ import { State } from './../../states/state';
 import * as React from "react";
 import { bindActionCreators } from 'redux';
 import { CharacterClass } from '../../../models/wow';
-import { ApplicationCharacter, ApplicationCharacterChange } from '../../../models/application';
+import { ApplicationCharacter } from '../../../models/application';
 
 import { CharacterClassSelectorContainer } from './class';
 import { CharacterSpecSelectorContainer } from './spec';
@@ -92,7 +92,7 @@ const Character = (props: CharacterProps) => {
   return (
     <div>
 
-      <Field name={`${props.field}.name`} component={renderTextField} data={{ label: "Name" }} />
+      <Field name={`${props.field}.name`} component={renderTextField} data={{ label: "Character Name" }} />
       <Field name={`${props.field}.realm`} component={RealmSelectorContainer} data={{ label: "Realm" }} />
       <Field name={`${props.field}.class`} component={CharacterClassSelectorContainer} data={{ label: "Class" }} />
       <Field name={`${props.field}.primarySpecialization`} component={CharacterSpecSelectorContainer} data={{

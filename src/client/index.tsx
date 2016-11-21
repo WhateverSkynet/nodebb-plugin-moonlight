@@ -2,11 +2,8 @@ import './polyfills.ts';
 import './dependencies.ts';
 
 import { adminReducer } from './reducers/admin/admin';
-import { AdminState } from './states/admin/admin';
 import { State } from './states/state';
-import { AppState } from './states/app';
 import { appReducer } from './reducers/app';
-import { Action } from '../actions';
 import * as React from "react";
 import { render as renderDom } from "react-dom";
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
@@ -23,7 +20,7 @@ import { Roster } from "./components/roster/roster";
 import { ApplicationSocket } from './socket/application';
 import { appEpic } from "./epics";
 
-import { reducer as formReducer } from 'redux-form'
+import { reducer as formReducer } from 'redux-form';
 
 //Rxjs
 // import 'rxjs/add/operator/mergeMap';
@@ -34,7 +31,6 @@ import { AppDetailsContainer } from './components/application/details';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import { RecruitmentWidget } from "./components/recruitment/recruitment";
 import { LandingPage } from './components/landing';
 import { AdminPage } from './admin/index';
 import { muiTheme } from './theme';
@@ -120,4 +116,4 @@ export const renderAdmin = (container: Element) => {
     React.createElement(AdminPage, {}),
     container
   );
-}
+};
