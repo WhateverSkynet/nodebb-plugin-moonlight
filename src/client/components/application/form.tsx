@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import * as React from "react";
-=======
-import * as React from 'react';
->>>>>>> dev
 
 import { QuestionListContainer } from './question';
 import { Observable } from 'rxjs/Observable';

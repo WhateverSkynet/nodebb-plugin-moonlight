@@ -4,7 +4,6 @@ import { ApplicationAction, Action, GET_QUESTIONS, QUESTION_CREATED, QUESTION_UP
 import { Question, ApplicationTemplate, ApplicationCharacter } from './../../models/application';
 
 import * as UUID from "uuid";
-import { ApplicationValidationErrors, ValidationError, PropertyValidationErrors, ERROR } from '../../models/application';
 import { AjaxifyAction, AJAXIFY_APPLICATION } from '../../actions';
 
 const questionReducer: Reducer<Question> = (state: Question = {}, action: ApplicationAction = Action) => {

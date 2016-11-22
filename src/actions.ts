@@ -1,5 +1,5 @@
 import { BlizzardSettingsState } from './client/states/admin/blizzard-settings';
-import { Question, ApplicationTemplate, ApplicationCharacter, ApplicationCharacterChange, ApplicationReply } from './models/application';
+import { Question, ApplicationTemplate, ApplicationCharacter, ApplicationReply } from './models/application';
 import { RosterCharacter, CharacterClass } from './models/wow';
 import { Recruitment } from "./models/recruitment";
 
