@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-moonlight",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Battle.net integration with Nodebb",
   "main": "library.js",
   "repository": {
