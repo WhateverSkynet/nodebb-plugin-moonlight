@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 import { QuestionListContainer } from './question';
 import { Observable } from 'rxjs/Observable';
@@ -86,7 +86,6 @@ const formConfig = {
 
 interface ApplicationFormProps extends FormProps<{}, {}> {
   questions: Question[];
-  valid: boolean;
   // fix for missing typings
   submitSucceeded: boolean;
 }
@@ -100,7 +99,7 @@ class ApplicationFormImpl extends React.PureComponent<ApplicationFormProps, {}> 
     getWoWData(() => { });
     this.sub = Observable.timer(30000, 30000)
       .subscribe(x => {
-        if (!this.props.submitting && !this.props.submitSucceeded) {
+        if (!this.props.submitting && !this.props.submitSucceeded && this.props.dirty) {
           store.dispatch({
             type: SAVE_APPLICATION
           });

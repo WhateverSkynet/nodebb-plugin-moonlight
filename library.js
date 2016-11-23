@@ -17,6 +17,7 @@ plugin.init = function (params, callback) {
 
   var publicMiddlewares = [hostMiddleware.registrationComplete, hostMiddleware.pageView, hostMiddleware.pluginHooks];
   var middlewares = [hostMiddleware.authenticate, ...publicMiddlewares];
+
   // router.get(name, middleware.busyCheck, middleware.buildHeader, middlewares, controller);
 
 
@@ -62,6 +63,14 @@ const isRaider = (uid, callback) => {
   }
 };
 
+const isTrial = (uid, callback) => {
+  if (Array.isArray(uid)) {
+    groups.isMembers(uid, 'trials', callback);
+  } else {
+    groups.isMember(uid, 'trials', callback);
+  }
+};
+
 plugin.renderHeader = (data, callback) => {
   const uid = data.req.uid;
   async.series({
@@ -71,6 +80,9 @@ plugin.renderHeader = (data, callback) => {
     isRaider: (next) => {
       isRaider(uid, next);
     },
+    isTrial: (next) => {
+      isTrial(uid, next);
+    },
   }, (err, membership) => {
     if (err) {
       return callback(err)
@@ -78,6 +90,7 @@ plugin.renderHeader = (data, callback) => {
     const user = data.templateValues.user;
     user.isOfficer = membership.isOfficer;
     user.isRaider = membership.isRaider;
+    user.isTrial = membership.isTrial;
     user.isMember = membership.isRaider || membership.isOfficer;
     data.templateValues.userJSON = JSON.stringify(user);
     callback(null, data);

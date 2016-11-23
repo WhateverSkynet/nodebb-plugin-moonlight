@@ -6,6 +6,7 @@ import { store } from "../index";
 import { Recruitment } from '../../models/recruitment';
 
 import { publicPath } from '../util';
+
 import { classIcons } from '../../assets/assets';
 
 interface RecruitmentWidgetProps {

@@ -15,7 +15,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import { classIcons } from '../../../assets/assets';
 
-
 interface AppListProps {
   apps?: ApplicationTemplate[];
   isAdmin?: boolean;
