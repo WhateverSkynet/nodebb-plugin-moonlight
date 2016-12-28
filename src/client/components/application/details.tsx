@@ -135,7 +135,13 @@ export const AppDetails = ({routeParams: { id }, app, appActions}: AppDetailsPro
                         app.questions.map((q, i) => (
                           <li key={q.qid} >
                             <p className="app-details__questions">{`${i + 1}. ${q.text}`}</p>
-                            <p className="message__text">{q.value}</p>
+                            {
+                              q.value ?
+                              q.value.split("\n").map((text, i) => (
+                                  <p className="message__text" key={i}>{text}</p>
+                              ))
+                              : <p className="message__text" key={i}></p>
+                            }
                           </li>
                         ))
                       }

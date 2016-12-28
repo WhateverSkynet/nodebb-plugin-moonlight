@@ -1,6 +1,13 @@
 {
   "rules": {
     "class-name": true,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
+    ],
     "comment-format": [
       true,
       "check-space"

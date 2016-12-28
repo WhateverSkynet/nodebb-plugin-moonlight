@@ -35,7 +35,7 @@ const rank1Toggled = {
     }
 };
 
-describe('todos reducer', () => {
+describe('roster reducer', () => {
     it('should return the initial state', () => {
         expect(
             rosterReducer(undefined, Action)

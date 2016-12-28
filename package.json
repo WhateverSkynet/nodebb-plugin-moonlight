@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-moonlight",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Battle.net integration with Nodebb",
   "main": "library.js",
   "repository": {
@@ -8,7 +8,8 @@
     "url": "https://github.com/WhateverSkynet/nodebb-plugin-moonlight"
   },
   "scripts": {
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "test": "jest"
   },
   "keywords": [
     "nodebb",
@@ -23,7 +24,7 @@
     "index": true
   },
   "devDependencies": {
-    "@types/jest": "^15.1.32",
+    "@types/jest": "^16.0.0",
     "@types/lodash": "^4.14.37",
     "@types/material-ui": "^0.15.37",
     "@types/react-addons-pure-render-mixin": "^0.14.14",
@@ -39,7 +40,8 @@
     "css-loader": "0.23.1",
     "extract-text-webpack-plugin": "1.0.1",
     "image-webpack-loader": "^3.0.0",
-    "jest-cli": "^16.0.2",
+    "jest": "^17.0.3",
+    "jest-cli": "^17.0.3",
     "lodash": "^4.16.4",
     "material-ui": "^0.16.1",
     "node-sass": "3.8.0",
@@ -63,6 +65,7 @@
     "sass-loader": "4.0.0",
     "source-map-loader": "0.1.5",
     "style-loader": "0.13.1",
+    "ts-jest": "^17.0.0",
     "ts-loader": "0.9.4",
     "typescript": "^2.0.3",
     "uuid": "^2.0.3",
@@ -73,5 +76,23 @@
     "uuid": "2.0.3",
     "webpack": "1.13.2",
     "battlenet-api": "0.13.0"
+  },
+  "jest": {
+    "verbose": true,
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "globals": {
+      "__TS_CONFIG__": {
+        "module": "commonjs",
+        "jsx": "react"
+      }
+    }
   }
 }
