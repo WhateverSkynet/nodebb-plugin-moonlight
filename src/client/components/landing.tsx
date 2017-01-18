@@ -5,6 +5,16 @@ import { BlogPost } from '../../models/blog';
 
 const blogPosts: BlogPost[] = [
   {
+    bpId: 2,
+    imageUrl: `${publicPath}/${require('../../assets/uploads/we-helya.jpg')}`,
+    imageAlt: 'Hellya down',
+    title: 'M Hell Yeah!',
+    date: '13.01.2017',
+    paragraphs: [
+      'Finally! After the normal attendance issues and the what-not which always happen around the holidays, we managed to get a full raid group together and killed her. Post-nerf, but still felt good to get some revenge on the bitch.',
+    ],
+  },
+  {
     bpId: 1,
     imageUrl: `${publicPath}/${require('../../assets/uploads/m-xavius.jpg')}`,
     imageAlt: 'Xavius down',
@@ -12,16 +22,6 @@ const blogPosts: BlogPost[] = [
     date: '25.10.2016',
     paragraphs: [
       ' After several computer issues, work trips to greece and some holidays we downed Cenarius, the real end boss of this raid. Subsequently we quickly proceeded to liberate the Emerald Dream from Xavius\' hold. Thanks to everyone for being a part of it and see you soon in Trial of Valor, followed by Nighthold, the real raid of the first tier. Special shout out to Deli for being the first one in the guild for a very long time to get genuinely excited at getting a realm first and some awkward nerd screams.',
-    ],
-  },
-  {
-    bpId: 2,
-    imageUrl: `${publicPath}/${require('../../assets/uploads/m-xavius.jpg')}`,
-    imageAlt: 'Xavius down',
-    title: 'M Hell Yeah!',
-    date: '13.01.2017',
-    paragraphs: [
-      'This was way too hard...',
     ],
   },
 ];
