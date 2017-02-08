@@ -18,7 +18,7 @@ module.exports = {
         path: "./dist",
         libraryTarget: "amd",
         filename: '[name].js?',
-        sourceMapFilename: '[name].map?'
+        sourceMapFilename: '[name].map?',
     },
 
     // Enable sourcemaps for debugging webpack's output.
@@ -26,42 +26,76 @@ module.exports = {
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
-        modulesDirectories: [
+        extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+        // https://webpack.js.org/configuration/resolve/#resolve-alias
+        alias: {
+        },
+        modules: [
             'node_modules',
             path.resolve(__dirname, 'node_modules')
-        ]
+        ],
     },
 
     module: {
-        loaders: [
+        rules: [
             // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
             {
                 test: /\.tsx?$/,
-                loader: "ts"
+                loader: "ts-loader",
             }, {
                 test: /(\.scss|\.css)$/,
-                loader: ExtractTextPlugin.extract(['css?sourceMap', 'sass?sourceMap'])
+                loader: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: [
+                        {
+                            loader: "css-loader",
+                            options: {
+                                sourceMaps: true,
+                            }
+                        },
+                        {
+                            loader: "sass-loader",
+                            options: {
+                                sourceMaps: true,
+                            }
+                        }
+                    ],
+                }),
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
-                loaders: [
-                    'file?hash=sha512&digest=hex&name=[hash].[ext]',
-                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-                ]
-            }
-        ],
-        preLoaders: [
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            hash: 'sha512',
+                            digest: 'hex',
+                            name: '[hash].[ext]',
+                        },
+                    },
+                    {
+                        loader: 'image-webpack-loader',
+                        options: {
+                            bypassOnDebug: true,
+                            optimizationLevel: 7,
+                            interlaced: false,
+                        }
+                    },
+                ],
+            },
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             {
                 test: /\.js$/,
-                loader: "source-map-loader"
+                enforce: 'pre',
+                loader: "source-map-loader",
             }
-        ]
+        ],
     },
     plugins: [
-        new ExtractTextPlugin('[name].css', {
-            allChunks: true
-        })
+        new ExtractTextPlugin({
+            filename: '[name].css',
+            disable: false,
+            allChunks: true,
+        }),
     ],
 };
