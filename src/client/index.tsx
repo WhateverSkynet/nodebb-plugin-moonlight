@@ -35,7 +35,7 @@ import { LandingPage } from './components/landing';
 import { AdminPage } from './admin/index';
 import { muiTheme } from './theme';
 
-const injectTapEventPlugin = require('react-tap-event-plugin');
+import * as injectTapEventPlugin from 'react-tap-event-plugin';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941

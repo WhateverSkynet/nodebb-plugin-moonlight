@@ -84,7 +84,8 @@ const formConfig = {
   onSubmitSuccess
 };
 
-interface ApplicationFormProps extends FormProps<{}, {}> {
+//TODO: typesafe form shape
+interface ApplicationFormProps extends FormProps<{},void, void> {
   questions: Question[];
   // fix for missing typings
   submitSucceeded: boolean;

@@ -6,9 +6,10 @@ import { Socket } from './helpers';
 import { State } from '../states/state';
 import { store } from '../index';
 import { INITIALIZE_REDUX_FORM, SUBMIT_APPLICATION, START_SUBMIT_REDUX_FORM, ReduxFormAction, END_SUBMIT_REDUX_FORM, ReplyToApplicationAction, REPLY_TO_APPLICATION_SUCCESS, REPLY_TO_APPLICATION, QUESTION_UPDATE_SUCCESS, DeleteApplicationAction, DELETE_APPLICATION, DELETE_APPLICATION_SUCCESS } from '../../actions';
+import { AppState } from '../states/app';
 
 
-export const getQuestionsEpic: Epic<ApplicationAction> = action$ =>
+export const getQuestionsEpic: Epic<ApplicationAction, AppState> = action$ =>
   action$.ofType(GET_QUESTIONS)
     .mergeMap(action => Socket
       .emit({ event: 'plugins.ml.application.getQuestions' })
@@ -20,7 +21,7 @@ export const getQuestionsEpic: Epic<ApplicationAction> = action$ =>
     );
 
 
-export const getTemplateQuestionsEpic: Epic<ApplicationAction> = action$ =>
+export const getTemplateQuestionsEpic: Epic<ApplicationAction, AppState> = action$ =>
   action$.ofType(GET_APPLICATION_QUESTIONS_INIT)
     .mergeMap(action => Socket
       .emit({ event: 'plugins.ml.application.getTemplateQuestions' })
@@ -31,7 +32,7 @@ export const getTemplateQuestionsEpic: Epic<ApplicationAction> = action$ =>
     //  .catch(err => console.log(err))
     );
 
-export const getApplicationTemplateEpic: Epic<ApplicationAction> = action$ =>
+export const getApplicationTemplateEpic: Epic<ApplicationAction, AppState> = action$ =>
   action$.ofType(AJAXIFY_NEW_APPLICATION)
     .mergeMap(action => Socket
       .emit({ event: 'plugins.ml.application.getApplicationTemplate' })
@@ -69,7 +70,7 @@ export const getApplicationForm = (state: State) => {
   return payload;
 };
 
-export const saveApplication: Epic<ApplicationAction> = action$ =>
+export const saveApplication: Epic<ApplicationAction, AppState> = action$ =>
   action$.ofType(SAVE_APPLICATION)
     .mergeMap((action: SaveApplicationAction) => {
       return Socket
@@ -87,7 +88,7 @@ export const saveApplication: Epic<ApplicationAction> = action$ =>
     }
     );
 
-export const deleteApplication: Epic<ApplicationAction> = action$ =>
+export const deleteApplication: Epic<ApplicationAction, AppState> = action$ =>
   action$.ofType(DELETE_APPLICATION)
     .mergeMap((action: DeleteApplicationAction) => {
       return Socket
@@ -105,7 +106,7 @@ export const deleteApplication: Epic<ApplicationAction> = action$ =>
     }
     );
 
-export const replyToApplication: Epic<ApplicationAction> = action$ =>
+export const replyToApplication: Epic<ApplicationAction, AppState> = action$ =>
   action$.ofType(REPLY_TO_APPLICATION)
     .mergeMap((action: ReplyToApplicationAction) => {
       return Socket
@@ -125,7 +126,7 @@ export const replyToApplication: Epic<ApplicationAction> = action$ =>
 
 
 // Just catch errors. updates are broadcasted.
-export const updateQuestion: Epic<ApplicationAction> = action$ =>
+export const updateQuestion: Epic<ApplicationAction, AppState> = action$ =>
   action$.ofType(QUESTION_UPDATE_INITIATED)
     .mergeMap((action: QuestionUpdateInitiateAction) => {
       return Socket
@@ -139,7 +140,7 @@ export const updateQuestion: Epic<ApplicationAction> = action$ =>
     }
     );
 
-export const updateTemplateQuestionsEpic: Epic<ApplicationAction> = action$ =>
+export const updateTemplateQuestionsEpic: Epic<ApplicationAction, AppState> = action$ =>
   action$.ofType(INIT_APPLICATION_TEMPLATE_SAVE)
     .mergeMap((action: InitializeApplicationTemplateSaveAction) => Socket
       .emit({ event: 'plugins.ml.application.updateTemplateQuestions', payload: action.qids })
