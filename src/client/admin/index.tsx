@@ -1,28 +1,29 @@
 import { getWoWData } from '../services/wow';
 import { getSettings } from '../services/settings';
-import * as React from "react";
+import * as React from 'react';
 import { Provider } from "react-redux";
 import { IndexRedirect, Link, Router, Route, browserHistory } from 'react-router';
 
-import { RecruitmentSettings } from "./recruitment";
-import { history, store } from "../index";
+import { RecruitmentSettings } from './recruitment';
+import { history, store } from '../index';
 
-import { BlizzardSettings } from "./blizzard";
-import { RosterSettings } from "./roster";
+import { BlizzardSettings } from './blizzard';
+import { RosterSettings } from './roster';
 import { ApplicationService } from './../services/application';
 import { ApplicationSettings } from './application';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { muiTheme } from '../theme';
+import { BlogContainer } from './blog';
 
 export class AdminTab extends Link {
   render() {
     let router = (this.context as any).router;
-    let cls = "";
+    let cls = '';
 
     if (router) {
 
       if (router.isActive(this.props.to, this.props.onlyActiveOnIndex)) {
-        cls += "mui--is-active"
+        cls += 'mui--is-active';
       }
     }
 
@@ -37,19 +38,22 @@ export class AdminTab extends Link {
 
 const AdminTabs = (props: React.HTMLAttributes<HTMLDivElement>) => (
   <div>
-    <div className="mui-panel">
-      <ul className="mui-tabs__bar">
+    <div className='mui-panel'>
+      <ul className='mui-tabs__bar'>
         <AdminTab to={{
-          pathname: "/admin/plugins/moonlight#recruitment"
+          pathname: '/admin/plugins/moonlight#recruitment',
         }}>Recruitment</AdminTab>
         <AdminTab to={{
-          pathname: "/admin/plugins/moonlight#application"
+          pathname: '/admin/plugins/moonlight#blog',
+        }}>News</AdminTab>
+        <AdminTab to={{
+          pathname: '/admin/plugins/moonlight#application',
         }}>Application</AdminTab>
         <AdminTab to={{
-          pathname: "/admin/plugins/moonlight#roster"
+          pathname: '/admin/plugins/moonlight#roster',
         }}>Roster</AdminTab>
         <AdminTab to={{
-          pathname: "/admin/plugins/moonlight#blizzard"
+          pathname: '/admin/plugins/moonlight#blizzard',
         }}>Blizzard Api</AdminTab>
       </ul>
     </div>
@@ -72,12 +76,13 @@ export class AdminPage extends React.Component<{}, {}> {
       <Provider store={store}>
         <MuiThemeProvider muiTheme={muiTheme}>
           <Router history={history}>
-            <Route path="/admin/plugins/moonlight" component={AdminTabs} >
-              <IndexRedirect to="/admin/plugins/moonlight#recruitment" />
-              <Route path="/admin/plugins/moonlight#recruitment" component={RecruitmentSettings} />
-              <Route path="/admin/plugins/moonlight#application" component={ApplicationSettings} />
-              <Route path="/admin/plugins/moonlight#roster" component={RosterSettings} />
-              <Route path="/admin/plugins/moonlight#blizzard" component={BlizzardSettings} />
+            <Route path='/admin/plugins/moonlight' component={AdminTabs} >
+              <IndexRedirect to='/admin/plugins/moonlight#recruitment' />
+              <Route path='/admin/plugins/moonlight#recruitment' component={RecruitmentSettings} />
+              <Route path='/admin/plugins/moonlight#blog' component={BlogContainer} />
+              <Route path='/admin/plugins/moonlight#application' component={ApplicationSettings} />
+              <Route path='/admin/plugins/moonlight#roster' component={RosterSettings} />
+              <Route path='/admin/plugins/moonlight#blizzard' component={BlizzardSettings} />
             </Route>
           </Router>
         </MuiThemeProvider>

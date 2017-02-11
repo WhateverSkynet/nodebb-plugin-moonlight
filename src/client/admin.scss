@@ -45,6 +45,10 @@ html {
 .mnl-text-field {
   input, textarea {
     // Remove nodebb css.
-    box-shadow: none;
+    box-shadow: none !important;
   }
+}
+
+.clickable {
+  cursor: pointer;
 }

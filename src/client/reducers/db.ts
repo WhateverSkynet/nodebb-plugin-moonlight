@@ -5,6 +5,7 @@ import { ApplicationTemplate } from '../../models/application';
 import { State } from '../states/state';
 
 import * as UUID from "uuid";
+import { blogPostReducer } from './db/blog-post';
 
 export const selectApplications = (state: State) => {
   return state.db.applications.allIds.map(x => state.db.applications.byId[x]);
@@ -64,5 +65,6 @@ export const applicationReducer = combineReducers<ApplicationDbState>({
 
 
 export const dbReducer = combineReducers<DbState>({
-  applications: applicationReducer
+  applications: applicationReducer,
+  blogPosts: blogPostReducer,
 });

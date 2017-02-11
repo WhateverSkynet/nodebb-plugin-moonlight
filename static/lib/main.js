@@ -44,6 +44,10 @@
         document.getElementById("moonlight-content").appendChild(root);
         if (ajaxify.data.action) {
           App.store.dispatch(ajaxify.data.action)
+        } else if (ajaxify.data.actions) {
+          ajaxify.data.actions.forEach(function(action) {
+            App.store.dispatch(action);
+          });
         }
         var url = ajaxify.data.url.replace("loggedin", "");
         if (url.endsWith("?")) {

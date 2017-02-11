@@ -31,7 +31,7 @@ import { AppDetailsContainer } from './components/application/details';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import { LandingPage } from './components/landing';
+import { LandingPageContainer } from './components/landing';
 import { AdminPage } from './admin/index';
 import { muiTheme } from './theme';
 
@@ -79,7 +79,7 @@ export class Page extends React.Component<{}, {}> {
 
           <Router history={history}>
             <Route path="/" component={App}>
-              <Route path="/landing" component={LandingPage} />
+              <Route path="/landing" component={LandingPageContainer} />
               <Route path="/apply" component={ApplicationForm} />
               <Route path="/applications" component={AppListContainer} />
               <Route path="/application/:id" component={AppDetailsContainer} />

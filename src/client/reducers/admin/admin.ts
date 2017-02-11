@@ -1,8 +1,10 @@
-import {blizzardReducer} from './blizzard';
+import { combineReducers } from 'redux';
+
+import { blizzardReducer } from './blizzard';
 import { AdminState } from '../../states/admin/admin';
-import { combineReducers } from "redux";
+import { blogReducer } from './blog';
 
 export const adminReducer = combineReducers<AdminState>({
-  blizzard: blizzardReducer
+  blizzard: blizzardReducer,
+  blog: blogReducer,
 });
-
