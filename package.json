@@ -41,7 +41,7 @@
     "jest": "~18.1.0",
     "jest-cli": "~18.1.0",
     "lodash": "~4.17.4",
-    "material-ui": "~0.16.7",
+    "material-ui": "~0.17.4",
     "node-sass": "~4.5.0",
     "normalize.css": "~5.0.0",
     "normalizr": "~2.2.1",
