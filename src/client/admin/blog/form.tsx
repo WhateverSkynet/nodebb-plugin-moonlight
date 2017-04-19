@@ -139,7 +139,7 @@ class Form extends React.Component<BlogPostFormProps, void> {
                 }
               </div>
               <div className='panel__footer'>
-                <span className='panel__text' title={date}>{window.jQuery.timeago(post.date)}</span>
+                <span className='panel__text' title={date}>{date ? window.jQuery.timeago(post.date) : ''}</span>
               </div>
             </div>
           )
