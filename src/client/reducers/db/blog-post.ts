@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import * as UUID from "uuid";
-import { AjaxifyAction, ADMIN_CREATE_BLOG_POST, Action, AdminAction, GET_BLOG_POSTS_SUCCESS, BlogAction, ADMIN_SAVE_BLOG_POST_SUCCESS, AJAXIFY_BLOG } from '../../../actions';
+import { AjaxifyAction, ADMIN_CREATE_BLOG_POST, Action, AdminAction, GET_BLOG_POSTS_SUCCESS, BlogAction, ADMIN_SAVE_BLOG_POST_SUCCESS, AJAXIFY_BLOG, DELETE_BLOG_POST_SUCCESS } from '../../../actions';
 import { ApplicationDbState, DbState } from '../../states/db';
 import { BlogPostEntity } from '../../../models/blog';
 import { State } from '../../states/state';
@@ -33,6 +33,8 @@ export const byId = (state: { [appId: number]: BlogPostEntity } = {}, action: Bl
 
 export const allIds = (state: number[] = [], action: BlogAction | AdminAction | AjaxifyAction = Action) => {
   switch (action.type) {
+    case DELETE_BLOG_POST_SUCCESS:
+      return state.filter(id => id !== action.payload.id);
     case AJAXIFY_BLOG:
     case GET_BLOG_POSTS_SUCCESS:
       return [...action.payload.posts.map(post => post.id)];

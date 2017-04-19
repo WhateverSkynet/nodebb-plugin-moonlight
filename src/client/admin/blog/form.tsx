@@ -1,5 +1,6 @@
 
 import * as React from 'react';
+import FlatButton from 'material-ui/FlatButton';
 import { publicPath } from '../../util';
 
 import TextField from 'material-ui/TextField';
@@ -13,7 +14,8 @@ import { selectBlogPost } from '../../reducers/db/blog-post';
 import { BlogPostEntity } from '../../../models/blog';
 import { Socket } from '../../epics/helpers';
 import { store } from './../../index';
-import { ADMIN_SAVE_BLOG_POST_SUCCESS } from '../../../actions';
+import { ADMIN_SAVE_BLOG_POST_SUCCESS, DELETE_BLOG_POST_REQUEST, DeleteBlogPostRequestAction } from '../../../actions';
+import { bindActionCreators } from 'redux';
 
 const onSubmit = () => {
   const state = store.getState();
@@ -103,13 +105,16 @@ const renderDatePicker = ({ data, input, meta: { touched, error } }) => {
 };
 
 interface BlogPostFormProps {
-  post: BlogPostEntity;
-  initialValues: BlogPostEntity;
+  post?: BlogPostEntity;
+  initialValues?: BlogPostEntity;
+  actions?: {
+    delete?: (id: number) => DeleteBlogPostRequestAction;
+  };
 }
 
 class Form extends React.Component<BlogPostFormProps, void> {
   render() {
-    const { post } = this.props;
+    const { post, actions } = this.props;
     const date = post && post.date ? new Date(post.date).toString() : "";
     return (
       <div>
@@ -122,7 +127,13 @@ class Form extends React.Component<BlogPostFormProps, void> {
             <Field name={`imageAlt`} component={renderTextField} data={{ label: "Image Alt" }} />
             <Field name={`content`} component={renderTextField} multiLine={true} data={{ label: "Content" }} />
             <Field name={`published`} component={renderToggle} data={{ label: "Published" }} />
+            {
+              post && post.id
+                ?     <FlatButton label='Delete' secondary={true} onClick={() => actions.delete(post.id)} />
+                : ''
+            }
           </div>
+
           <button className='panel__button panel__button--action' onClick={() => onSubmit()}>Save</button>
         </div>
         {
@@ -158,4 +169,18 @@ const mapStateToProps = (state: State) => {
   return props;
 };
 
-export const BlogPostForm = connect(mapStateToProps)(reduxForm(formConfig)(Form));
+const mapDispatchToProps = (dispatch) => {
+  const props: BlogPostFormProps = {
+    actions: bindActionCreators({
+      delete: (id: number) => ({
+        type: DELETE_BLOG_POST_REQUEST,
+        payload: {
+          id,
+        },
+      }),
+    }, dispatch),
+  };
+  return props;
+};
+
+export const BlogPostForm = connect(mapStateToProps, mapDispatchToProps)(reduxForm(formConfig)(Form));

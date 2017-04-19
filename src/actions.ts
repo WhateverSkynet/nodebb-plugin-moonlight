@@ -143,9 +143,29 @@ export type GetBlogPostsSuccessAction = {
   }
 };
 
+export type DeleteBlogPostRequest = '@mnl/blog/DELETE_POST_REQUEST';
+export const DELETE_BLOG_POST_REQUEST: DeleteBlogPostRequest = '@mnl/blog/DELETE_POST_REQUEST';
+export type DeleteBlogPostRequestAction = {
+  type: DeleteBlogPostRequest;
+  payload: {
+    id: number;
+  };
+};
+
+export type DeleteBlogPostSuccess = '@mnl/blog/DELETE_POST_SUCCESS';
+export const DELETE_BLOG_POST_SUCCESS: DeleteBlogPostSuccess = '@mnl/blog/DELETE_POST_SUCCESS';
+export type DeleteBlogPostSuccessAction = {
+  type: DeleteBlogPostSuccess;
+  payload: {
+    id: number;
+  };
+};
+
 export type BlogAction = GetBlogPostsRequestAction
-| GetBlogPostsSuccessAction
-| Action;
+  | GetBlogPostsSuccessAction
+  | DeleteBlogPostRequestAction
+  | DeleteBlogPostSuccessAction
+  | Action;
 
 // Admin Actions
 
@@ -197,12 +217,12 @@ export type AdminSaveBlogPostSuccessAction = {
 
 
 export type AdminAction = AdminGetSettingsAction
-| AdminSetBlizzardSettingsAction
-| AdminCreateBlogPostAction
-| AdminSelectBlogPostAction
-| AdminSaveBlogPostAction
-| AdminSaveBlogPostSuccessAction
-| Action;
+  | AdminSetBlizzardSettingsAction
+  | AdminCreateBlogPostAction
+  | AdminSelectBlogPostAction
+  | AdminSaveBlogPostAction
+  | AdminSaveBlogPostSuccessAction
+  | Action;
 
 // Application Actions
 
@@ -471,5 +491,5 @@ export type ReduxFormAction = InitializeReduxFormAction
 
 
 export type AnyAction = ApplicationAction
-| BlogAction
-| AdminAction;
+  | BlogAction
+  | AdminAction;
