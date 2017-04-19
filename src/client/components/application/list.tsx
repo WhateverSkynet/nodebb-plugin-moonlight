@@ -79,7 +79,7 @@ const AppList = (props: AppListProps) => {
                     <td className={authorClassName}>{app.author}</td>
                     <td className='col-xs-3 col-sm-2'>{appStatus[app.status]}</td>
                     <td className='col-xs-3 col-sm-2'>
-                      <span title={new Date(app.changed).toString()}>{window.jQuery.timeago(app.changed)}</span>
+                      <span className='timeago' title={new Date(app.changed).toString()}>{window.jQuery.timeago(app.changed)}</span>
                     </td>
                     {
                       props.isAdmin

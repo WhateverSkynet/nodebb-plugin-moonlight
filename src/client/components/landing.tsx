@@ -33,7 +33,7 @@ const LandingPage = ({posts}: LandingPageProps) => {
                     }
                   </div>
                   <div className='panel__footer'>
-                    <span className='panel__text' title={new Date(post.date).toString()}>{window.jQuery.timeago(post.date)}</span>
+                    <span className='panel__text timeago' title={new Date(post.date).toString()}>{window.jQuery.timeago(post.date)}</span>
                   </div>
                 </div>
               ))
