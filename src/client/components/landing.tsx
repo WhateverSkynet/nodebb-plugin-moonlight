@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RecruitmentWidget } from './recruitment/recruitment';
 import { publicPath } from '../util';
-import { BlogPost, BlogPostEntity } from '../../models/blog';
+import { BlogPostEntity } from '../../models/blog';
 import { connect } from 'react-redux';
 import { State } from '../states/state';
 import { selectBlogPosts } from '../reducers/db/blog-post';
@@ -33,7 +33,7 @@ const LandingPage = ({posts}: LandingPageProps) => {
                     }
                   </div>
                   <div className='panel__footer'>
-                    <div className='panel__text'>{post.date}</div>
+                    <span className='panel__text' title={new Date(post.date).toString()}>{window.jQuery.timeago(post.date)}</span>
                   </div>
                 </div>
               ))

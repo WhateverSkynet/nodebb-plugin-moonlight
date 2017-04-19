@@ -71,10 +71,10 @@ const RecruitmentWidgetImpl: React.StatelessComponent<RecruitmentWidgetProps> = 
                     <span>{x.class}</span>
                   </td>
                   <td className="col-md-4">{x.spec || x.role}</td>
-                  <td className="col-md-1"><input type="radio" checked={x.status === "None"} onClick={() => handleChange(i, "None")} /></td>
-                  <td className="col-md-1"><input type="radio" checked={x.status === "Low"} onClick={() => handleChange(i, "Low")} /></td>
-                  <td className="col-md-1"><input type="radio" checked={x.status === "Medium"} onClick={() => handleChange(i, "Medium")} /></td>
-                  <td className="col-md-1"><input type="radio" checked={x.status === "High"} onClick={() => handleChange(i, "High")} /></td>
+                  <td className="col-md-1"><input type="radio" checked={x.status === "None"} onChange={() => handleChange(i, "None")} /></td>
+                  <td className="col-md-1"><input type="radio" checked={x.status === "Low"} onChange={() => handleChange(i, "Low")} /></td>
+                  <td className="col-md-1"><input type="radio" checked={x.status === "Medium"} onChange={() => handleChange(i, "Medium")} /></td>
+                  <td className="col-md-1"><input type="radio" checked={x.status === "High"} onChange={() => handleChange(i, "High")} /></td>
                 </tr>
               ))
             }

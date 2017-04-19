@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { State } from '../../states/state';
 import { bindActionCreators } from 'redux';
 
+import CheckedCircle from 'material-ui/svg-icons/action/check-circle';
+import { blue500 } from 'material-ui/styles/colors';
+
 import { BlogPostEntity } from '../../../models/blog';
 import { selectBlogPosts } from '../../reducers/db/blog-post';
 import { Link } from 'react-router';
@@ -66,8 +69,10 @@ const BlogList = (props: BlogListProps) => {
                   } onClick={() => props.actions.select(post.id)}>
                     <td className='col-xs-2'>{post.id}</td>
                     <td className='col-xs-12'>{post.title}</td>
-                    <td className='col-xs-16'></td>
-                    <td className='col-xs-4'>{post.date}</td>
+                    <td className='col-xs-16'>{post.author}</td>
+                    <td className='col-xs-4'>{post.published
+                      ? (<CheckedCircle color={blue500} />)
+                      : ''}</td>
                   </tr>)
               }
             </tbody>

@@ -3,12 +3,14 @@ import * as React from 'react';
 import { publicPath } from '../../util';
 
 import TextField from 'material-ui/TextField';
+import Toggle from 'material-ui/Toggle';
+import DatePicker from 'material-ui/DatePicker';
+
 import { connect } from 'react-redux';
 import { Field, reduxForm, getFormValues } from 'redux-form';
 import { State } from '../../states/state';
 import { selectBlogPost } from '../../reducers/db/blog-post';
 import { BlogPostEntity } from '../../../models/blog';
-import DatePicker from 'material-ui/DatePicker';
 import { Socket } from '../../epics/helpers';
 import { store } from './../../index';
 import { ADMIN_SAVE_BLOG_POST_SUCCESS } from '../../../actions';
@@ -26,10 +28,18 @@ const onSubmit = () => {
           post,
         }
       })
-     return Promise.resolve();
+      return Promise.resolve();
     });
 };
 
+const styles = {
+  checkbox: {
+    marginBottom: 16,
+    width: "auto",
+    display: "inline-block",
+    marginRight: 16
+  },
+};
 
 const formConfig = {
   form: 'blogPost',
@@ -37,7 +47,7 @@ const formConfig = {
   enableReinitialize: true,
 };
 
-const renderTextField = ({ data, input, label, multiLine = false, meta: { touched, error } }) => {
+const renderTextField = ({ data, input, multiLine = false, meta: { touched, error } }) => {
   return (
     <TextField
       className="mnl-text-field"
@@ -58,6 +68,40 @@ const renderTextField = ({ data, input, label, multiLine = false, meta: { touche
   );
 };
 
+const renderToggle = ({ data, input, meta: { touched, error } }) => {
+  return (
+    <Toggle
+      label={data.label}
+      labelStyle={{
+        color: "#007ABE",
+        fontWeight: 400
+      }}
+      defaultToggled={input.value || false}
+      onChange={input.onChange}
+      onBlur={input.onBlur}
+      onFocus={input.onFocus}
+    />
+  );
+};
+const renderDatePicker = ({ data, input, meta: { touched, error } }) => {
+  const date = input.value ? new Date(input.value) : null;
+  return (
+    <DatePicker
+      className="mnl-text-field"
+      floatingLabelText={data.label}
+      floatingLabelStyle={{
+        color: "#007ABE",
+        fontWeight: 400
+      }}
+      fullWidth={true}
+      container="inline"
+      mode="landscape"
+      value={date}
+      onChange={(event, date) => { input.onChange(date.getTime()) }}
+    />
+  );
+};
+
 interface BlogPostFormProps {
   post: BlogPostEntity;
   initialValues: BlogPostEntity;
@@ -66,16 +110,18 @@ interface BlogPostFormProps {
 class Form extends React.Component<BlogPostFormProps, void> {
   render() {
     const { post } = this.props;
+    const date = post && post.date ? new Date(post.date).toString() : "";
     return (
       <div>
         <div className='panel'>
           <div className='panel__header'>Post</div>
           <div className='panel__content'>
             <Field name={`title`} component={renderTextField} data={{ label: "Title" }} />
-            <Field name={`date`} component={renderTextField} data={{ label: "Date" }} />
+            <Field name={`date`} component={renderDatePicker} data={{ label: "Date" }} />
             <Field name={`imageUrl`} component={renderTextField} data={{ label: "Image Url" }} />
             <Field name={`imageAlt`} component={renderTextField} data={{ label: "Image Alt" }} />
             <Field name={`content`} component={renderTextField} multiLine={true} data={{ label: "Content" }} />
+            <Field name={`published`} component={renderToggle} data={{ label: "Published" }} />
           </div>
           <button className='panel__button panel__button--action' onClick={() => onSubmit()}>Save</button>
         </div>
@@ -93,7 +139,7 @@ class Form extends React.Component<BlogPostFormProps, void> {
                 }
               </div>
               <div className='panel__footer'>
-                <div className='panel__text'>{post.date}</div>
+                <span className='panel__text' title={date}>{window.jQuery.timeago(post.date)}</span>
               </div>
             </div>
           )

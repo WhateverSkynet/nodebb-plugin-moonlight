@@ -41,12 +41,11 @@ const AppList = (props: AppListProps) => {
           <table className='table'>
             <thead>
               <tr className='row'>
-                <th className='col-xs-1' ></th>
                 <th className='col-xs-1' >Id</th>
+                <th className='col-xs-1 col-sm-3' >Character</th>
                 <th className={authorClassName} >Author</th>
-                <th className='col-xs-2' >Character</th>
-                <th className='col-xs-2 hidden-xs' >Class</th>
-                <th className='col-xs-2' >Status</th>
+                <th className='col-xs-3 col-sm-2' >Status</th>
+                <th className='col-xs-3 col-sm-2' >Changed</th>
                 {
                   props.isAdmin
                     ? <th className='col-xs-2' ></th>
@@ -66,20 +65,22 @@ const AppList = (props: AppListProps) => {
                       background: i % 2 === 0 ? '#cce4f2' : 'transparent',
                     }
                   } onClick={() => window.ajaxify.go(`/application/${app.appId}`)}>
-                    <td className='col-xs-1'>
+                    <td className='col-xs-1'>{app.appId}</td>
+                    <td className='col-sm-3'>
                       {
                         app.characters[0].class
                           ? <img className='roster__class-icon'
-                          src={`${publicPath}/${classIcons[app.characters[0].class.toLowerCase().replace(' ', '-')]}`} 
-                          alt={app.characters[0].class}></img>
+                            src={`${publicPath}/${classIcons[app.characters[0].class.toLowerCase().replace(' ', '-')]}`}
+                            alt={app.characters[0].class}></img>
                           : ''
                       }
+                      <span className='hidden-xs'>{app.characters[0].name}</span>
                     </td>
-                    <td className='col-xs-1'>{app.appId}</td>
                     <td className={authorClassName}>{app.author}</td>
-                    <td className='col-xs-2' >{app.characters[0].name}</td>
-                    <td className='col-xs-2 hidden-xs'>{app.characters[0].class}</td>
-                    <td className='col-xs-2'>{appStatus[app.status]}</td>
+                    <td className='col-xs-3 col-sm-2'>{appStatus[app.status]}</td>
+                    <td className='col-xs-3 col-sm-2'>
+                      <span title={new Date(app.changed).toString()}>{window.jQuery.timeago(app.changed)}</span>
+                    </td>
                     {
                       props.isAdmin
                         ? <td className='col-xs-2' >
@@ -90,7 +91,7 @@ const AppList = (props: AppListProps) => {
                               props.delete(app.appId);
                               e.stopPropagation();
                             }}
-                            />
+                          />
                         </td>
                         : ''
                     }
