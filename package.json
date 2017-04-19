@@ -8,7 +8,7 @@
     "url": "https://github.com/WhateverSkynet/nodebb-plugin-moonlight"
   },
   "scripts": {
-    "build": "webpack -p",
+    "build": "set NODE_ENV=production&&webpack -p",
     "test": "jest"
   },
   "keywords": [
