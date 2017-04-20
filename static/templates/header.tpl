@@ -39,7 +39,13 @@
 	{{customJS}}
 	<!-- ENDIF useCustomJS -->
 	<!-- IF useCustomCSS -->
-	<style type="text/css">{{customCSS}}</style>
+	<style type="text/css">
+		{
+			{
+				customCSS
+			}
+		}
+	</style>
 	<!-- ENDIF useCustomCSS -->
 </head>
 
@@ -53,7 +59,7 @@
 				</a>
 			</div>
 			<div class="menu">
-        	<!-- IMPORT partials/menu.tpl -->
+				<!-- IMPORT partials/menu.tpl -->
 			</div>
 		</div>
 	</div>
@@ -73,10 +79,13 @@
 			<h3 class="menu-section-title">[[global:header.navigation]]</h3>
 			<ul class="menu-section-list">
 				<li>
-					<a href="/categories">Apply</a>
+					<a href="/apply">Apply</a>
 				</li>
 				<li>
-					<a href="/categories">Forum</a>
+					<a href="/register">Register</a>
+				</li>
+				<li>
+					<a href="/login">Login</a>
 				</li>
 			</ul>
 		</section>
