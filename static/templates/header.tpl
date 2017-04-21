@@ -40,11 +40,7 @@
 	<!-- ENDIF useCustomJS -->
 	<!-- IF useCustomCSS -->
 	<style type="text/css">
-		{
-			{
-				customCSS
-			}
-		}
+	{{customCSS}}
 	</style>
 	<!-- ENDIF useCustomCSS -->
 </head>
@@ -81,12 +77,14 @@
 				<li>
 					<a href="/apply">Apply</a>
 				</li>
+				<!-- IF !config.loggedIn -->
 				<li>
 					<a href="/register">Register</a>
 				</li>
 				<li>
 					<a href="/login">Login</a>
 				</li>
+				<!-- IF !config.loggedIn -->
 			</ul>
 		</section>
 
