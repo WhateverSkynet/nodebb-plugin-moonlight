@@ -1,5 +1,4 @@
-import { mapStateToProps, getProperty } from "./roster";
-//import { characters } from '../../../../__data__/characters';
+import { mapStateToProps, getProperty } from './roster';
 
 jest.dontMock('./roster');
 
@@ -10,16 +9,16 @@ const defaultState = {
   app: {
     filters: {
       rank: {
-        "2": true,
-        "5": true,
-        "6": true,
-        "7": true
+        '2': true,
+        '5': true,
+        '6': true,
+        '7': true
       },
-      sortBy: "rank",
-      sortDirection: "ASC"
-    }
-  }
-}
+      sortBy: 'rank',
+      sortDirection: 'ASC',
+    },
+  },
+};
 
 describe('roster filter/sort', () => {
   it('should return the initial state', () => {
