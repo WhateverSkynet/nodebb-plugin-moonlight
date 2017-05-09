@@ -18,12 +18,12 @@ const defaultState = {
 };
 
 export const rosterReducer = (state: RosterState = defaultState, action: RosterAction = Action) => {
- 
+
   let keys: string[];
   switch (action.type) {
     case TOGGLE_RANK_FILTER:
       let ranks: { [key: string]: boolean } = {};
-     
+
       if (state.filters.rank[action.rank]) {
         keys = Object.keys(state.filters.rank)
           .filter(key => key !== action.rank.toString());
@@ -66,7 +66,7 @@ export const rosterReducer = (state: RosterState = defaultState, action: RosterA
     case SORT_ROSTER_BY:
       if (state.filters.sortBy === action.propertyName) {
         ///togle
-        
+
         return {
           characters: state.characters,
           filters: {
@@ -74,7 +74,7 @@ export const rosterReducer = (state: RosterState = defaultState, action: RosterA
             sortBy: action.propertyName,
             sortDirection: state.filters.sortDirection === "ASC" ? "DESC" : "ASC",
             charClass: state.filters.charClass
-          }
+          },
         };
       } else {
 
@@ -85,7 +85,7 @@ export const rosterReducer = (state: RosterState = defaultState, action: RosterA
             sortBy: action.propertyName,
             sortDirection: "ASC",
             charClass: state.filters.charClass
-          }
+          },
         };
       }
     default:

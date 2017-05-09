@@ -1,7 +1,7 @@
 
 
 export interface Character {
-  guid: string;
+  id: string;
   name: string;
   lastModified: number;
   realm: string;

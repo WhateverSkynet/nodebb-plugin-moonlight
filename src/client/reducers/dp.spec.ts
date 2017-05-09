@@ -2,7 +2,7 @@ import { byIdApplicationReducer, allIdApplicationReducer } from './db';
 import { Action, AJAXIFY_APPLICATION_LIST, AjaxifyApplicationListAction, AJAXIFY_APPLICATION } from '../../actions';
 
 
-jest.dontMock('./db');
+// jest.dontMock('./db');
 
 const defaultState = {}
 
@@ -117,6 +117,6 @@ describe('byId reducer', () => {
           expect(
             allIdApplicationReducer([], appAction)
         ).toEqual([222]);
-    }); 
+    });
 
 });

@@ -1,10 +1,12 @@
 import { AjaxifyState } from '../states/ajaxify';
 import { Question } from '../../models/application';
 import { RosterCharacter } from '../../models/wow';
+import * as UUID from "uuid";
 
 import { Reducer } from "redux";
 import { AJAXIFY_NEW_APPLICATION, AJAXIFY_ROSTER, AJAXIFY_RECRUITMENT, AJAXIFY_CHANGE_RECRUITMENT_STATUS, AjaxifyAction, Action } from '../../actions';
 import { Recruitment } from '../../models/recruitment';
+
 
 const LOCATION_CHANGE = "@@router/LOCATION_CHANGE";
 const defaultState = {
@@ -20,7 +22,7 @@ export const ajaxifyReducer = (state: AjaxifyState = defaultState, action: Ajaxi
         recruitment: state.recruitment,
         roster: state.roster
       };
-      newState.roster = action.characters;
+      newState.roster = action.characters.map(c => Object.assign({}, c, { id: UUID.v4() }));
       return newState;
     case AJAXIFY_RECRUITMENT:
       newState = {

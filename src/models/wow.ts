@@ -17,6 +17,7 @@ export type Specialization = {
 }
 
 export type RosterCharacter = {
+    id: string;
     name: string;
     lastModified: number;
     realm: string;

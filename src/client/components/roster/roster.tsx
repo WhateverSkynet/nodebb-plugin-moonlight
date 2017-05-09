@@ -94,7 +94,7 @@ const RosterImpl = (props: RosterProps) => {
               onCheck={() => props.actions.toggleRank(x)}
               label={rankNames[x]}
               style={styles.checkbox}
-              />
+            />
           ))
         }
       </div>
@@ -107,7 +107,7 @@ const RosterImpl = (props: RosterProps) => {
               onCheck={() => props.actions.toggleClass(x)}
               label={className[i]}
               style={styles.checkbox}
-              />
+            />
           ))
         }
       </div>
@@ -131,10 +131,10 @@ const RosterImpl = (props: RosterProps) => {
           {
             props.characters
               .map((m, i) =>
-                <tr key={m.name + m.realm} className='row' style={
+                <tr key={m.id} className='row' style={
                   {
                     background: i % 2 === 0 ? '#cce4f2' : 'transparent',
-                  //  color:  i % 2 === 0 ? "#000" : "#FFF",
+                    //  color:  i % 2 === 0 ? "#000" : "#FFF",
                   }
                 } >
                   <td className='col-xs-2'>
@@ -186,8 +186,8 @@ export const mapStateToProps = (state: State) => {
   const roster = state.ajaxify.roster || [];
   const sortBy = state.app.roster.filters.sortBy;
   let props: RosterProps = {
-    characters: roster.filter((x) => state.app.roster.filters.rank[x.rank] === undefined && state.app.roster.filters.charClass[x.class] === undefined)
-      .sort(sort(sortBy, state.app.roster.filters.sortDirection)),
+    characters: [...roster].sort(sort(sortBy, state.app.roster.filters.sortDirection))
+      .filter((x) => state.app.roster.filters.rank[x.rank] === undefined && state.app.roster.filters.charClass[x.class] === undefined),
     disabledRanks: state.app.roster.filters.rank,
     disabledClasses: state.app.roster.filters.charClass,
     ranks: rankNames.map((rank, index) => index),

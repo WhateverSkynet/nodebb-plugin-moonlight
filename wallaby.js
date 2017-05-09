@@ -4,6 +4,8 @@ module.exports = function (wallaby) {
     files: [
       'src/**/*.ts',
       'src/**/*.tsx',
+      '__data__/**',
+      '__mocks__/**',
       '!src/**/*.spec.ts'
     ],
     tests: [
@@ -20,9 +22,9 @@ module.exports = function (wallaby) {
       type: 'node',
       runner: 'node',
       params: {
-        runner: '--harmony'
-      }
+        runner: '--harmony',
+      },
     },
-    testFramework: 'jest'
+    testFramework: 'jest',
   };
 };
