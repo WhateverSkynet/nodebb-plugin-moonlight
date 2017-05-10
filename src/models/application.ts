@@ -24,6 +24,7 @@ export interface ApplicationTemplate {
   status?: number;
   uid?: number;
   author?: string;
+  submitted?: number;
   changed?: number;
   deleted?: number;
   questions?: Question[];

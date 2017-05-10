@@ -398,6 +398,21 @@ export type GetApplicationListSuccessAction = {
   };
 };
 
+export type SortAplicationsBy = '@mnl/application/SORT_BY';
+export const SORT_APPLICATION_BY: SortAplicationsBy = '@mnl/application/SORT_BY';
+export type SortApplicationByAction = {
+  type: SortAplicationsBy;
+  propertyName: string;
+};
+
+export type ToggleStatusFilter = '@mnl/application/STATUS_TOGGLE';
+export const TOGGLE_STATUS_FILTER: ToggleStatusFilter = '@mnl/application/STATUS_TOGGLE';
+export type ToggleStatusFilterAction = {
+  type: ToggleStatusFilter;
+  status: number;
+};
+
+
 export type ReplyToApplication = '@mnl/application/REPLY';
 export const REPLY_TO_APPLICATION: ReplyToApplication = '@mnl/application/REPLY';
 export type ReplyToApplicationAction = {
@@ -439,6 +454,8 @@ export type ApplicationAction = GetQuestionsAction
   | GetApplicationListAction
   | GetApplicationListSuccessAction
   | ReduxFormAction
+  | SortApplicationByAction
+  | ToggleStatusFilterAction
   | ReplyToApplicationAction
   | ReplyToApplicationSuccessAction
   | Action;
