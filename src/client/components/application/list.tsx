@@ -20,6 +20,7 @@ interface AppListProps {
   apps?: ApplicationTemplate[];
   disabledStatuses?: { [key: string]: boolean };
   isAdmin?: boolean;
+  isMember?: boolean;
   delete?: (appId: number) => DeleteApplicationAction;
   actions?: {
     sortBy?: (propertyName: string) => SortApplicationByAction;
@@ -58,7 +59,7 @@ const AppList = (props: AppListProps) => {
         <h2 className='panel__header'>Applications</h2>
         <div className='panel__content'>
           {
-            props.isAdmin
+            props.isAdmin || props.isMember
               ? <div>
                 <h4>Statuses</h4>
                 <div style={styles.row}>
@@ -170,9 +171,9 @@ export const sort = (property: string, direction: string) => {
 };
 
 const mapStateToProps = (state: State) => {
-  const { isAdmin } = window.app.user;
+  const { isAdmin, isMember } = window.app.user;
   const { sortBy, sortDirection, statuses } = state.app.applicationList.filters;
-  const apps = isAdmin
+  const apps = isAdmin || isMember
     ? [...selectApplications(state)].sort(sort(sortBy, sortDirection))
       .filter((app) => !statuses[app.status])
     : selectApplications(state);
@@ -180,6 +181,7 @@ const mapStateToProps = (state: State) => {
     disabledStatuses: statuses,
     apps,
     isAdmin,
+    isMember,
   };
   return props;
 };

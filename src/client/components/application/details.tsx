@@ -44,6 +44,11 @@ const Character = ({character}: { character: ApplicationCharacter }) => {
             </a>
           </li>
           <li className="app-details__character-item app-details__character-item--link">
+            <a className="link" href={`https://www.warcraftlogs.com/character/eu/${character.realm}/${character.name}`} target="_blank">
+              wcl
+            </a>
+          </li>
+          <li className="app-details__character-item app-details__character-item--link">
             <a className="link" href={`https://wowtrack.org/characters/EU/${character.realm}/${character.name}`} target="_blank">
               wowtrack
             </a>
