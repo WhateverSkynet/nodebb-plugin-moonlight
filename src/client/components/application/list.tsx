@@ -21,8 +21,8 @@ interface AppListProps {
   disabledStatuses?: { [key: string]: boolean };
   isAdmin?: boolean;
   isMember?: boolean;
-  delete?: (appId: number) => DeleteApplicationAction;
   actions?: {
+    delete?: (appId: number) => DeleteApplicationAction;
     sortBy?: (propertyName: string) => SortApplicationByAction;
     toggleStatus?: (status: number) => ToggleStatusFilterAction;
   };
@@ -53,6 +53,7 @@ const styles = {
 
 const AppList = (props: AppListProps) => {
   const authorClassName = props.isAdmin ? 'col-xs-2' : 'col-xs-3';
+  const { actions } = props;
   return (
     <div className='section'>
       <div className='panel'>
@@ -135,7 +136,7 @@ const AppList = (props: AppListProps) => {
                             secondary={true}
                             label='Delete'
                             onClick={(e) => {
-                              props.delete(app.appId);
+                              actions.delete(app.appId);
                               e.stopPropagation();
                             }}
                           />
