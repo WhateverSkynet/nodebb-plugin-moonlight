@@ -4,11 +4,23 @@
 
 Battle.net integration for NodeBB and other usefull tools for World of Warcraft guilds.
 
-# Features:
+## Installation
+
+    $ npm i nodebb-plugin-moonlight --production
+
+## Features:
 
 - Private application process.
 - Guild news page.
+- Guild roster page.
 
 # DISCLAIMER
 
-Currentrly this plugin is made for one particular site and tied to a particular design. It does not work with nodebb installation out of the box.
+Currentrly this plugin is made for a specific guild site and tied to design (you can't make visual changes easily).
+
+## Requirements
+
+User groups:
+- officers
+- raiders
+- trials

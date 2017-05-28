@@ -14,7 +14,7 @@
   var validUrls = ["/landing", "/roster", "/apply", "/applications"];
   var root = document.createElement("div");
   root.setAttribute("id", "moonlight-root");
-  require(["/plugins/nodebb-plugin-moonlight/public/bundle"], function (App) {
+  require(["/plugins/nodebb-plugin-moonlight/public/main.js"], function (App) {
     App.initSocket();
 
     App.render(root);
@@ -39,7 +39,7 @@
 
   $(window).on("action:ajaxify.contentLoaded", function (data) {
 
-    require(["/plugins/nodebb-plugin-moonlight/public/bundle"], function (App) {
+    require(["/plugins/nodebb-plugin-moonlight/public/main.js"], function (App) {
       if (validUrls.indexOf(ajaxify.data.url) !== -1 || ajaxify.data.url.startsWith("/application")) {
         document.getElementById("moonlight-content").appendChild(root);
         if (ajaxify.data.action) {
