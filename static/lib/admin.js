@@ -20,7 +20,7 @@
   link.setAttribute("href", "/plugins/nodebb-plugin-moonlight/public/admin.css");
   document.head.appendChild(link);
 
-  require(["moonlight/bundle"], function (App) {
+  require(["/plugins/nodebb-plugin-moonlight/public/bundle"], function (App) {
     App.initSocket();
 
     App.renderAdmin(root);
@@ -28,7 +28,7 @@
 
   $(window).on("action:ajaxify.contentLoaded", function (data) {
 
-    require(["moonlight/bundle"], function (App) {
+    require(["/plugins/nodebb-plugin-moonlight/public/bundle"], function (App) {
       if (ajaxify.data.url.startsWith("/admin/plugins/moonlight")) {
         document.getElementById("moonlight-content").appendChild(root);
         if (ajaxify.data.action) {
