@@ -4,6 +4,11 @@
 
 Battle.net integration for NodeBB and other usefull tools for World of Warcraft guilds.
 
-## Installation
+# Features:
 
-    npm install nodebb-plugin-moonlight
+- Private application process.
+- Guild news page.
+
+# DISCLAIMER
+
+Currentrly this plugin is made for one particular site and tied to a particular design. It does not work with nodebb installation out of the box.
