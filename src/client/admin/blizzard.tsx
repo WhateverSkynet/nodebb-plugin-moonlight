@@ -1,11 +1,9 @@
-import { BlizzardSettingsState } from '../states/admin/blizzard-settings';
+
 import { State } from '../states/state';
-import { RosterCharacter } from '../../models/wow';
-import { AdminSetBlizzardSettingsAction, ADMIN_SET_BLIZZARD_SETTINGS } from '../../actions';
-import * as React from "react";
-import { bindActionCreators } from 'redux'
-import { connect } from "react-redux";
-import { store } from "../index";
+import { ADMIN_SET_BLIZZARD_SETTINGS } from '../../actions';
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { store } from '../index';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -17,18 +15,18 @@ interface BlizzardSettingsProps extends React.HTMLAttributes<HTMLDivElement> {
   realm: string;
 }
 
-const regions = ["us", "eu", "kr", "tw", "cn"];
+const regions = ['us', 'eu', 'kr', 'tw', 'cn'];
 
 const saveSettings = () => {
   window.socket.emit('admin.settings.set', {
-    hash: "moonlight",
-    values: store.getState().admin.blizzard
+    hash: 'moonlight',
+    values: store.getState().admin.blizzard,
   }, function (err) {
 
     window.app.alert({
       title: 'Settings Saved',
       type: 'success',
-      timeout: 2500
+      timeout: 2500,
     });
 
   });
@@ -42,7 +40,7 @@ const handleInput = (key: string, value: string) => {
   props[key] = value;
   let action = {
     type: ADMIN_SET_BLIZZARD_SETTINGS,
-    settings: props
+    settings: props,
   };
   store.dispatch(action);
 };
@@ -54,12 +52,12 @@ const renderTextField = (label: string, defaultValue: string, key: string) => {
         floatingLabelFixed={true}
         fullWidth={true}
         floatingLabelStyle={{
-          color: "#007ABE",
-          fontWeight: 400
+          color: '#007ABE',
+          fontWeight: 400,
         }}
         inputStyle={{
           // This is needed to override nodebb box css.
-          boxShadow: "none"
+          boxShadow: 'none',
         }}
         floatingLabelText={label}
         defaultValue={defaultValue}
@@ -69,22 +67,22 @@ const renderTextField = (label: string, defaultValue: string, key: string) => {
 };
 
 const BlizzardSettingsImpl: React.StatelessComponent<BlizzardSettingsProps> = (props: BlizzardSettingsProps) => (
-  <div className="panel">
-    <h2 className="panel__header">
+  <div className='panel'>
+    <h2 className='panel__header'>
       Blizzard Api Settings
       </h2>
-    <div className="panel__content">
+    <div className='panel__content'>
       {
-        renderTextField("Api Key", props.apiKey, "apiKey")
+        renderTextField('Api Key', props.apiKey, 'key')
       }
       <SelectField
         value={props.region}
         floatingLabelStyle={{
-          color: "#007ABE",
-          fontWeight: 400
+          color: '#007ABE',
+          fontWeight: 400,
         }}
-        onChange={(e, key, payload) => handleInput("region", payload)}
-        floatingLabelText="Region"
+        onChange={(e, key, payload) => handleInput('region', payload)}
+        floatingLabelText='Region'
         fullWidth={true}
         >
         {
@@ -92,13 +90,13 @@ const BlizzardSettingsImpl: React.StatelessComponent<BlizzardSettingsProps> = (p
         }
       </SelectField>
       {
-        renderTextField("Guild", props.guild, "guild")
+        renderTextField('Guild', props.guild, 'guild')
       }
       {
-        renderTextField("Realm", props.realm, "realm")
+        renderTextField('Realm', props.realm, 'realm')
       }
     </div>
-    <button className="panel__button panel__button--action" onClick={() => saveSettings()}>Save</button>
+    <button className='panel__button panel__button--action' onClick={() => saveSettings()}>Save</button>
   </div >
 
 );
@@ -107,7 +105,7 @@ const mapStateToProps = (state: State) => {
     apiKey: state.admin.blizzard.key,
     region: state.admin.blizzard.region,
     guild: state.admin.blizzard.guild,
-    realm: state.admin.blizzard.realm
+    realm: state.admin.blizzard.realm,
   };
 };
 
