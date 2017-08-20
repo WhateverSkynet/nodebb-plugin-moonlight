@@ -13,6 +13,10 @@
         "moduleResolution": "node",
         "jsx": "react",
         "removeComments": true,
+        "types": [
+            "node",
+            "jest"
+        ],
         "typeRoots": [
             "node_modules/@types"
         ]

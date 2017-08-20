@@ -4,21 +4,24 @@ import './dependencies.ts';
 import { adminReducer } from './reducers/admin/admin';
 import { State } from './states/state';
 import { appReducer } from './reducers/app';
-import * as React from "react";
-import { render as renderDom } from "react-dom";
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import { syncHistoryWithStore, routerReducer, push } from 'react-router-redux';
-import { Router, Route, browserHistory } from 'react-router';
-import { Provider } from "react-redux";
+import * as React from 'react';
+import { render as renderDom } from 'react-dom';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { ConnectedRouter, routerReducer, routerMiddleware, push, replace } from 'react-router-redux';
+import { Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-import { createEpicMiddleware } from "redux-observable";
+import createBrowserHistory from 'history/createBrowserHistory';
+
+
+import { createEpicMiddleware } from 'redux-observable';
 
 import { ajaxifyReducer } from './reducers/ajaxify';
 import { wowReducer } from './reducers/wow';
-import { Roster } from "./components/roster/roster";
+import { Roster } from './components/roster/roster';
 
 import { ApplicationSocket } from './socket/application';
-import { appEpic } from "./epics";
+import { appEpic } from './epics';
 
 import { reducer as formReducer } from 'redux-form';
 
@@ -40,6 +43,7 @@ import * as injectTapEventPlugin from 'react-tap-event-plugin';
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
+const history = createBrowserHistory();
 
 const reducer = combineReducers<State>({
   routing: routerReducer,
@@ -48,72 +52,85 @@ const reducer = combineReducers<State>({
   wow: wowReducer,
   admin: adminReducer,
   form: formReducer,
-  db: dbReducer
+  db: dbReducer,
 });
 
-const epicMiddleware = createEpicMiddleware(appEpic);
+const middlewares = [
+  createEpicMiddleware(appEpic),
+  routerMiddleware(history),
+];
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = createStore<State>(reducer, composeEnhancers(
-  applyMiddleware(epicMiddleware)
+  applyMiddleware(...middlewares),
 ));
 
+// export class Page extends React.Component<{}, {}> {
+//   render() {
+//     return (
+//       <Provider store={store}>
+//         <MuiThemeProvider muiTheme={muiTheme}>
+//           <LandingPageContainer />
+//           <ConnectedRouter history={history}>
+//             <Switch >
+//               <Route path='/' component={LandingPageContainer} />
+//               <Route path='/landing' component={LandingPageContainer} />
+//               <Route path='/apply' component={ApplicationForm} />
+//               <Route path='/applications' component={AppListContainer} />
+//               <Route path='/application/:id' component={AppDetailsContainer} />
+//               <Route path='/roster' component={Roster} />
+//             </Switch>
+//           </ConnectedRouter >
 
-export const history = syncHistoryWithStore(browserHistory, store);
+//         </MuiThemeProvider>
+//       </Provider>);
+//   }
+// }
 
-class App extends React.Component<React.HTMLAttributes<HTMLDivElement>, {}> {
-  render() {
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    );
-  }
-}
+export { AdminPage } from './admin';
 
-export class Page extends React.Component<{}, {}> {
-  render() {
-    return (
-      <Provider store={store}>
-        <MuiThemeProvider muiTheme={muiTheme}>
-
-          <Router history={history}>
-            <Route path="/" component={App}>
-              <Route path="/landing" component={LandingPageContainer} />
-              <Route path="/apply" component={ApplicationForm} />
-              <Route path="/applications" component={AppListContainer} />
-              <Route path="/application/:id" component={AppDetailsContainer} />
-              <Route path="/roster" component={Roster} />
-            </Route>
-            <Route path='*' />
-
-          </Router>
-        </MuiThemeProvider>
-      </Provider>);
-  }
-}
-
-export { AdminPage } from "./admin";
-
-export const navigate = (url: string) => {
-  browserHistory.replace(url);
-};
+// export const navigate = (url: string, quiet: boolean) => {
+//   const action = quiet ? replace(url) : push(url);
+//   store.dispatch(action);
+// };
 
 
 export const initSocket = () => {
   ApplicationSocket.register();
 };
 
-export const render = (container: Element) => {
-  renderDom(
-    React.createElement(Page, {}),
-    container
-  );
+const matchRoute = (path: string) => {
+  switch (path) {
+    case '/': return <LandingPageContainer />;
+    case '/landing': return <LandingPageContainer />;
+    case '/apply': return <ApplicationForm />;
+    case '/applications': return <AppListContainer />;
+    case '/roster': return <Roster />;
+    default:
+      if (path.startsWith('/application/')) {
+        return <AppDetailsContainer />;
+      }
+      console.error('No matching component found!');
+  }
+};
 
-}
+export const render = (container: Element, path: string) => {
+  const component = matchRoute(path);
+  renderDom(
+    (<Provider store={store}>
+      <MuiThemeProvider muiTheme={muiTheme}>
+        {component}
+      </MuiThemeProvider>
+    </Provider>),
+    container,
+  );
+};
+
+
 export const renderAdmin = (container: Element) => {
   renderDom(
     React.createElement(AdminPage, {}),
-    container
+    container,
   );
 };

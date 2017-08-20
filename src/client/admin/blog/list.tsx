@@ -8,13 +8,10 @@ import { blue500 } from 'material-ui/styles/colors';
 
 import { BlogPostEntity } from '../../../models/blog';
 import { selectBlogPosts } from '../../reducers/db/blog-post';
-import { Link } from 'react-router';
+
 import { ADMIN_SELECT_BLOG_POST, AdminSelectBlogPostAction, ADMIN_CREATE_BLOG_POST, AdminCreateBlogPostAction, GET_BLOG_POSTS_REQUEST } from '../../../actions';
 import { store } from '../../index';
 
-const create = () => {
-
-};
 
 interface BlogListProps {
   posts?: BlogPostEntity[];
@@ -23,7 +20,7 @@ interface BlogListProps {
     create: () => AdminCreateBlogPostAction;
   };
 }
-class BlogPostListContainer extends React.Component<BlogListProps, void> {
+class BlogPostListContainer extends React.Component<BlogListProps, {}> {
 
   componentDidMount() {
     store.dispatch({
@@ -38,7 +35,7 @@ class BlogPostListContainer extends React.Component<BlogListProps, void> {
   }
 }
 
-const BlogList = (props: BlogListProps) => {
+const BlogList: React.StatelessComponent<BlogListProps> = (props: BlogListProps) => {
   const { actions } = props;
   return (
     <div className='section'>

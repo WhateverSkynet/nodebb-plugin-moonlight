@@ -16,7 +16,7 @@ module.exports = {
     ]
   },
   output: {
-    path: "./dist",
+    path: __dirname + "/dist",
     libraryTarget: "amd",
     filename: '[name].js?',
     sourceMapFilename: '[name].map?',

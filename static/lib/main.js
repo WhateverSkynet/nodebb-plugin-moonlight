@@ -15,9 +15,10 @@
   var root = document.createElement("div");
   root.setAttribute("id", "moonlight-root");
   require(["/plugins/nodebb-plugin-moonlight/public/main.js"], function (App) {
+
     App.initSocket();
 
-    App.render(root);
+
 
   });
   var matchRooms = function (path) {
@@ -37,15 +38,18 @@
     }
   };
 
+
   $(window).on("action:ajaxify.contentLoaded", function (data) {
 
     require(["/plugins/nodebb-plugin-moonlight/public/main.js"], function (App) {
+
       if (validUrls.indexOf(ajaxify.data.url) !== -1 || ajaxify.data.url.startsWith("/application")) {
+        App.render(root, ajaxify.data.url);
         document.getElementById("moonlight-content").appendChild(root);
         if (ajaxify.data.action) {
           App.store.dispatch(ajaxify.data.action)
         } else if (ajaxify.data.actions) {
-          ajaxify.data.actions.forEach(function(action) {
+          ajaxify.data.actions.forEach(function (action) {
             App.store.dispatch(action);
           });
         }
@@ -54,10 +58,9 @@
           url = url.slice(0, -1);
         }
         app.enterRoom(matchRooms(ajaxify.data.url), function () { });
-        App.navigate(url);
 
       }
 
     });
   });
-} ());
+}());

@@ -1,7 +1,6 @@
 import { reducers } from './application';
 import { Action, QUESTION_UPDATE_INITIATED, EDIT_QUESTION, ADD_QUESTION_TO_TEMPLATE, REMOVE_QUESTION_FROM_TEMPLATE, QUESTION_CREATED, QUESTION_LIST_UPDATED, QUESTION_UPDATE_SUCCESS, GET_APPLICATION_TEMPLATE_QUESTIONS_SUCCESS } from '../../../actions';
 
-
 jest.dontMock('./application');
 
 describe('edit question index reducer', () => {

@@ -96,8 +96,8 @@ const renderDatePicker = ({ data, input, meta: { touched, error } }) => {
         fontWeight: 400
       }}
       fullWidth={true}
-      container="inline"
-      mode="landscape"
+      container='inline'
+      mode='landscape'
       value={date}
       onChange={(event, date) => { input.onChange(date.getTime()) }}
     />
@@ -112,53 +112,51 @@ interface BlogPostFormProps {
   };
 }
 
-class Form extends React.Component<BlogPostFormProps, void> {
-  render() {
-    const { post, actions } = this.props;
-    const date = post && post.date ? new Date(post.date).toString() : "";
-    return (
-      <div>
-        <div className='panel'>
-          <div className='panel__header'>Post</div>
-          <div className='panel__content'>
-            <Field name={`title`} component={renderTextField} data={{ label: "Title" }} />
-            <Field name={`date`} component={renderDatePicker} data={{ label: "Date" }} />
-            <Field name={`imageUrl`} component={renderTextField} data={{ label: "Image Url" }} />
-            <Field name={`imageAlt`} component={renderTextField} data={{ label: "Image Alt" }} />
-            <Field name={`content`} component={renderTextField} multiLine={true} data={{ label: "Content" }} />
-            <Field name={`published`} component={renderToggle} data={{ label: "Published" }} />
-            {
-              post && post.id
-                ?     <FlatButton label='Delete' secondary={true} onClick={() => actions.delete(post.id)} />
-                : ''
-            }
-          </div>
-
-          <button className='panel__button panel__button--action' onClick={() => onSubmit()}>Save</button>
+const Form: any = (props: BlogPostFormProps) => {
+  const { post, actions } = props;
+  const date = post && post.date ? new Date(post.date).toString() : '';
+  return (
+    <div>
+      <div className='panel'>
+        <div className='panel__header'>Post</div>
+        <div className='panel__content'>
+          <Field name={`title`} component={renderTextField} data={{ label: 'Title' }} />
+          <Field name={`date`} component={renderDatePicker} data={{ label: 'Date' }} />
+          <Field name={`imageUrl`} component={renderTextField} data={{ label: 'Image Url' }} />
+          <Field name={`imageAlt`} component={renderTextField} data={{ label: 'Image Alt' }} />
+          <Field name={`content`} component={renderTextField} multiLine={true} data={{ label: 'Content' }} />
+          <Field name={`published`} component={renderToggle} data={{ label: 'Published' }} />
+          {
+            post && post.id
+              ?     <FlatButton label='Delete' secondary={true} onClick={() => actions.delete(post.id)} />
+              : ''
+          }
         </div>
-        {
-          post ? (
-            <div className='panel'>
-              <img className="panel__image" src={post.imageUrl} alt={post.imageAlt}></img>
-              <div className='panel__heading'>{post.title}</div>
-              <div className='panel__content panel__content--dark'>
-                {
-                  post.content
-                    ? post.content.split('\n')
-                      .map((paragraph, i) => (<p key={i}>{paragraph}</p>))
-                    : ''
-                }
-              </div>
-              <div className='panel__footer'>
-                <span className='panel__text' title={date}>{date ? window.jQuery.timeago(post.date) : ''}</span>
-              </div>
-            </div>
-          )
-            : ""
-        }
+
+        <button className='panel__button panel__button--action' onClick={() => onSubmit()}>Save</button>
       </div>
-    );
-  }
+      {
+        post ? (
+          <div className='panel'>
+            <img className='panel__image' src={post.imageUrl} alt={post.imageAlt}></img>
+            <div className='panel__heading'>{post.title}</div>
+            <div className='panel__content panel__content--dark'>
+              {
+                post.content
+                  ? post.content.split('\n')
+                    .map((paragraph, i) => (<p key={i}>{paragraph}</p>))
+                  : ''
+              }
+            </div>
+            <div className='panel__footer'>
+              <span className='panel__text' title={date}>{date ? window.jQuery.timeago(post.date) : ''}</span>
+            </div>
+          </div>
+        )
+          : ''
+      }
+    </div>
+  );
 };
 
 const mapStateToProps = (state: State) => {

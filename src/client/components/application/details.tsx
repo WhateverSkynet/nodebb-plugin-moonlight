@@ -14,7 +14,7 @@ import { MessageList } from './reply-list';
 import { publicPath } from '../../util';
 import { classIcons } from '../../../assets/assets';
 
-const Character = ({character}: { character: ApplicationCharacter }) => {
+const Character = ({ character }: { character: ApplicationCharacter }) => {
   const showUIImage = character.userInterfaceUrl && character.userInterfaceUrl.length === 7;
   return (
 
@@ -96,14 +96,12 @@ const appStatus = [
 
 interface AppDetailsProps {
 
+  id?: string;
   app?: ApplicationTemplate;
   appActions?: string[];
-  routeParams?: {
-    id?: string;
-  }
 }
 
-export const AppDetails = ({routeParams: { id }, app, appActions}: AppDetailsProps) => {
+export const AppDetails = ({app, appActions }: AppDetailsProps) => {
   return (
     <div className="section">
       {
@@ -142,10 +140,10 @@ export const AppDetails = ({routeParams: { id }, app, appActions}: AppDetailsPro
                             <p className="app-details__questions">{`${i + 1}. ${q.text}`}</p>
                             {
                               q.value ?
-                              q.value.split("\n").map((text, i) => (
+                                q.value.split("\n").map((text, i) => (
                                   <p className="message__text" key={i}>{text}</p>
-                              ))
-                              : <p className="message__text" key={i}></p>
+                                ))
+                                : <p className="message__text" key={i}></p>
                             }
                           </li>
                         ))
@@ -184,9 +182,13 @@ export const AppDetails = ({routeParams: { id }, app, appActions}: AppDetailsPro
 };
 
 const mapStateToProps = (state: State, ownProps: AppDetailsProps) => {
+  const pattern = /\/application\/(\d{1,10})/;
+  const [, id] = pattern.exec(window.ajaxify.data.url);
+  // const index = parseInt(id, 10);
   const props: AppDetailsProps = {
-    app: state.db.applications.byId[ownProps.routeParams.id],
-    appActions: state.app.application.actions
+    id,
+    app: state.db.applications.byId[id],
+    appActions: state.app.application.actions,
   }
   return props;
 };

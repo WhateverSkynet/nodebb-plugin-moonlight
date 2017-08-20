@@ -86,7 +86,10 @@ const RosterImpl = (props: RosterProps) => {
   return (
     <div>
       <h4>Ranks</h4>
-      <div style={styles.row}>
+      <div style={{
+    display: 'flex',
+    flexWrap: 'wrap',
+  }}>
         {
           props.ranks.map((x) => (
             <Checkbox key={x}
@@ -99,7 +102,10 @@ const RosterImpl = (props: RosterProps) => {
         }
       </div>
       <h4>Classes</h4>
-      <div style={styles.row}>
+      <div style={{
+    display: 'flex',
+    flexWrap: 'wrap',
+  }}>
         {
           props.charClasses.map((x, i) => (
             <Checkbox key={x}
@@ -142,8 +148,8 @@ const RosterImpl = (props: RosterProps) => {
                     <a className='roster__text' href={'https://eu.battle.net/wow/en/character/' + m.realm + '/' + m.name + '/advanced'} target='_blank'>{m.name}</a>
                   </td>
                   <td className='col-xs-2'>
-                    <a href={`https://www.askmrrobot.com/wow/gear/eu/${m.realm}/${m.name}`} target='_blank'>
-                      <img src='https://media-curse.cursecdn.com/attachments/81/383/a7c1e08f4816cf2632752d5949eb7bdc.png' height='15' width='15' />
+                    <a href={`https://www.warcraftlogs.com/character/eu/${m.realm}/${m.name}`} target='_blank'>
+                      <img src='https://www.warcraftlogs.com/img/common/warcraft-logo.png' height='22' width='22' />
                     </a>
                     &nbsp;
                     <a className='roster__text' href={`http://www.wowprogress.com/character/eu/${m.realm}/${m.name}`} target='_blank' >

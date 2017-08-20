@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 import { QuestionListContainer } from './question';
 import { Observable } from 'rxjs/Observable';
@@ -8,15 +8,11 @@ import { SAVE_APPLICATION } from './../../../actions';
 import { renderCharacterList } from './characters';
 import { getWoWData } from '../../services/wow';
 
-import RaisedButton from 'material-ui/RaisedButton';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 
-
-import { reduxForm, Field, FieldArray, FormProps } from 'redux-form';
+import { reduxForm, FieldArray, FormProps, formValueSelector, valueSelector } from 'redux-form';
 import { State } from '../../states/state';
 import { connect } from 'react-redux';
 import { Question } from '../../../models/application';
-import { SUBMIT_APPLICATION } from '../../../actions';
 import { Socket } from '../../epics/helpers';
 import { getApplicationForm } from '../../epics/application';
 
@@ -39,32 +35,38 @@ const validateCharacter = (character, uiUrlRequired = false) => {
   if (!character.primarySpecialization) {
     errors.primarySpecialization = 'Required.';
   }
-  if (!character.secondarySpecialization) {
-    errors.secondarySpecialization = 'Required.';
-  }
+  // if (!character.secondarySpecialization) {
+  //   errors.secondarySpecialization = 'Required.';
+  // }
   if (!character.userInterfaceUrl) {
     if (uiUrlRequired) {
       errors.userInterfaceUrl = 'Required.';
     }
-  // } else if (!/^(?:https?:\/\/(?:www\.)?(?:imgur\.com)|(?:i\.imgur\.com))\/([A-z0-9]{7})\.?|^([A-z0-9]{7})$/.test(character.userInterfaceUrl)) {
-  //   errors.userInterfaceUrl = "Invalid URL.";
-  // }
+    // } else if (!/^(?:https?:\/\/(?:www\.)?(?:imgur\.com)|(?:i\.imgur\.com))\/([A-z0-9]{7})\.?|^([A-z0-9]{7})$/.test(character.userInterfaceUrl)) {
+    //   errors.userInterfaceUrl = "Invalid URL.";
+    // }
   }
   return errors;
 };
 
-const validate = (values) => {
+const validate = (values, { questions = [] }) => {
   const errors: any = {
     characters: [],
-    questions: []
+    questions: [],
   };
-  values.characters && values.characters.forEach((c, i) => {
-    errors.characters[i] = validateCharacter(c, i === 0);
-  });
 
-  errors.questions = values.questions
-    ? values.questions.map(q => !q || !q.value ? { value: 'Required.' } : null)
-    : [];
+  if (values.characters) {
+    values.characters.forEach((c, i) => {
+      errors.characters[i] = validateCharacter(c, i === 0);
+    });
+  }
+  errors.questions = questions.map((q, i) => {
+    if (values.questions && values.questions.length > i && values.questions[i].value) {
+      return null;
+    } else {
+      return { value: 'Required.' };
+    }
+  });
 
   return errors;
 };
@@ -81,28 +83,31 @@ const formConfig = {
   form: 'application',
   validate,
   onSubmit,
-  onSubmitSuccess
+  onSubmitSuccess,
 };
 
-//TODO: typesafe form shape
-interface ApplicationFormProps extends FormProps<{},void, void> {
+// TODO: typesafe form shape
+interface ApplicationFormProps extends FormProps {
   questions: Question[];
   // fix for missing typings
   submitSucceeded: boolean;
+  submitting: boolean;
+  dirty: boolean;
+  valid: boolean;
+  handleSubmit: (event: any) => void;
 }
 
-
-class ApplicationFormImpl extends React.PureComponent<ApplicationFormProps, {}> {
+class ApplicationFormImpl extends React.Component<ApplicationFormProps, {}> {
 
   private sub: Subscription;
-  constructor(props: {}) {
+  constructor(props: ApplicationFormProps) {
     super(props);
     getWoWData(() => { });
     this.sub = Observable.timer(30000, 30000)
       .subscribe(x => {
         if (!this.props.submitting && !this.props.submitSucceeded && this.props.dirty) {
           store.dispatch({
-            type: SAVE_APPLICATION
+            type: SAVE_APPLICATION,
           });
         }
       });
@@ -141,10 +146,12 @@ class ApplicationFormImpl extends React.PureComponent<ApplicationFormProps, {}> 
   }
 }
 
+const proxy: any = ApplicationFormImpl;
+const valueSelector = formValueSelector('application');
 const mapStateToProps = (state: State) => {
   return {
-    questions: state.app.application.template.questions
+    questions: valueSelector(state, `questions`) || state.app.application.template.questions,
   };
 };
 
-export const ApplicationForm = connect(mapStateToProps)(reduxForm(formConfig)(ApplicationFormImpl));
+export const ApplicationForm = connect(mapStateToProps)(reduxForm(formConfig)(proxy));

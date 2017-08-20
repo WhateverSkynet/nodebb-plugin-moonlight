@@ -15,7 +15,8 @@
     },
     {
       "name": "Attach to Process",
-      "type": "node2",
+      "type": "node",
+      "protocol": "inspector",
       "request": "attach",
       "port": 9229,
       "outFiles": [],

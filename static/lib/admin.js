@@ -39,7 +39,6 @@
           url = url.slice(0, -1);
         }
         app.enterRoom("mnl.admin", function() {});
-        App.navigate(url);
 
       }
 

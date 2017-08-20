@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 
 import { BlogPostEntity } from '../../models/blog';
 import { selectBlogPosts } from '../reducers/db/blog-post';
-import { Link } from 'react-router';
 
 import { BlogListContainer } from './blog/list';
 import { BlogPostForm } from './blog/form';

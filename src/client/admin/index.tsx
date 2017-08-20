@@ -1,11 +1,11 @@
 import { getWoWData } from '../services/wow';
 import { getSettings } from '../services/settings';
 import * as React from 'react';
-import { Provider } from "react-redux";
-import { IndexRedirect, Link, Router, Route, browserHistory } from 'react-router';
+import { Provider } from 'react-redux';
+import { HashRouter as Router, Switch, Route, NavLink, Redirect } from 'react-router-dom';
 
 import { RecruitmentSettings } from './recruitment';
-import { history, store } from '../index';
+import { store } from '../index';
 
 import { BlizzardSettings } from './blizzard';
 import { RosterSettings } from './roster';
@@ -14,54 +14,11 @@ import { ApplicationSettings } from './application';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { muiTheme } from '../theme';
 import { BlogContainer } from './blog';
+import { DiscordSettings } from './discord';
 
-export class AdminTab extends Link {
-  render() {
-    let router = (this.context as any).router;
-    let cls = '';
-
-    if (router) {
-
-      if (router.isActive(this.props.to, this.props.onlyActiveOnIndex)) {
-        cls += 'mui--is-active';
-      }
-    }
-
-    return (
-      <li className={cls}>
-        {super.render()}
-      </li>
-    );
-  }
-}
-
-
-const AdminTabs = (props: React.HTMLAttributes<HTMLDivElement>) => (
-  <div>
-    <div className='mui-panel'>
-      <ul className='mui-tabs__bar'>
-        <AdminTab to={{
-          pathname: '/admin/plugins/moonlight#recruitment',
-        }}>Recruitment</AdminTab>
-        <AdminTab to={{
-          pathname: '/admin/plugins/moonlight#blog',
-        }}>News</AdminTab>
-        <AdminTab to={{
-          pathname: '/admin/plugins/moonlight#application',
-        }}>Application</AdminTab>
-        <AdminTab to={{
-          pathname: '/admin/plugins/moonlight#roster',
-        }}>Roster</AdminTab>
-        <AdminTab to={{
-          pathname: '/admin/plugins/moonlight#blizzard',
-        }}>Blizzard Api</AdminTab>
-      </ul>
-    </div>
-    <div>
-      {props.children}
-    </div>
-  </div>
-);
+const linkStyle = {
+  marginRight: '5px',
+};
 
 export class AdminPage extends React.Component<{}, {}> {
   constructor(props: any) {
@@ -75,15 +32,30 @@ export class AdminPage extends React.Component<{}, {}> {
     return (
       <Provider store={store}>
         <MuiThemeProvider muiTheme={muiTheme}>
-          <Router history={history}>
-            <Route path='/admin/plugins/moonlight' component={AdminTabs} >
-              <IndexRedirect to='/admin/plugins/moonlight#recruitment' />
-              <Route path='/admin/plugins/moonlight#recruitment' component={RecruitmentSettings} />
-              <Route path='/admin/plugins/moonlight#blog' component={BlogContainer} />
-              <Route path='/admin/plugins/moonlight#application' component={ApplicationSettings} />
-              <Route path='/admin/plugins/moonlight#roster' component={RosterSettings} />
-              <Route path='/admin/plugins/moonlight#blizzard' component={BlizzardSettings} />
-            </Route>
+          <Router>
+            <div className='mui-panel'>
+              <ul className='mui-tabs__bar'>
+                <NavLink style={linkStyle} to='/recruitment'>Recruitment</NavLink>
+                <NavLink style={linkStyle} to='/blog'>News</NavLink>
+                <NavLink style={linkStyle} to='/application'>Application</NavLink>
+                <NavLink style={linkStyle} to='/roster'>Roster</NavLink>
+                <NavLink style={linkStyle} to='/blizzard'>Blizzard Api</NavLink>
+                <NavLink style={linkStyle} to='/discord'>Discord Api</NavLink>
+              </ul>
+              <div>
+                <Switch>
+                  <Route exact path='/' >
+                    <Redirect to='/recruitment' />
+                  </Route>
+                  <Route path='/recruitment' component={RecruitmentSettings} />
+                  <Route path='/blog' component={BlogContainer} />
+                  <Route path='/application' component={ApplicationSettings} />
+                  <Route path='/roster' component={RosterSettings} />
+                  <Route path='/blizzard' component={BlizzardSettings} />
+                  <Route path='/discord' component={DiscordSettings} />
+                </Switch>
+              </div>
+            </div>
           </Router>
         </MuiThemeProvider>
       </Provider>

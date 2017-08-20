@@ -59,7 +59,7 @@ interface QuestionMangerProps {
   actions?: {
     updateQuestion?: (question: Question, newText: string) => ApplicationAction;
     deleteQuestion?: (question: Question) => ApplicationAction;
-    addToTemplate?: (question: Question) => AddQuestionToTemplateAction;
+    addToTemplate?: (qid: number) => AddQuestionToTemplateAction;
   }
 }
 const createQuestion = (text: string) => {
@@ -158,7 +158,7 @@ const mapDispatchToProps = (dispatch: any) => {
     actions: bindActionCreators({
       updateQuestion,
       deleteQuestion,
-      addToTemplate: (qid: Question) => ({
+      addToTemplate: (qid: number) => ({
         type: ADD_QUESTION_TO_TEMPLATE,
         qid
       }),
@@ -182,9 +182,9 @@ const ApplicationSettingsImpl = (props: React.HTMLAttributes<HTMLDivElement>) =>
 interface ApplicationTemplateProps {
   questions: Question[];
   actions: {
-    removeFromTemplate: (question: Question) => RemoveQuestionFromTemplateAction;
-    moveUp: (question: Question) => MoveTemplateQuestionUpAction;
-    moveDown: (question: Question) => MoveTemplateQuestionDownAction;
+    removeFromTemplate: (qid: number) => RemoveQuestionFromTemplateAction;
+    moveUp: (qid: number) => MoveTemplateQuestionUpAction;
+    moveDown: (qid: number) => MoveTemplateQuestionDownAction;
     save: (questions: Question[]) => InitializeApplicationTemplateSaveAction;
   }
 }
@@ -243,15 +243,15 @@ const mapStateToProps2 = (state: State) => {
 const mapDispatchToProps2 = (dispatch: any) => {
   return {
     actions: bindActionCreators({
-      removeFromTemplate: (qid: Question) => ({
+      removeFromTemplate: (qid: number) => ({
         type: REMOVE_QUESTION_FROM_TEMPLATE,
         qid
       }),
-      moveUp: (qid: Question) => ({
+      moveUp: (qid: number) => ({
         type: MOVE_TEMPLATE_QUESTION_UP,
         qid
       }),
-      moveDown: (qid: Question) => ({
+      moveDown: (qid: number) => ({
         type: MOVE_TEMPLATE_QUSTION_DOWN,
         qid
       }),

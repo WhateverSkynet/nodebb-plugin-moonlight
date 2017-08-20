@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 import { State } from '../../states/state';
 import { selectApplications } from '../../reducers/db';
 import { bindActionCreators } from 'redux';
-import { navigate, store } from '../../index';
-import { browserHistory } from 'react-router';
 
 import { publicPath } from '../../util';
 import { DeleteApplicationAction, DELETE_APPLICATION, SORT_APPLICATION_BY, SortApplicationByAction, TOGGLE_STATUS_FILTER, ToggleStatusFilterAction } from '../../../actions';
@@ -63,7 +61,10 @@ const AppList = (props: AppListProps) => {
             props.isAdmin || props.isMember
               ? <div>
                 <h4>Statuses</h4>
-                <div style={styles.row}>
+                <div style={{
+    display: 'flex',
+    flexWrap: 'wrap',
+  }}>
                   {
                     appStatus.map((x, index) => (
                       <Checkbox key={x}

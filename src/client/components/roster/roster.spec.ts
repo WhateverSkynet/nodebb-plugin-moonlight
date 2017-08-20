@@ -23,7 +23,7 @@ const defaultState: any = {
   },
 };
 
-test('initial state props', () => {
+describe('initial state props', () => {
   // // const props = mapStateToProps(defaultState);
   // console.log(props)
 });

@@ -6,6 +6,7 @@ module.exports = function (wallaby) {
       'src/**/*.tsx',
       '__data__/**',
       '__mocks__/**',
+      'tsconfig.json',
       '!src/**/*.spec.ts'
     ],
     tests: [

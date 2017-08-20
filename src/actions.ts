@@ -1,10 +1,11 @@
 import { BlizzardSettingsState } from './client/states/admin/blizzard-settings';
-import { Question, ApplicationTemplate, ApplicationCharacter, ApplicationReply } from './models/application';
+import { Question, ApplicationTemplate, ApplicationReply } from './models/application';
 import { RosterCharacter, CharacterClass } from './models/wow';
-import { Recruitment } from "./models/recruitment";
+import { Recruitment } from './models/recruitment';
 import { BlogPostEntity } from './models/blog';
+import { DiscordSettingsState } from './client/states/admin/discord-settings';
 
-export type Action = { type: "" };
+export type Action = { type: '' };
 export const Action: Action = { type: '' };
 
 // Ajaxify actions
@@ -44,7 +45,7 @@ export const AJAXIFY_APPLICATION_LIST: AjaxifyApplicationList = '@mnl/ajaxify/AP
 export type AjaxifyApplicationListAction = {
   type: AjaxifyApplicationList;
   payload: {
-    applications: ApplicationTemplate[]
+    applications: ApplicationTemplate[],
   };
 };
 
@@ -54,7 +55,7 @@ export type AjaxifyApplicationAction = {
   type: AjaxifyApplication;
   payload: {
     application: ApplicationTemplate,
-    actions: string[]
+    actions: string[],
   };
 };
 
@@ -182,6 +183,13 @@ export type AdminSetBlizzardSettingsAction = {
   settings: BlizzardSettingsState;
 };
 
+export type AdminSetDiscordSettings = '@mnl/admin/SET_DISCORD_SETTING';
+export const ADMIN_SET_DISCORD_SETTINGS: AdminSetDiscordSettings = '@mnl/admin/SET_DISCORD_SETTING';
+export type AdminSetDiscordSettingsAction = {
+  type: AdminSetDiscordSettings;
+  settings: DiscordSettingsState;
+};
+
 export type AdminCreateBlogPost = '@mnl/admin/CREATE_BLOG_POST';
 export const ADMIN_CREATE_BLOG_POST: AdminCreateBlogPost = '@mnl/admin/CREATE_BLOG_POST';
 export type AdminCreateBlogPostAction = {
@@ -222,6 +230,7 @@ export type AdminAction = AdminGetSettingsAction
   | AdminSelectBlogPostAction
   | AdminSaveBlogPostAction
   | AdminSaveBlogPostSuccessAction
+  | AdminSetDiscordSettingsAction
   | Action;
 
 // Application Actions
@@ -394,7 +403,7 @@ export const GET_APPLICATION_LIST_SUCCESS: GetApplicationListSuccess = '@mnl/app
 export type GetApplicationListSuccessAction = {
   type: GetApplicationListSuccess;
   payload: {
-    applications: ApplicationTemplate[]
+    applications: ApplicationTemplate[],
   };
 };
 
@@ -458,7 +467,8 @@ export type ApplicationAction = GetQuestionsAction
   | ToggleStatusFilterAction
   | ReplyToApplicationAction
   | ReplyToApplicationSuccessAction
-  | Action;
+  | Action
+  | BlogAction;
 
 
 // Redux Form

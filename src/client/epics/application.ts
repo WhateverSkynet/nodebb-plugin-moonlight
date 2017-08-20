@@ -7,6 +7,7 @@ import { State } from '../states/state';
 import { store } from '../index';
 import { INITIALIZE_REDUX_FORM, SUBMIT_APPLICATION, START_SUBMIT_REDUX_FORM, ReduxFormAction, END_SUBMIT_REDUX_FORM, ReplyToApplicationAction, REPLY_TO_APPLICATION_SUCCESS, REPLY_TO_APPLICATION, QUESTION_UPDATE_SUCCESS, DeleteApplicationAction, DELETE_APPLICATION, DELETE_APPLICATION_SUCCESS } from '../../actions';
 import { AppState } from '../states/app';
+import { initialize } from 'redux-form';
 
 export const getQuestionsEpic: Epic<ApplicationAction, AppState> = action$ =>
   action$.ofType(GET_QUESTIONS)
@@ -38,28 +39,18 @@ export const getApplicationTemplateEpic: Epic<ApplicationAction, AppState> = act
       .flatMap(data =>
         Observable.concat(
           // Form needs to be initilized first with correct values else question inputs will be empty. TODO: find better solution.
-          Observable.of({
-            type: INITIALIZE_REDUX_FORM,
-            meta: { form: 'application' },
-            payload: {
+          Observable.of(
+            initialize('application', {
               characters: data.characters,
-              questions: data.questions
-            }
-          }),
-          ...data.characters.map(character => Observable.of({
-            type: '@@redux-form/ARRAY_PUSH',
-            meta: {
-              form: 'application',
-              field: 'characters',
-            },
-            payload: character,
-          })),
+              questions: data.questions,
+            }),
+          ),
           Observable.of({
             type: GET_APPLICATION_TEMPLATE_SUCCESS,
-            template: data
-          })
-        )
-      )
+            template: data,
+          }),
+        ),
+      ),
     // .catch(err => console.log(err))
     );
 
