@@ -1,5 +1,4 @@
 module.exports = function (wallaby) {
-
   return {
     files: [
       'lib/**/*.js',
@@ -10,8 +9,8 @@ module.exports = function (wallaby) {
     ],
     env: {
       type: 'node',
-      runner: 'node',
+      runner: 'node'
     },
     testFramework: 'tape'
-  };
-};
+  }
+}

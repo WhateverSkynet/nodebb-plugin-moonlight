@@ -1,5 +1,4 @@
 module.exports = function (wallaby) {
-
   return {
     files: [
       'src/**/*.ts',
@@ -23,9 +22,9 @@ module.exports = function (wallaby) {
       type: 'node',
       runner: 'node',
       params: {
-        runner: '--harmony',
-      },
+        runner: '--harmony'
+      }
     },
-    testFramework: 'jest',
-  };
-};
+    testFramework: 'jest'
+  }
+}
