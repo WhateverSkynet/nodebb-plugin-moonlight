@@ -34,9 +34,9 @@
         if (ajaxify.data.action) {
           App.store.dispatch(ajaxify.data.action)
         }
-        var url = ajaxify.data.url.replace("loggedin", "");
+        const url = ajaxify.data.url.replace("loggedin", "");
         if (url.endsWith("?")) {
-          url = url.slice(0, -1);
+          url.slice(0, -1);
         }
         app.enterRoom("mnl.admin", function() {});
 

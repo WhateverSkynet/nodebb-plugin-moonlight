@@ -34,7 +34,7 @@
       case "/application":
         return "mnl_application";
       default:
-        "mnl";
+        return "mnl";
     }
   };
 
@@ -55,7 +55,7 @@
         }
         var url = ajaxify.data.url.replace("loggedin", "");
         if (url.endsWith("?")) {
-          url = url.slice(0, -1);
+          url.slice(0, -1);
         }
         app.enterRoom(matchRooms(ajaxify.data.url), function () { });
 
